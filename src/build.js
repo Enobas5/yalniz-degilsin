@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const [, , tplPath, dataPath, outPath] = process.argv;
-const { T, S } = require(path.resolve(dataPath));
+const { T, S, M } = require(path.resolve(dataPath));
 
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const phase = { bas: "Tanışma ve başlangıç", ic: "İlişkinin içinde", son: "Ayrılık ve sonrası", dij: "Dijital" };
@@ -53,6 +53,16 @@ ${pad}</details></li>`).join("\n");
 const missing = Object.keys(TSRC).filter((k) => !T.some((t) => t.en === k)).concat(Object.keys(SSRC).filter((k) => !S.some((s) => s.en === k)));
 if (missing.length) console.warn("Eşleşmeyen kaynak anahtarı:", missing);
 
+// Madde kartları: sıra, "en hafif" sanılandan en ağırına
+const madde = M.map((m, i) => `${pad}<li id="madde-k${i + 1}" style="--r:${((i + 1) / M.length * 100).toFixed(0)}%"><details class="acc">
+${pad}  <summary><span><span class="acc__t"><span class="rank">${i + 1}</span>${esc(m.tr)}</span><span class="acc__en">${esc(m.en)}</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+${pad}  <div class="acc__body">
+${pad}    <p class="myth"><span class="k">Sanılan</span><s>${esc(m.sanilan)}</s></p>
+${pad}    <div><span class="k">Gerçek</span><ul class="d">${m.gercek.map((g) => `<li>${esc(g)}</li>`).join("")}</ul></div>
+${pad}    <p class="src">Kaynak: ${m.src.map(([h, t]) => `<a href="${h}">${t}</a>`).join(" · ")}</p>
+${pad}  </div>
+${pad}</details></li>`).join("\n");
+
 // Giriş grafiği: nokta ızgarası. Sabit tohumlu rastgelelik, her derlemede aynı desen.
 function dots(cols, rows, you, cls, seed) {
   let x = seed;
@@ -94,6 +104,6 @@ function chapters(src) {
 const html = chapters(fs.readFileSync(tplPath, "utf8"))
   .replace("{{HERO}}", hero)
   .replace("{{TERMS}}", terms).replace("{{STIS}}", stis)
-  .replace("{{T_COUNT}}", T.length).replace("{{S_COUNT}}", S.length);
+  .replace("{{MADDE}}", madde).replace("{{T_COUNT}}", T.length).replace("{{S_COUNT}}", S.length);
 fs.writeFileSync(outPath, html);
 console.log("ok", html.length);
