@@ -22,9 +22,9 @@ const TSRC = {
   "Hoovering": [L("https://health.clevelandclinic.org/hoovering", "Cleveland Clinic, Hoovering")],
 };
 const SSRC = {
-  "Pubic lice": [L("https://gesund.bund.de/tr/kasik-biti", "Almanya Sağlık Bakanlığı (Türkçe), Kasık biti")],
+  "Pubic lice": [L("https://gesund.bund.de/tr/filzlaeuse", "Almanya Sağlık Bakanlığı (Türkçe), Kasık biti")],
   "Scabies": [L("https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyuz2024.pdf", "Hacettepe Üniversitesi Halk Sağlığı, Uyuz")],
-  "Molluscum contagiosum": [L("https://gesund.bund.de/tr/molluskum-kontagiosum", "Almanya Sağlık Bakanlığı (Türkçe), Molluskum kontagiozum")],
+  "Molluscum contagiosum": [L("https://gesund.bund.de/tr/dellwarzen", "Almanya Sağlık Bakanlığı (Türkçe), Molluskum kontagiozum")],
   "Mpox": [L("https://www.istabip.org.tr/site_icerik/2024/agustos/maymun-cicegi-bilgi-notu.pdf", "İstanbul Tabip Odası, Mpox")],
   "Gonorrhea": [L("https://www.who.int/news-room/fact-sheets/detail/sexually-transmitted-infections-%28stis%29", "Dünya Sağlık Örgütü, CYBE bilgi notu")],
 };
@@ -39,7 +39,7 @@ ${pad}    <p><span class="k">Ne yapabilirsin</span>${esc(t.x)}</p>${src(TSRC[t.e
 ${pad}  </div>
 ${pad}</details></li>`).join("\n");
 
-const cLbl = { ok: '<span class="ok">İlaçla iyileşir</span>', mid: "Kalıcı ama kontrol edilir" };
+const cLbl = { ok: '<span class="ok">İyileşir</span>', mid: "Kalıcı ama kontrol edilir" };
 const stis = S.map((s) => `${pad}<li data-cat="${s.c}${s.skin ? " skin" : ""}"><details class="acc">
 ${pad}  <summary><span><span class="acc__t">${esc(s.tr)}</span><span class="acc__en" lang="en">${esc(s.en)}</span></span><span class="acc__cat">${cLbl[s.c]}${s.skin ? " · Ten temasıyla da" : ""}</span></summary>
 ${pad}  <div class="acc__body">
