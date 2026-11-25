@@ -130,7 +130,7 @@ ul.d + ol.n { margin-top: 1.4em; }
   transition: color 200ms ease;
 }
 .menu .ico { width: 18px; height: 18px; }
-.menu a { border-bottom: 2px solid transparent; }
+.menu a { border-block: 2px solid transparent; }
 .menu a:hover { color: var(--text); }
 .menu a[aria-current] { color: var(--text); }
 .menu a[aria-current] { border-bottom-color: var(--c); }
@@ -502,6 +502,21 @@ html:not(.js) .menu ul { flex-wrap: wrap; gap: 0 18px; }
   .wordmark { font-size: 1.375rem; }
   .bar-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .bar .theme-toggle { padding-left: 12px; }
+}
+
+/* Türkçe menü daha kısa: yer varken yazıyı küçültme */
+@media (min-width: 1445px) and (max-width: 1810px) {
+  html[lang="tr"] .menu a, html[lang="tr"] .bar-btn, html[lang="tr"] .bar .theme-toggle, html[lang="tr"] .lang, html[lang="tr"] .bar .exit { font-size: 0.9375rem; }
+  html[lang="tr"] .menu ul { gap: 15px; }
+  html[lang="tr"] .menu a { gap: 6px; }
+  html[lang="tr"] .menu .ico { width: 18px; height: 18px; }
+}
+@media (min-width: 1560px) and (max-width: 1810px) {
+  html[lang="tr"] .menu ul { gap: 20px; }
+  html[lang="tr"] .bar { gap: 20px; }
+}
+@media (min-width: 1275px) and (max-width: 1485px) {
+  html[lang="tr"] .menu a, html[lang="tr"] .bar-btn, html[lang="tr"] .bar .theme-toggle, html[lang="tr"] .lang, html[lang="tr"] .bar .exit { font-size: 0.875rem; }
 }
 
 /* dar ekran: üst menü yerine alt çubuk */
