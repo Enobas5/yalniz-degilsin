@@ -19,6 +19,9 @@ const TSRC = {
   "Trauma bonding": [L("https://health.clevelandclinic.org/trauma-bonding", "Cleveland Clinic, Trauma bonding"), L("https://www.psychologytoday.com/us/basics/trauma-bonding", "Psychology Today, Trauma bonding")],
   "Ghosting": [L("https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope", "Colorado Üniversitesi, Ghosting ve orbiting")],
   "Orbiting": [L("https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope", "Colorado Üniversitesi, Ghosting ve orbiting")],
+  "Sextortion": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 107")],
+  "Revenge porn / Image-based abuse": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 73, 134 ve 139")],
+  "Cyberstalking": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 123/A")],
   "Hoovering": [L("https://health.clevelandclinic.org/hoovering", "Cleveland Clinic, Hoovering")],
 };
 const SSRC = {
