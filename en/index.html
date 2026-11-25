@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>You Are Not Alone</title>
-<meta name="description" content="If you can't talk to your family or have no one to ask: plain information and free places to get help on family, mental health, relationships, sexual health, drug addiction, speaking up and your rights in Türkiye.">
+<meta name="description" content="If you can't talk to your family or have no one to ask: plain information and places to get help in Türkiye on family, mental health, harassment and violence, relationships, puberty and sexual health, drugs and gambling, and your rights.">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#2a2f33">
@@ -395,8 +395,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .srcs[open] > summary::before { content: "–"; }
 .srcs > summary:hover { color: var(--text); text-decoration: underline; }
 .srcs > .src { margin-top: 4px; }
-@media print { .srcs::details-content { content-visibility: visible; block-size: auto; } }
 @media (max-width: 720px) { .blocks { row-gap: 44px; } html.js .jump { display: none; } }
+/* JavaScript kapalıysa: işe yaramayan düğmeler gizli, menü satır kırar */
+html:not(.js) .bar-btn, html:not(.js) .theme-toggle, html:not(.js) .filters, html:not(.js) .meta-row { display: none; }
+html:not(.js) .bar { height: auto; flex-wrap: wrap; padding-block: 10px; position: static; }
+html:not(.js) .menu { flex: 1 1 100%; order: 9; justify-content: flex-start; }
+html:not(.js) .menu ul { flex-wrap: wrap; gap: 0 18px; }
 .fold__btn { all: unset; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; min-height: 48px; cursor: pointer; }
 .fold__btn::after { content: "+"; flex: none; font: 400 1.5rem/1 var(--font); color: var(--c); }
 .fold__btn[aria-expanded="true"]::after { content: "–"; }
@@ -462,6 +466,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .js .fade-up.is-shown { opacity: 1; translate: none; transition: opacity 0.8s ease, translate 1s cubic-bezier(0.2, 0.7, 0.2, 1); }
 @media (prefers-reduced-motion: reduce) {
   .js .fade-up { opacity: 1; translate: none; }
+  details::details-content { content-visibility: visible; block-size: auto; }
+  .fold__btn::after, .acc summary::after { display: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
@@ -618,7 +624,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     </div>
     <p class="intro__lead fade-up">If you can't talk to your family, have no one at home to ask, or feel too embarrassed to open up to anyone, this page is for you. Each topic explains what it is, gives a real example, shows step by step what you can do, and tells you who to contact.</p>
     <p class="intro__urgent fade-up">If a life is in danger or you are thinking of harming yourself, call now: <a href="tel:112">112</a></p>
-    <p class="intro__urgent intro__exit fade-up">If someone comes near, tap <b>Quick exit</b>; a weather page opens. <a href="#gizlilik">Staying private</a></p>
+    <p class="intro__urgent intro__exit fade-up">If someone comes near, tap <b>Quick exit</b>, or on a computer press the <b>Delete</b> (Del) key once; a weather page opens. <a href="#gizlilik">Staying private</a></p>
   </section>
 
   <nav class="now grid fade-up" aria-labelledby="now-baslik">
@@ -638,6 +644,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <li data-c="ruh"><a href="#ruh-panik">I'm having a panic attack</a></li>
       <li data-c="aile"><a href="#aile-sinir">I don't get along with my family</a></li>
       <li data-c="hayat"><a href="#hayat-avukat">I can't afford a lawyer</a></li>
+      <li data-c="ruh"><a href="#ruh-yalnizlik">I feel lonely</a></li>
+      <li data-c="cinsel"><a href="#beden-ergenlik">Is my body normal?</a></li>
     </ul>
   </nav>
 
@@ -654,14 +662,14 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <nav class="index grid fade-up" aria-labelledby="index-baslik">
     <h2 class="label" id="index-baslik">On this page</h2>
     <ol>
-      <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Family <span>A missing or difficult family, boundaries, violence</span></a></li>
-      <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Mental health <span>Crisis, depression, panic, grief, first appointment</span></a></li>
+      <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Family <span>A missing or difficult family, child support, boundaries, violence</span></a></li>
+      <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Mental health <span>Crisis, depression, panic, loneliness, first appointment</span></a></li>
       <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>Relationships <span>Glossary, getting out of a toxic relationship</span></a></li>
       <li data-c="siddet"><a href="#siddet"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.7 5.7 3.8 3.8M14.5 14.5l3.8 3.8M18.3 5.7l-3.8 3.8M9.5 14.5l-3.8 3.8"/></svg>Harassment and violence <span>Harassment, bullying, forced marriage, your rights</span></a></li>
-      <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Sexual health <span>Infections, protection, free tests</span></a></li>
+      <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Sexual health <span>Puberty, periods, consent, infections, protection</span></a></li>
       <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Addiction <span>Drugs, gambling, gaming; the way out</span></a></li>
       <li data-c="ifade"><a href="#ifade"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg>Speaking up <span>Social anxiety, ready-made sentences</span></a></li>
-      <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Your rights <span>Free lawyer, work, scholarships, scams</span></a></li>
+      <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Your rights <span>Free lawyer, school, work, scholarships, scams</span></a></li>
       <li data-c="rehber"><a href="#rehber"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg>Where to get help? <span>All the numbers together</span></a></li>
     </ol>
   </nav>
@@ -679,7 +687,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">81 provinces</span><span class="glance__txt">free family and individual counselling at Social Service Centres</span></li>
         <li><span class="glance__big">7/24</span><span class="glance__txt">ALO 183: free line for abuse, neglect and domestic violence</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Family: in this section"><span class="jump__t">In this section</span><a href="#aile-1"><b>01</b>What changes when a parent is missing?</a><a href="#aile-2"><b>02</b>You can choose your own role model</a><a href="#aile-sinir"><b>03</b>If you don't get along with your family: setting boundaries</a><a href="#aile-4"><b>04</b>What nobody taught you at home: who can you ask?</a><a href="#aile-ayrilmak"><b>05</b>If you are thinking of leaving your family</a><a href="#aile-siddet"><b>06</b>If there is violence or neglect at home</a></nav>
+      <nav class="jump fade-up" aria-label="Family: in this section"><span class="jump__t">In this section</span><a href="#aile-1"><b>01</b>What changes when a parent is missing?</a><a href="#aile-haklar"><b>02</b>If your mother or father isn't with you: your rights</a><a href="#aile-3"><b>03</b>You can choose your own role model</a><a href="#aile-sinir"><b>04</b>If you don't get along with your family: setting boundaries</a><a href="#aile-5"><b>05</b>What nobody taught you at home: who can you ask?</a><a href="#aile-ayrilmak"><b>06</b>If you are thinking of leaving your family</a><a href="#aile-siddet"><b>07</b>If there is violence or neglect at home</a></nav>
     </div>
 
     <div class="blocks">
@@ -697,7 +705,23 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-2" data-k="role model mentor sister brother example">You can choose your own role model</h3>
+        <h3 id="aile-haklar" data-k="alimony child support custody orphan pension paternity father doesn't pay divorce survivor pension">If your mother or father isn't with you: your rights</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Child support.</strong> Your mother and father must share the cost of your care and education. The one you live with can sue the other on your behalf; if you are old enough to understand, you can sue too.</li>
+            <li><strong>It continues after 18.</strong> If your education goes on, your parents must support you, as far as they can, until it ends.</li>
+            <li><strong>Custody.</strong> After a divorce, custody is with the parent the court left you with; if one parent has passed away, with the other. If your parents aren't married, as a rule it is with your mother.</li>
+            <li><strong>Visits.</strong> The parent you don't live with has the right to see you. But if this puts your peace at risk, the court can limit or end it.</li>
+            <li><strong>If your father isn't in the records</strong>, you can also sue to have him recognised. Your mother's time limit is 1 year after birth; the limit set for the child was annulled by the Constitutional Court.</li>
+            <li><strong>If they passed away: orphan's pension.</strong> If your mother or father paid enough premiums (usually 1800 days; for employees 5 years insured and 900 days), you may get a pension. If you don't work, until 18; in high school until 20; at university until 25. It isn't automatic; you must apply to SGK in writing.</li>
+          </ul>
+          <p>If you can't afford a lawsuit, you can ask for a <a href="#hayat-avukat">free lawyer</a>.</p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4721.pdf">Turkish Civil Code, articles 301, 303, 323, 324, 327–329, 336 and 337 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">Law No. 5510, articles 32 and 34 (Turkish)</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="aile-3" data-k="role model mentor sister brother example">You can choose your own role model</h3>
         <div class="prose">
           <p>In psychology, when someone outside the family guides a young person it is called "natural mentoring". A meta-analysis of 30 studies shows that young people who have someone like this do better at school, emotionally and in behaviour. This also holds for young people growing up in hard conditions. Research shows that programmes where the young person chooses this person work too.</p>
           <ol class="n">
@@ -726,7 +750,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-4" data-k="tie shave cooking budget money hygiene">What nobody taught you at home: who can you ask?</h3>
+        <h3 id="aile-5" data-k="tie shave cooking budget money hygiene">What nobody taught you at home: who can you ask?</h3>
         <div class="prose">
           <p>If nobody showed you how to tie a tie, shave, fix a tap, cook or keep a budget, there is no shame in it. Instead of explaining these here, we point you to sources that do it well:</p>
           <ul class="res">
@@ -796,9 +820,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <ul class="glance fade-up" aria-label="At a glance">
         <li><span class="glance__big">322 million</span><span class="glance__txt">people worldwide live with depression (World Health Organization)</span></li>
         <li><span class="glance__big">2 weeks</span><span class="glance__txt">of feeling low nearly every day can be a sign of depression</span></li>
-        <li><span class="glance__big">0 TL</span><span class="glance__txt">for a mental health appointment at a state hospital: ALO 182 or MHRS</span></li>
+        <li><span class="glance__big">ALO 182</span><span class="glance__txt">books a mental health appointment at a state hospital; your family doctor is free</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Mental health: in this section"><span class="jump__t">In this section</span><a href="#ruh-kriz"><b>01</b>If you are thinking of harming yourself or ending your life</a><a href="#ruh-arkadas"><b>02</b>If you are worried about a friend</a><a href="#ruh-3"><b>03</b>This is not your fault</a><a href="#ruh-4"><b>04</b>The difference between sadness and depression</a><a href="#ruh-panik"><b>05</b>If you are having a panic attack</a><a href="#ruh-sinav"><b>06</b>Exam anxiety</a><a href="#ruh-yeme"><b>07</b>If you are at war with food and your body</a><a href="#ruh-yas"><b>08</b>If you have lost someone</a><a href="#ruh-9"><b>09</b>Psychologist or psychiatrist?</a><a href="#ruh-10"><b>10</b>What happens at the first appointment?</a></nav>
+      <nav class="jump fade-up" aria-label="Mental health: in this section"><span class="jump__t">In this section</span><a href="#ruh-kriz"><b>01</b>If you are thinking of harming yourself or ending your life</a><a href="#ruh-arkadas"><b>02</b>If you are worried about a friend</a><a href="#ruh-3"><b>03</b>This is not your fault</a><a href="#ruh-4"><b>04</b>The difference between sadness and depression</a><a href="#ruh-panik"><b>05</b>If you are having a panic attack</a><a href="#ruh-sinav"><b>06</b>Exam anxiety</a><a href="#ruh-yalnizlik"><b>07</b>If you feel lonely</a><a href="#ruh-yeme"><b>08</b>If you are at war with food and your body</a><a href="#ruh-yas"><b>09</b>If you have lost someone</a><a href="#ruh-10"><b>10</b>Psychologist or psychiatrist?</a><a href="#ruh-11"><b>11</b>What happens at the first appointment?</a></nav>
     </div>
 
     <div class="blocks">
@@ -882,6 +906,21 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
+        <h3 id="ruh-yalnizlik" data-k="loneliness lonely no friends make friends left out nobody">If you feel lonely</h3>
+        <div class="prose">
+          <p>You can feel lonely even in a crowd. It is very common, especially between 16 and 34. It isn't your fault and it can pass.</p>
+          <ul class="d">
+            <li><strong>Send a small message.</strong> Writing "you crossed my mind" to someone you haven't talked to for a while is enough. Short, regular chats help.</li>
+            <li><strong>Find a shared activity.</strong> A club, sport, course, library or volunteering. There is already something to talk about, and introducing yourself gets easier.</li>
+            <li><strong>Go at your own pace.</strong> The first time, just being there is enough. If you are shy, build <a href="#ifade-2">your own ladder</a>.</li>
+            <li><strong>Be careful with strangers online.</strong> When you're lonely, fast and intense attention feels good. Don't send money or private images to someone you haven't seen.</li>
+            <li><strong>If it lasts long</strong>, tell your school counsellor or family doctor. Severe, long-lasting loneliness can raise the risk of anxiety and depression.</li>
+          </ul>
+          <p class="src">Source: <a href="https://www.nhs.uk/every-mind-matters/lifes-challenges/loneliness/">NHS, Dealing with loneliness</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
         <h3 id="ruh-yeme" data-k="eating disorder anorexia bulimia vomiting weight diet fat body image binge">If you are at war with food and your body</h3>
         <div class="prose">
           <p>An eating disorder is not a phase or a matter of willpower; it is a mental health condition. It is about controlling food to cope with feelings. It can happen to anyone in any body and is most common in young people. With treatment most people recover.</p>
@@ -910,7 +949,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-9" data-k="therapy therapist counsellor">Psychologist or psychiatrist?</h3>
+        <h3 id="ruh-10" data-k="therapy therapist counsellor">Psychologist or psychiatrist?</h3>
         <div class="prose">
           <div class="table-wrap">
             <table class="stack">
@@ -929,10 +968,11 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-10" data-k="appointment mhrs hospital therapy">What happens at the first appointment?</h3>
+        <h3 id="ruh-11" data-k="appointment mhrs hospital therapy">What happens at the first appointment?</h3>
         <div class="prose">
           <ol class="n">
-            <li><span>You book an appointment at a state hospital's "Ruh Sağlığı ve Hastalıkları" (mental health) department through MHRS or by calling <a href="tel:182">ALO 182</a>. It is free.</span></li>
+            <li><span>You book an appointment at a state hospital's "Ruh Sağlığı ve Hastalıkları" (mental health) department through MHRS or by calling <a href="tel:182">ALO 182</a>.</span></li>
+            <li><span>If you are covered by SGK, you only pay a co-payment for the examination: 50 TL at a state hospital, 90 TL at a training and research hospital (July 2026). Half if your family doctor refers you. Seeing your family doctor is free.</span></li>
             <li><span>The doctor asks how long you have felt this way, about your sleep and appetite, and what has been going on in your life. There is no right or wrong answer.</span></li>
             <li><span>You don't have to tell everything on the first day. The first meeting is for getting to know each other; no one expects a miracle.</span></li>
             <li><span>Medicine isn't always necessary. The doctor may suggest therapy, medicine or both. You decide together.</span></li>
@@ -941,7 +981,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <p class="callout__t">If you're afraid you won't be able to speak</p>
             <p>Write three sentences on your phone beforehand, for example: <q>I haven't been able to sleep for two months. I don't enjoy anything. There is no one at home I can talk to.</q> You can tell the doctor "I find it hard to explain, so I wrote it down" and read it. People do this very often.</p>
           </div>
-          <p class="src">Appointments: <a href="https://www.mhrs.gov.tr/">MHRS</a>, ALO 182</p>
+          <details class="srcs"><summary>Sources (3)</summary><p class="src"><a href="https://www.mhrs.gov.tr/">MHRS</a> · <a href="https://www.alomaliye.com/2026/07/01/hastane-muayene-katilim-paylari-yeniden-belirlendi/">Alomaliye, change in health fees (1 July 2026, Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">Law No. 5510, articles 68 and 69 (Turkish)</a></p></details>
         </div>
       </div>
     </div>
@@ -949,9 +989,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <div class="help fade-up">
       <h3 class="label">Where can you get help?</h3>
       <ul>
-        <li><span class="help__name">State hospital appointment</span><a class="tel" href="tel:182">ALO 182</a><small>or MHRS. Mental health department ("Ruh Sağlığı ve Hastalıkları"), free.</small></li>
+        <li><span class="help__name">State hospital appointment</span><a class="tel" href="tel:182">ALO 182</a><small>or MHRS. Mental health department ("Ruh Sağlığı ve Hastalıkları").</small></li>
         <li><span class="help__name">Community Mental Health Centre (TRSM)</span><small>Linked to state hospitals. Ask the hospital whether there is one in your city.</small></li>
-        <li><span class="help__name">Your family doctor</span><small>For a first step. Find out who it is with "Aile Hekimi Bilgisi Sorgulama" on e-Devlet.</small></li>
+        <li><span class="help__name">Your family doctor</span><small>Free, for a first step. Find out who it is with "Aile Hekimi Bilgisi Sorgulama" on e-Devlet.</small></li>
         <li><span class="help__name">Municipalities and university hospitals</span><small>Many offer free psychological counselling.</small></li>
         <li><span class="help__name">Thoughts of harming yourself</span><a class="tel" href="tel:112">112</a><small>Call without waiting or go to the nearest emergency department.</small></li>
       </ul>
@@ -979,7 +1019,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <div class="block fade-up">
         <h3 id="iliski-1" data-k="toxic manipulation jealousy dating">Glossary of terms</h3>
         <div class="prose prose--wide">
-          <p style="max-width:38em">Below are terms often met in relationships today. Each is given in English and Turkish. For every term we explain what it is, give an example and say what you can do. Seeing one of these once doesn't make someone a bad person. What matters is whether a behaviour <strong>keeps repeating</strong> and whether it leaves you feeling afraid, guilty or worthless.</p>
+          <p style="max-width:38em">Below are terms often met in relationships today. Each is given in English and Turkish.</p>
+          <p style="max-width:38em">Seeing one of these once doesn't make someone a bad person. What matters is whether a behaviour <strong>keeps repeating</strong> and whether it leaves you feeling afraid, guilty or worthless.</p>
           <div class="filters" data-filter="terms">
             <div class="tabs" role="group" aria-label="Filter terms">
               <button class="tab" type="button" data-f="all" aria-pressed="true">All</button>
@@ -1137,7 +1178,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p>Being threatened with a private photo or video to get money, new images or something else. Under the Turkish Penal Code this is blackmail (article 107) and it is prosecuted even without a complaint.</p>
                 <p class="q"><span class="k">Example</span>“If you don't send money I'll send this video to all your followers.”</p>
-                <p><span class="k">What you can do</span>Never pay. The more you pay, the more they ask. Don't delete the messages, take screenshots, go to the police or the prosecutor and report it to the platform. This is not your fault.</p>
+                <p><span class="k">What you can do</span>Never pay. The more you pay, the more they ask. Don't delete the messages, take screenshots of the chat and username, go to the police or the prosecutor and report it to the platform. If the person in the image is under 18, don't copy the image itself or send it to anyone. This is not your fault.</p>
                 <p class="src">Source: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, article 107</a></p>
               </div>
             </details></li>
@@ -1146,8 +1187,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p>Sharing private images without consent. Even if you sent the image willingly, sharing it is a crime (Penal Code 134/2). It depends on a complaint; file it within 6 months of finding out.</p>
                 <p class="q"><span class="k">Example</span>After a break-up, an ex posting a private photo in a group chat.</p>
-                <p><span class="k">What you can do</span>Save the links and screenshots, go to the prosecutor and ask the platform to remove it. If you can't afford a lawyer, you can apply to the bar association for legal aid.</p>
-                <p class="src">Source: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 73, 134 and 139</a></p>
+                <p><span class="k">What you can do</span>Save the links, usernames and chats. Don't copy or send an image of anyone under 18. Go to the prosecutor and ask the platform to remove it. If you can't afford a lawyer, you can apply to the bar association for legal aid.</p>
+                <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 73, 134, 139 and 226</a> · <a href="https://stopncii.org/?lang=tr-tr">StopNCII (over 18)</a></p></details>
               </div>
             </details></li>
             <li data-cat="dij"><details class="acc">
@@ -1173,7 +1214,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>If you have to see them, be a "grey rock".</strong> If you must meet because of work, school or a child, keep your answers short, calm and unemotional: "OK", "Thursday works". Manipulation weakens when it gets no reaction.</span></li>
             <li><span><strong>Missing them is normal, going back isn't required.</strong> With a trauma bond, the longing after a break-up is as intense as withdrawal. It shows how strong the cycle was, not that the relationship was good. When a wave of longing comes, read your notes.</span></li>
             <li><span><strong>Rebuild your circle.</strong> Writing to the friends you drifted from is enough: "I disappeared for a while, I'm sorry, I miss you." Most people understand.</span></li>
-            <li><span><strong>Get support.</strong> If you keep ending up in similar relationships, the root is often the bond with caregivers in childhood. You can work through this pattern with a therapist. Free options are in the <a href="#ruh">Mental health section</a>.</span></li>
+            <li><span><strong>Get support.</strong> If you keep ending up in similar relationships, the root is often the bond with caregivers in childhood. You can work through this pattern with a therapist. Places to go are in the <a href="#ruh">Mental health section</a>.</span></li>
           </ol>
           <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a> · <a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a></p></details>
         </div>
@@ -1186,7 +1227,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <ul>
         <li><span class="help__name">Violence Helpline</span><a class="tel" href="tel:183">ALO 183</a><small>24/7, free. Includes psychological violence.</small></li>
         <li><span class="help__name">If there is harassment, violence, stalking or blackmail</span><small><a href="#siddet">Harassment and violence section</a></small></li>
-        <li><span class="help__name">A professional to talk to</span><small>Free options in the <a href="#ruh">Mental health section</a></small></li>
+        <li><span class="help__name">A professional to talk to</span><small>Places to go in the <a href="#ruh">Mental health section</a></small></li>
         <li><span class="help__name">Emergency</span><a class="tel" href="tel:112">112</a></li>
       </ul>
       <p class="checked">Links and numbers last checked: <time datetime="2026-11-25">25 November 2026</time></p>
@@ -1221,12 +1262,13 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <ol class="n" style="margin-top:24px">
             <li><span><strong>Don't stay alone.</strong> Tell someone you trust and ask them to be with you.</span></li>
             <li><span><strong>After a sexual assault, go to a hospital.</strong> Even if you don't plan to file a complaint, you need to be examined for injuries, infection and pregnancy. For infection <a href="#cinsel-1">the first 72 hours</a> matter, for pregnancy <a href="#cinsel-gebelik">the morning-after pill</a>; the sooner you go, the better.</span></li>
+            <li><span><strong>Know about reporting beforehand.</strong> Health workers must report to the authorities if they see signs of a crime. This isn't to punish you; you can ask them what rights you have in the process.</span></li>
             <li><span><strong>If possible, don't wash or change your clothes.</strong> Traces collected in the examination can be evidence. If you have washed, it isn't too late; you can still report it. Having no marks on your body doesn't mean there was no assault.</span></li>
             <li><span><strong>Keep the evidence.</strong> Don't delete messages or call logs; take screenshots. Write down the place, the time and what you saw, as far as you remember. You can ask for nearby cameras to be checked.</span></li>
             <li><span><strong>Report it.</strong> You can go to the police, the gendarmerie or the prosecutor; if you go to a hospital, the police become involved from there. If you don't know what to do, <a href="tel:183">ALO 183</a> will guide you.</span></li>
-            <li><span><strong>Give yourself time.</strong> Fear, sleeplessness, shame or feeling nothing at all are common. For free support see the <a href="#ruh">Mental health section</a>.</span></li>
+            <li><span><strong>Give yourself time.</strong> Fear, sleeplessness, shame or feeling nothing at all are common. For support see the <a href="#ruh">Mental health section</a>.</span></li>
           </ol>
-          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Help after rape and sexual assault</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı lawyer Funda Ekin, bianet (2025, Turkish)</a></p></details>
+          <details class="srcs"><summary>Sources (3)</summary><p class="src"><a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Help after rape and sexual assault</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı lawyer Funda Ekin, bianet (2025, Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, article 280 (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1234,7 +1276,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <h3 id="iliski-taciz-yasa" data-k="harassment rape assault abuse penalty punishment complaint law">Your rights after harassment and sexual assault</h3>
         <div class="prose">
           <ul class="d">
-            <li><strong>Harassment can happen without touching (Penal Code 105).</strong> Sexually motivated acts such as catcalling, persistent sexual messages or sending unwanted images can be the crime of sexual harassment. The penalty is 3 months–2 years in prison or a judicial fine; if the victim is a child, 6 months–3 years in prison. It is increased by half if done within the family, at work, by a teacher or carer, or by message. It depends on a complaint.</li>
+            <li><strong>Harassment can happen without touching (Penal Code 105).</strong> Sexually motivated acts such as catcalling, persistent sexual messages or sending unwanted images can be the crime of sexual harassment. It depends on a complaint.</li>
+            <li><strong>Penalty for sexual harassment:</strong> 3 months–2 years in prison or a judicial fine; if the victim is a child, 6 months–3 years in prison. It is increased by half if done within the family, at work, by a teacher or carer, or by message.</li>
             <li><strong>Unwanted sexual touching is sexual assault (Penal Code 102).</strong> The penalty is 5–10 years in prison, or 2–5 years if it stays at the level of a sudden, brief touch; it depends on a complaint. For rape the penalty is at least 12 years and no complaint is needed. It is also a crime if a spouse does it; in that case your complaint is needed.</li>
             <li><strong>Sexual abuse of anyone under 18 is a crime (Penal Code 103).</strong> Any sexual act towards someone who has not turned 15 is abuse; consent is not valid. Between 15 and 18, acts done by force, threat, deceit or another reason that affects the will are abuse.</li>
             <li><strong>If a family member did it</strong>, the law treats it as more serious. You don't have to protect anyone's reputation. ALO 183 and the Child Monitoring Centres in the <a href="#aile">Family section</a> are there for this.</li>
@@ -1302,9 +1345,11 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <h3 id="iliski-hukuk" data-k="restraining order protection order complaint lawsuit law threat blackmail stalking">Know your legal rights</h3>
         <div class="prose">
           <ul class="d">
-            <li><strong>Psychological violence is violence too.</strong> Law No. 6284 covers physical, sexual, psychological, verbal and economic violence. It protects women, children, family members and anyone who is stalked; being at risk of violence is enough. You can apply to the police, the prosecutor, the district or provincial governor, the family court or ŞÖNİM. No evidence or document is needed for protective measures; preventive measures such as removal from the home are also given without delay (article 8).</li>
+            <li><strong>Psychological violence is violence too.</strong> Law No. 6284 covers physical, sexual, psychological, verbal and economic violence. It protects women, children, family members and anyone who is stalked; being at risk of violence is enough.</li>
+            <li><strong>How do you ask for protection?</strong> You can apply to the police, the prosecutor, the district or provincial governor, the family court or ŞÖNİM. No evidence or document is needed for protective measures; preventive measures such as removal from the home are also given without delay (article 8).</li>
             <li><strong>Stalking is a crime (Penal Code 123/A).</strong> Persistently following someone, or trying to make contact by phone, message, online or through others, is a crime if it causes you serious distress or fear for your safety. The penalty is 6 months–2 years in prison; 1–3 years if the victim is a child, or a spouse under a separation decision or divorced. You don't need to be related. It depends on a complaint.</li>
             <li><strong>Sharing your private images is a crime (Penal Code 134/2).</strong> Even if the image was taken or sent with your consent, showing or spreading it to others without your consent is a crime. The penalty is 2–5 years in prison. It depends on a complaint. Obscene images of anyone under 18 also fall under Penal Code 226; there the child's consent doesn't matter and no complaint is needed.</li>
+            <li><strong>Be careful when gathering evidence.</strong> Possessing, copying or sending an obscene image of anyone under 18 is a crime (Penal Code 226); even if the image is of you, don't copy it or send it to anyone. The link, the username and screenshots of the chat are enough; the police or prosecutor examines the image.</li>
             <li><strong>Blackmail with images is a crime (Penal Code 107).</strong> Threatening to publish your images to gain something carries 1–3 years in prison and a judicial fine. It doesn't depend on a complaint, so the prosecutor can start an investigation on their own.</li>
             <li><strong>Don't miss the deadline.</strong> For crimes that depend on a complaint (such as 123/A and 134), you must file it within 6 months of learning of the act and who did it (Penal Code 73).</li>
             <li><strong>If the offender is under 18</strong> the penalties differ (Penal Code 31). The penalties above are for adults.</li>
@@ -1319,9 +1364,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <ul>
         <li><span class="help__name">Violence Helpline</span><a class="tel" href="tel:183">ALO 183</a><small>24/7, free. Includes psychological violence.</small></li>
         <li><span class="help__name">ALO 183 WhatsApp</span><a class="tel" href="https://wa.me/905011830183">0501 183 0 183</a><small>Write when you can't speak aloud.</small></li>
-        <li><span class="help__name">ŞÖNİM</span><small>Violence Prevention and Monitoring Centre. For advice and protection measures, in every province.</small></li>
-        <li><span class="help__name">Digital blackmail and leaked images</span><small>To the police or the Chief Public Prosecutor's Office. Don't delete messages, take screenshots, don't send money.</small></li>
-        <li><span class="help__name">KADES</span><small>One-tap app for women to call the police.</small></li>
+        <li><span class="help__name">ŞÖNİM</span><small>Violence Prevention and Monitoring Centre. For advice and protection measures. <a href="https://aile.gov.tr/iletisim/bakanlik-iletisim-bilgileri/sonim/">Addresses and phone numbers</a></small></li>
+        <li><span class="help__name">Digital blackmail and leaked images</span><small>To the police or the Chief Public Prosecutor's Office. Don't delete messages, take screenshots of the chat and link, don't send money. If you are over 18, a free tool to stop the image spreading: <a href="https://stopncii.org/?lang=tr-tr">StopNCII</a>.</small></li>
+        <li><span class="help__name">KADES</span><small>The police's one-tap alert app for women. Search for "KADES" in your phone's app store.</small></li>
         <li><span class="help__name">Mor Çatı</span><small>Solidarity for women facing violence. <a href="https://morcati.org.tr">morcati.org.tr</a></small></li>
         <li><span class="help__name">Emergency</span><a class="tel" href="tel:112">112</a></li>
       </ul>
@@ -1342,10 +1387,57 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">4 / 8</span><span class="glance__txt">four of the eight most common infections are fully cured with medicine</span></li>
         <li><span class="glance__big">Anonymous</span><span class="glance__txt">free HIV testing without ID at GDTM centres</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Sexual health: in this section"><span class="jump__t">In this section</span><a href="#cinsel-1"><b>01</b>Know this first</a><a href="#cinsel-2"><b>02</b>All together: infections</a><a href="#cinsel-3"><b>03</b>How does it not spread?</a><a href="#cinsel-4"><b>04</b>Protection: what does each one do?</a><a href="#cinsel-gebelik"><b>05</b>Preventing pregnancy and the morning-after pill</a><a href="#cinsel-18"><b>06</b>If you are under 18</a><a href="#cinsel-7"><b>07</b>Free or low-cost options</a></nav>
+      <nav class="jump fade-up" aria-label="Sexual health: in this section"><span class="jump__t">In this section</span><a href="#beden-ergenlik"><b>01</b>Your body is changing: is this normal?</a><a href="#beden-adet"><b>02</b>Your first period and after</a><a href="#cinsel-riza"><b>03</b>What is consent?</a><a href="#cinsel-1"><b>04</b>Know this first</a><a href="#cinsel-5"><b>05</b>All together: infections</a><a href="#cinsel-6"><b>06</b>How does it not spread?</a><a href="#cinsel-7"><b>07</b>Protection: what does each one do?</a><a href="#cinsel-gebelik"><b>08</b>Preventing pregnancy and the morning-after pill</a><a href="#cinsel-18"><b>09</b>If you are under 18</a><a href="#cinsel-10"><b>10</b>Free or low-cost options</a></nav>
     </div>
 
     <div class="blocks">
+      <div class="block fade-up">
+        <h3 id="beden-ergenlik" data-k="puberty normal hair beard voice acne sweat smell height breast penis wet dream hygiene">Your body is changing: is this normal?</h3>
+        <div class="prose">
+          <p>Most likely yes. Puberty can start any time between the ages of 8 and 14. Starting before or after your friends is normal.</p>
+          <ul class="d">
+            <li><strong>Everyone:</strong> hair under the arms and around the genitals, a growth spurt, more sweating, acne.</li>
+            <li><strong>Girls:</strong> breasts grow, hips widen, periods start.</li>
+            <li><strong>Boys:</strong> the voice cracks and deepens, the penis and testicles grow, facial hair appears. Ejaculating during sleep (a wet dream) can happen; it is normal and nothing to be ashamed of.</li>
+            <li><strong>Sweat and smell:</strong> wash your armpits, groin and feet with soap and dry well, use deodorant, and change underwear and socks often.</li>
+            <li><strong>Acne</strong> is very common and treatable. If it hurts, leaves marks or upsets you, see your family doctor or a dermatologist.</li>
+            <li><strong>See a doctor:</strong> if signs of puberty started before age 8, or there are none by age 15. Usually it's nothing to worry about.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (5)</summary><p class="src"><a href="https://www.nhs.uk/conditions/early-or-delayed-puberty/">NHS, Early or delayed puberty</a> · <a href="https://kidshealth.org/en/parents/talk-about-puberty.html">KidsHealth, Puberty</a> · <a href="https://www.nhs.uk/symptoms/body-odour-bo/">NHS, Body odour</a> · <a href="https://www.nhs.uk/conditions/acne/">NHS, Acne</a> · <a href="https://hsgm.saglik.gov.tr/tr/dokumanlar-cocukergen/afisler-brosurler.html">Ministry of Health, Adolescent health brochures (Turkish)</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="beden-adet" data-k="period menstruation pad tampon period pain first period bleeding cycle">Your first period and after</h3>
+        <div class="prose">
+          <p>A period is not an illness or something dirty. For most it starts around age 12; starting earlier or later usually isn't a problem.</p>
+          <ul class="d">
+            <li><strong>How long does it last?</strong> It usually comes every 21 to 35 days and lasts 2 to 7 days. It can be irregular in the first years and mostly becomes regular by 16–18.</li>
+            <li><strong>What can I use?</strong> A pad, tampon, menstrual cup or period underwear. A pad is easiest: stick the adhesive side to your underwear. A tampon can't get lost inside you.</li>
+            <li><strong>If you don't have a pad</strong> at school, tell the counsellor, a female teacher or a friend. They all know about it.</li>
+            <li><strong>For pain</strong>, a hot water bottle (wrapped in a towel), massaging your tummy and gentle movement can help. Ask a pharmacist about painkillers.</li>
+            <li><strong>See a doctor:</strong> if painkillers don't help or pain stops your daily life, if bleeding gets much heavier, or if you bleed between periods.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.nhs.uk/conditions/periods/">NHS, Periods</a> · <a href="https://www.nhs.uk/symptoms/period-pain/">NHS, Period pain</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="cinsel-riza" data-k="consent say no don't want to forced yes">What is consent?</h3>
+        <div class="prose">
+          <p>Consent means saying "yes" willingly and freely. Not saying "no" doesn't mean you said yes.</p>
+          <ul class="d">
+            <li><strong>Not consent:</strong> staying silent, freezing, agreeing out of fear or because you feel you have to, anything done while you're drunk or asleep.</li>
+            <li><strong>It can be withdrawn.</strong> Even if you said yes at first, you can change your mind at any moment.</li>
+            <li><strong>It is asked every time.</strong> Having said yes before, or being a couple, engaged or married, doesn't replace consent.</li>
+            <li><strong>You ask too.</strong> If you're not sure, stop and ask: <q>Do you want this?</q> If the answer isn't a clear yes, don't go on.</li>
+            <li><strong>Age:</strong> in law the consent of someone who has not turned 15 isn't valid. For ages 15–18 see <a href="#cinsel-18">this topic</a>.</li>
+            <li><strong>If something happened without your consent</strong>, read <a href="#iliski-taciz">what to do here</a>. It isn't your fault.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Consent</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 103 and 104 (Turkish)</a></p></details>
+        </div>
+      </div>
+
       <div class="block fade-up">
         <h3 id="cinsel-1" data-k="std sti disease condom broke pep">Know this first</h3>
         <div class="prose">
@@ -1359,7 +1451,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-2" data-k="discharge itching wart sore aids std sti sexual disease">All together: infections</h3>
+        <h3 id="cinsel-5" data-k="discharge itching wart sore aids std sti sexual disease">All together: infections</h3>
         <div class="prose prose--wide">
           <div class="filters" data-filter="stis" style="margin-top:0">
             <div class="tabs" role="group" aria-label="Filter infections">
@@ -1532,7 +1624,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-3" data-k="kissing toilet pool saliva can i catch">How does it not spread?</h3>
+        <h3 id="cinsel-6" data-k="kissing toilet pool saliva can i catch">How does it not spread?</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>HIV</strong> does not spread by kissing, hugging, shaking hands, or sharing the same items, food or water. Saliva, sweat, coughing, shared toilets and insect bites don't spread it either.</li>
@@ -1545,7 +1637,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-4" data-k="condom vaccine protection">Protection: what does each one do?</h3>
+        <h3 id="cinsel-7" data-k="condom vaccine protection">Protection: what does each one do?</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Condom.</strong> Use it every time, from start to finish, for vaginal, anal and oral sex. It is the most reliable protection against HIV. But it protects only <strong>partly</strong> against infections that spread by skin contact, such as syphilis, herpes and HPV, because skin not covered by the condom can also pass them on.</li>
@@ -1582,18 +1674,19 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>You can go to a doctor and ask questions.</strong> As a rule a guardian's permission is needed for medical procedures, but you must also be informed and take part in the decision. If you have no guardian or they can't be present, permission isn't required. If you are unconscious and your life is in danger, treatment is given without waiting for permission.</li>
             <li><strong>You have a right to privacy.</strong> You can ask for the examination to be done in private.</li>
             <li><strong>Reporting:</strong> Health workers must report to the authorities if they see signs that a crime was committed. Any sexual act towards someone who has not turned 15 counts as abuse in law, even with their consent.</li>
+            <li><strong>Ages 15–18:</strong> sexual intercourse with a child who has turned 15, without force, threat or deceit, is also a crime if there is a complaint; the penalty is 2–5 years in prison (Penal Code 104). If it is done by a relative you can't marry, or a foster carer responsible for you, no complaint is needed and the penalty is 10–15 years. If the other person is also under 18, the rules differ (Penal Code 31).</li>
             <li><strong>If you were harmed, you are not to blame.</strong> 112, ALO 183 or a hospital emergency department will help you. After a risky contact, don't let the 72 hours pass.</li>
           </ul>
-          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Patient Rights Regulation, articles 21 and 24 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 103 and 280 (Turkish)</a></p></details>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Patient Rights Regulation, articles 21 and 24 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 31, 103, 104 and 280 (Turkish)</a></p></details>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-7" data-k="free test">Free or low-cost options</h3>
+        <h3 id="cinsel-10" data-k="free test">Free or low-cost options</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>HIV test without ID.</strong> It is free at Voluntary Counselling and Testing Centres (GDTM) supported by the Ministry of Health, and they don't ask your name. 20 centres operate in 2026. Some also test for hepatitis and syphilis.</li>
-            <li><strong>State hospitals and family doctors.</strong> Tests covered by General Health Insurance are free.</li>
+            <li><strong>State hospitals and family doctors.</strong> Tests are covered by General Health Insurance. Seeing a family doctor is free; hospitals take a small co-payment.</li>
             <li><strong>Treatment.</strong> HIV medicines and treatment are free under social security (SGK). Medicines that fully cure hepatitis C are also covered.</li>
             <li><strong>Cervical cancer (HPV) screening.</strong> Free for women at KETEM centres and family health centres.</li>
             <li><strong>Condoms.</strong> Law No. 2827 allows the Ministry of Health to give contraceptives free or cheaply to those in need. Not every family health centre may have them, but it is worth asking.</li>
@@ -1626,7 +1719,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <header class="chapter__head fade-up">
         <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg><span class="chapter__num">06</span><span class="chapter__name">Addiction</span></p>
         <h2 id="madde-baslik">There is no drug that "won't do anything".</h2>
-        <p class="chapter__lead">The most dangerous sentences about drugs are "once won't hurt", "it's natural, it's harmless" and "I can control it". This section uses official sources to explain why they are wrong. If you have started, the road hasn't ended: treatment is free, and if you apply on your own before an investigation starts, you are not punished for using.</p>
+        <p class="chapter__lead">The most dangerous sentences about drugs are "once won't hurt", "it's natural, it's harmless" and "I can control it". This section uses official sources to explain why they are wrong. If you have started, the road hasn't ended: treatment is free, and if you apply on your own before an investigation starts, you are not punished for using. Gambling, gaming and screen addiction are at the end of this section.</p>
       </header>
       <ul class="glance fade-up" aria-label="At a glance">
         <li><span class="glance__big">557</span><span class="glance__txt">people lost their lives to drugs in Türkiye in 2025; bonzai was found in 351 of them</span></li>
@@ -1772,7 +1865,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <ol class="n">
             <li><span><strong>Tell one person or call.</strong> <a href="tel:191">ALO 191</a> is open 24/7 and free from landlines. They inform you and direct you to the most suitable treatment centre; you can call even if you are undecided. Yeşilay's <a href="tel:115">115</a> line is also free.</span></li>
             <li><span><strong>Get free psychological support.</strong> YEDAM gives completely free outpatient support to people aged 12 and over with drug addiction. A psychologist meets you for an assessment and you make a treatment plan together.</span></li>
-            <li><span><strong>If needed, apply to a treatment centre.</strong> AMATEM is for adults, ÇEMATEM for children and adolescents. Outpatient treatment is also possible. According to YEDAM, inpatient treatment includes 2–6 weeks of detox followed by a year of psychosocial support; the length is planned for each person. You can book through ALO 191 or ALO 182. No insurance premium days are required and premium debt doesn't matter for addiction treatment; it is free. In 2024, 373 thousand people applied to AMATEM centres; you are not alone.</span></li>
+            <li><span><strong>If needed, apply to a treatment centre.</strong> AMATEM is for adults, ÇEMATEM for children and adolescents. Outpatient treatment is also possible. You can book through ALO 191 or ALO 182.</span></li>
+            <li><span><strong>How long does treatment take and what does it cost?</strong> According to YEDAM, inpatient treatment includes 2–6 weeks of detox followed by a year of psychosocial support; the length is planned for each person. No insurance premium days are required and premium debt doesn't matter for addiction treatment; it is free. In 2024, 373 thousand people applied to AMATEM centres; you are not alone.</span></li>
             <li><span><strong>Change your surroundings.</strong> Delete the numbers of people you used with and don't go to those places. In the first weeks after quitting, stay away from places that trigger you.</span></li>
             <li><span><strong>If you slip, don't give up.</strong> According to Yeşilay, addiction can be treated, but the treatment isn't easy. One slip doesn't mean everything is over; tell your specialist and carry on.</span></li>
           </ol>
@@ -1784,8 +1878,10 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <h3 id="madde-6" data-k="drugs penalty prison caught">Asking for treatment doesn't make you a criminal</h3>
         <div class="prose">
           <ul class="d">
-            <li><strong>No penalty if you apply before an investigation starts.</strong> Under article 192(4) of the Turkish Penal Code, a person who applies to official authorities or health institutions and asks for treatment before an investigation for using starts is not punished. In this case doctors and public officials also have no duty to report you. You must apply of your own will: going because of a treatment or probation decision already made about you doesn't count.</li>
-            <li><strong>If you are caught, treatment is still open.</strong> The penalty for possession for personal use is 2–5 years in prison (Penal Code 191). But the case is postponed for 5 years, at least 1 year of probation applies, and you get treatment if needed. If you follow the rules, no case is opened. If you keep breaking them, or use, buy or possess again, a case is opened and there is no second postponement for a later offence.</li>
+            <li><strong>No penalty if you apply before an investigation starts.</strong> Under article 192(4) of the Turkish Penal Code, a person who applies to official authorities or health institutions and asks for treatment before an investigation for using starts is not punished. In this case doctors and public officials also have no duty to report you.</li>
+            <li><strong>You must apply of your own will:</strong> going because of a treatment or probation decision already made about you doesn't count.</li>
+            <li><strong>If you are caught, treatment is still open.</strong> The penalty for possession for personal use is 2–5 years in prison (Penal Code 191). But the case is postponed for 5 years, at least 1 year of probation applies, and you get treatment if needed.</li>
+            <li><strong>If you follow the rules, no case is opened.</strong> If you keep breaking them, or use, buy or possess again, a case is opened and there is no second postponement for a later offence.</li>
             <li><strong>Giving it to a friend can also be trafficking.</strong> Giving or selling to someone else is drug trafficking under Penal Code 188/3, with at least 10 years in prison; at least 15 years if the person is a child. According to the Court of Cassation, taking no money doesn't change this.</li>
           </ul>
           <p>The penalties given are for adults; separate rules apply to those under 18 (Penal Code 31). If you have a legal problem, you can apply for the bar association's free legal aid in the <a href="#hayat">Your rights section</a>.</p>
@@ -1840,7 +1936,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <h3 class="label">Where can you get help?</h3>
       <ul>
         <li><span class="help__name">Drug Helpline (Ministry of Health)</span><a class="tel" href="tel:191">ALO 191</a><small>24/7, free from landlines. Both users and their families can call.</small></li>
-        <li><span class="help__name">Yeşilay Helpline (YEDAM)</span><a class="tel" href="tel:115">115</a><small>Free. Free psychological support and appointments for ages 12 and over.</small></li>
+        <li><span class="help__name">Yeşilay Helpline (YEDAM)</span><a class="tel" href="tel:115">115</a><small>Free. Free psychological support and appointments for ages 12 and over. <a href="https://www.yedam.org.tr/iletisim">Branches</a></small></li>
         <li><span class="help__name">AMATEM / ÇEMATEM</span><a class="tel" href="tel:182">ALO 182</a><small>Addiction treatment centres of state hospitals. ÇEMATEM is for children and adolescents. Book through ALO 191 or ALO 182 (MHRS).</small></li>
         <li><span class="help__name">To quit smoking</span><a class="tel" href="tel:171">ALO 171</a><small>Ministry of Health Quit Smoking Line, free.</small></li>
         <li><span class="help__name">Overdose, unconsciousness</span><a class="tel" href="tel:112">112</a><small>Call without waiting.</small></li>
@@ -1921,7 +2017,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <div class="help fade-up">
       <h3 class="label">Where can you get help?</h3>
       <ul>
-        <li><span class="help__name">Psychiatrist or psychologist</span><a class="tel" href="tel:182">ALO 182</a><small>All the free options in the <a href="#ruh">Mental health section</a> apply here too. You can ask for a specialist who knows CBT.</small></li>
+        <li><span class="help__name">Psychiatrist or psychologist</span><a class="tel" href="tel:182">ALO 182</a><small>All the places in the <a href="#ruh">Mental health section</a> apply here too. You can ask for a specialist who knows CBT.</small></li>
         <li><span class="help__name">If you are at university</span><small>Most universities have a free psychological counselling unit for students.</small></li>
         <li><span class="help__name">Municipal courses and volunteering</span><small>Meeting people through a shared activity can be easier than starting a conversation directly.</small></li>
       </ul>
@@ -1942,7 +2038,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">10 days</span><span class="glance__txt">to object to the bar president if your application is refused</span></li>
         <li><span class="glance__big">ALO 144</span><span class="glance__txt">ask which social aid you can get</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Your rights: in this section"><span class="jump__t">In this section</span><a href="#hayat-avukat"><b>01</b>Free lawyer: legal aid</a><a href="#hayat-para"><b>02</b>If you are in serious financial hardship</a><a href="#hayat-is"><b>03</b>Starting a job: insurance and complaints</a><a href="#hayat-cocuk-isci"><b>04</b>If you work and are under 18</a><a href="#hayat-dolandiricilik"><b>05</b>If you were scammed online</a><a href="#hayat-burs"><b>06</b>Scholarships and loans for university</a><a href="#hayat-7"><b>07</b>If you don't know what to do at a government office</a></nav>
+      <nav class="jump fade-up" aria-label="Your rights: in this section"><span class="jump__t">In this section</span><a href="#hayat-avukat"><b>01</b>Free lawyer: legal aid</a><a href="#hayat-para"><b>02</b>If you are in serious financial hardship</a><a href="#hayat-okul"><b>03</b>Problems with school</a><a href="#hayat-is"><b>04</b>Starting a job: insurance and complaints</a><a href="#hayat-cocuk-isci"><b>05</b>If you work and are under 18</a><a href="#hayat-dolandiricilik"><b>06</b>If you were scammed online</a><a href="#hayat-burs"><b>07</b>Scholarships and loans for university</a><a href="#hayat-8"><b>08</b>If you don't know what to do at a government office</a></nav>
     </div>
 
     <div class="blocks">
@@ -1964,6 +2060,20 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <div class="prose">
           <p>You can call the <a class="tel" href="tel:144">ALO 144</a> Social Aid Line and ask which aid you can get. It is open on weekdays 08:00–19:00 and free.</p>
           <p class="src">Source: <a href="https://alo144.aile.gov.tr/">Ministry of Family and Social Services, ALO 144 (Turkish)</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-okul" data-k="school drop out leave school absence fail open high school scholarship discipline">Problems with school</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Absence (high school):</strong> if you exceed 10 unexcused days or 30 days in total, you fail the year whatever your grades. Hand in reports and permission papers on time.</li>
+            <li><strong>Longer limits:</strong> if you lost a first-degree relative, the total limit is 40 days. If you have ongoing or inpatient treatment, or were taken into protection with an official report, 60 days. Be sure to tell the school.</li>
+            <li><strong>If you are thinking of leaving school</strong>, talk to your school counsellor first. There may be other solutions for money, problems at home, bullying or having to work.</li>
+            <li><strong>Open high school (açık lise):</strong> the conditions change often and depend on your age. Learn the current ones at <a href="https://aol.meb.gov.tr/">aol.meb.gov.tr</a> or a public education centre.</li>
+            <li><strong>Scholarship:</strong> ask the school office for the application date of the Ministry's yearly scholarship exam (İOKBS). For financial hardship also call <a href="tel:144">ALO 144</a>.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/MevzuatMetin/yonetmelik/7.5.18812.pdf">Ministry of National Education, Secondary Education Institutions Regulation, article 36 (Turkish)</a> · <a href="https://aol.meb.gov.tr/">Ministry of National Education, Open High School (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -2018,7 +2128,6 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <ul class="d">
             <li>A <strong>scholarship</strong> (burs) is not paid back; a <strong>student loan</strong> (kredi) is repaid later. You apply for both to the Ministry of Youth and Sports through e-Devlet.</li>
             <li><strong>Don't miss the date.</strong> Applications open once a year for a short time. When you get into university, follow the Ministry's announcements.</li>
-            <li><strong>If you are under state protection, or a relative of a martyr or veteran</strong>, say so when applying and ask whether you have priority.</li>
             <li>For a <strong>dormitory</strong>, see <a href="#aile-ayrilmak">this topic</a>.</li>
           </ul>
           <p class="src">Source: <a href="https://www.turkiye.gov.tr/genclik-ve-spor-bakanligi">e-Devlet, Ministry of Youth and Sports services (Turkish)</a></p>
@@ -2026,7 +2135,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="hayat-7" data-k="e-devlet government office document">If you don't know what to do at a government office</h3>
+        <h3 id="hayat-8" data-k="e-devlet government office document">If you don't know what to do at a government office</h3>
         <div class="prose">
           <p>It is perfectly normal to ask an officer, "This is my first time, where should I start?" You can do many things from home on e-Devlet. Wherever you go, photograph the papers you receive and write down the name of the person you spoke to.</p>
         </div>
@@ -2064,12 +2173,13 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <tr><th scope="row">Harassment, sexual assault, rape</th><td data-label="Where">Hospital emergency department, police or prosecutor; ALO 183 for advice</td><td data-label="Number"><a class="tel" href="tel:112">112</a></td><td data-label="Note">If possible without washing; first 72 hours. <a href="#iliski-taciz">Step by step</a></td></tr>
           <tr><th scope="row">Forced or early marriage</th><td data-label="Where">Violence Helpline</td><td data-label="Number"><a class="tel" href="tel:183">ALO 183</a></td><td data-label="Note">If the danger is close, 112. <a href="#siddet-evlilik">Step by step</a></td></tr>
           <tr><th scope="row">Hearing or speech disability</th><td data-label="Where">ALO 183 sign language line</td><td data-label="Number"><a class="tel" href="tel:+905493810183">0549 381 0 183</a></td><td data-label="Note">Video call (Turkish Sign Language); weekdays 08:00–24:00, Saturday 08:00–17:00</td></tr>
-          <tr><th scope="row">Blackmail with images, leaks, stalking</th><td data-label="Where">Police or Chief Public Prosecutor's Office</td><td data-label="Number"><a class="tel" href="tel:112">112</a></td><td data-label="Note">Don't delete evidence, don't send money</td></tr>
+          <tr><th scope="row">If you are a foreigner or migrant</th><td data-label="Where">YİMER 157, Foreigners Communication Centre</td><td data-label="Number"><a class="tel" href="tel:157">157</a></td><td data-label="Note">Turkish, English, Arabic, Russian, Persian</td></tr>
+          <tr><th scope="row">Blackmail with images, leaks, stalking</th><td data-label="Where">The nearest police station or Chief Public Prosecutor's Office</td><td data-label="Number">For advice <a class="tel" href="tel:183">ALO 183</a></td><td data-label="Note">112 in an emergency. Don't delete evidence, don't send money</td></tr>
           <tr><th scope="row">Family problems, not getting along</th><td data-label="Where">Social Service Centre (family and individual counselling)</td><td data-label="Number"><a href="https://www.turkiye.gov.tr">e-Devlet</a></td><td data-label="Note">Free</td></tr>
           <tr><th scope="row">Drugs, addiction (for yourself or someone close)</th><td data-label="Where">Ministry of Health Drug Helpline</td><td data-label="Number"><a class="tel" href="tel:191">ALO 191</a></td><td data-label="Note">24/7, free from landlines. Yeşilay: <a href="tel:115">115</a></td></tr>
           <tr><th scope="row">Overdose, unconsciousness</th><td data-label="Where">Emergency Call Centre</td><td data-label="Number"><a class="tel" href="tel:112">112</a></td><td data-label="Note">Tell the medical team what was taken</td></tr>
           <tr><th scope="row">Gambling, online betting, gaming and internet addiction</th><td data-label="Where">Yeşilay Helpline (YEDAM)</td><td data-label="Number"><a class="tel" href="tel:115">115</a></td><td data-label="Note">Free, ages 12 and over</td></tr>
-          <tr><th scope="row">Psychiatrist or psychologist</th><td data-label="Where">State hospital (MHRS)</td><td data-label="Number"><a class="tel" href="tel:182">ALO 182</a></td><td data-label="Note">Free</td></tr>
+          <tr><th scope="row">Psychiatrist or psychologist</th><td data-label="Where">State hospital (MHRS)</td><td data-label="Number"><a class="tel" href="tel:182">ALO 182</a></td><td data-label="Note">There is a small co-payment; the family doctor is free</td></tr>
           <tr><th scope="row">Risky sexual contact</th><td data-label="Where">Hospital emergency department</td><td data-label="Number">First 72 hours</td><td data-label="Note">Ideally the first 24 hours</td></tr>
           <tr><th scope="row">Anonymous HIV test</th><td data-label="Where">Voluntary Counselling and Testing Centre</td><td data-label="Number"><a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Ministry's list</a></td><td data-label="Note">No ID needed, free</td></tr>
           <tr><th scope="row">A question about sexual health</th><td data-label="Where">TAP Foundation Information Line</td><td data-label="Number"><a class="tel" href="tel:4446539">444 65 39</a></td><td data-label="Note">Weekdays 09:00–18:00</td></tr>
@@ -2086,7 +2196,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="gizlilik" class="privacy grid" data-c="rehber" data-k="private privacy history delete incognito private tab tracked monitored cookies" aria-labelledby="gizlilik-baslik">
     <h2 id="gizlilik-baslik" class="fade-up">If you don't want anyone to know you visited this page</h2>
     <ul class="d fade-up">
-      <li>The <strong>Quick exit</strong> button takes you straight to a weather page. It helps when someone comes near, but it does not erase your browser history.</li>
+      <li>The <strong>Quick exit</strong> button, or the Delete key on a computer, takes you straight to a weather page. It helps when someone comes near, but it does not erase your browser history.</li>
       <li><strong>Use a private tab.</strong> Pages you visit in a private tab are not saved in browser history.</li>
       <li><strong>Delete from history.</strong> If it is safe, remove this page from your browser history. Numbers you call show up in your phone's call log.</li>
       <li><strong>If you suspect your phone is being monitored</strong>, use another device. A private tab won't protect you in that case.</li>
@@ -2171,6 +2281,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <li><a href="tel:115"><span class="n">115</span><span class="go">Search</span><span class="s">Yeşilay helpline · free</span></a></li>
       <li><a href="tel:182"><span class="n">ALO 182</span><span class="go">Search</span><span class="s">State hospital appointments, including mental health</span></a></li>
       <li><a href="tel:4446539"><span class="n">444 65 39</span><span class="go">Search</span><span class="s">TAP Foundation sexual health line · weekdays 09:00–18:00</span></a></li>
+      <li><a href="tel:157"><span class="n">157</span><span class="go">Search</span><span class="s">Foreigners Communication Centre · also in English, Arabic, Russian, Persian</span></a></li>
       <li><a href="tel:144"><span class="n">ALO 144</span><span class="go">Search</span><span class="s">Social aid and financial hardship</span></a></li>
     </ul>
   </div>
@@ -2312,13 +2423,19 @@ tbody th { font-weight: 600; white-space: nowrap; }
   }
 
   /* hızlı çık: bu sayfanın geçmişteki yerine hava durumu geçer (geri tuşu buraya dönmez) */
+  function leave() {
+    document.documentElement.style.display = "none";
+    location.replace($("#quick-exit").href);
+  }
   $$("[data-exit]").forEach(function (x) {
-    x.addEventListener("click", function (e) {
-      e.preventDefault();
-      document.documentElement.style.display = "none";
-      location.replace(this.href);
-    });
+    x.addEventListener("click", function (e) { e.preventDefault(); leave(); });
   });
+  /* bilgisayarda tek tuş: Delete. Dolu bir yazı kutusunda harf silmeye devam eder */
+  addEventListener("keydown", function (e) {
+    if (e.key !== "Delete" || e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return;
+    if (/INPUT|TEXTAREA/.test(e.target.tagName) && e.target.value) return;
+    e.preventDefault(); leave();
+  }, true);
   /* dil: aynı başlığın diğer dildeki karşılığına git (kimlikler iki dilde aynı) */
   $("[data-lang]").addEventListener("click", function (e) {
     if (e.ctrlKey || e.metaKey || e.shiftKey) return;

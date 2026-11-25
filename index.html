@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yalnız Değilsin</title>
-<meta name="description" content="Ailenle konuşamıyorsan ya da soracak kimsen yoksa: aile, ruh sağlığı, ilişkiler, cinsel sağlık, madde bağımlılığı, kendini ifade etmek ve hak arama üzerine sade bilgiler ve ücretsiz başvuru yerleri.">
+<meta name="description" content="Ailenle konuşamıyorsan ya da soracak kimsen yoksa: aile, ruh sağlığı, taciz ve şiddet, ilişkiler, ergenlik ve cinsel sağlık, uyuşturucu ve kumar, hak arama üzerine sade bilgiler ve başvuru yerleri.">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#2a2f33">
@@ -395,8 +395,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .srcs[open] > summary::before { content: "–"; }
 .srcs > summary:hover { color: var(--text); text-decoration: underline; }
 .srcs > .src { margin-top: 4px; }
-@media print { .srcs::details-content { content-visibility: visible; block-size: auto; } }
 @media (max-width: 720px) { .blocks { row-gap: 44px; } html.js .jump { display: none; } }
+/* JavaScript kapalıysa: işe yaramayan düğmeler gizli, menü satır kırar */
+html:not(.js) .bar-btn, html:not(.js) .theme-toggle, html:not(.js) .filters, html:not(.js) .meta-row { display: none; }
+html:not(.js) .bar { height: auto; flex-wrap: wrap; padding-block: 10px; position: static; }
+html:not(.js) .menu { flex: 1 1 100%; order: 9; justify-content: flex-start; }
+html:not(.js) .menu ul { flex-wrap: wrap; gap: 0 18px; }
 .fold__btn { all: unset; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; min-height: 48px; cursor: pointer; }
 .fold__btn::after { content: "+"; flex: none; font: 400 1.5rem/1 var(--font); color: var(--c); }
 .fold__btn[aria-expanded="true"]::after { content: "–"; }
@@ -462,6 +466,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .js .fade-up.is-shown { opacity: 1; translate: none; transition: opacity 0.8s ease, translate 1s cubic-bezier(0.2, 0.7, 0.2, 1); }
 @media (prefers-reduced-motion: reduce) {
   .js .fade-up { opacity: 1; translate: none; }
+  details::details-content { content-visibility: visible; block-size: auto; }
+  .fold__btn::after, .acc summary::after { display: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
@@ -619,7 +625,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     </div>
     <p class="intro__lead fade-up">Ailenle konuşamıyorsan, evde soracak kimse yoksa ya da utandığın için kimseye açılamıyorsan bu sayfa senin için. Her konuda ne olduğu, gerçek bir örnek, adım adım ne yapabileceğin ve kime başvurabileceğin var.</p>
     <p class="intro__urgent fade-up">Hayati tehlike varsa ya da kendine zarar vermeyi düşünüyorsan hemen ara: <a href="tel:112">112</a></p>
-    <p class="intro__urgent intro__exit fade-up">Yanına biri gelirse <b>Hızlı çık</b>'a dokun; hava durumu sayfası açılır. <a href="#gizlilik">Gizli kalmak</a></p>
+    <p class="intro__urgent intro__exit fade-up">Yanına biri gelirse <b>Hızlı çık</b>'a dokun, bilgisayardaysan <b>Delete</b> (Del) tuşuna bir kez bas; hava durumu sayfası açılır. <a href="#gizlilik">Gizli kalmak</a></p>
   </section>
 
   <nav class="now grid fade-up" aria-labelledby="now-baslik">
@@ -639,6 +645,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <li data-c="ruh"><a href="#ruh-panik">Panik atak geçiriyorum</a></li>
       <li data-c="aile"><a href="#aile-sinir">Ailemle anlaşamıyorum</a></li>
       <li data-c="hayat"><a href="#hayat-avukat">Avukata param yok</a></li>
+      <li data-c="ruh"><a href="#ruh-yalnizlik">Yalnız hissediyorum</a></li>
+      <li data-c="cinsel"><a href="#beden-ergenlik">Bedenim normal mi?</a></li>
     </ul>
   </nav>
 
@@ -655,14 +663,14 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <nav class="index grid fade-up" aria-labelledby="index-baslik">
     <h2 class="label" id="index-baslik">Bu sayfada</h2>
     <ol>
-      <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Aile <span>Eksik ya da zor bir aile, sınır koymak, şiddet</span></a></li>
-      <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Ruh sağlığı <span>Kriz, depresyon, panik, yas, ilk randevu</span></a></li>
+      <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Aile <span>Eksik ya da zor bir aile, nafaka, sınır koymak, şiddet</span></a></li>
+      <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Ruh sağlığı <span>Kriz, depresyon, panik, yalnızlık, ilk randevu</span></a></li>
       <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>İlişkiler <span>Kavramlar sözlüğü, toksik ilişkiden çıkmak</span></a></li>
       <li data-c="siddet"><a href="#siddet"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.7 5.7 3.8 3.8M14.5 14.5l3.8 3.8M18.3 5.7l-3.8 3.8M9.5 14.5l-3.8 3.8"/></svg>Taciz ve şiddet <span>Taciz, zorbalık, zorla evlilik, hakların</span></a></li>
-      <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Cinsel sağlık <span>Enfeksiyonlar, korunma, ücretsiz test</span></a></li>
+      <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Cinsel sağlık <span>Ergenlik, adet, rıza, enfeksiyonlar, korunma</span></a></li>
       <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Bağımlılık <span>Uyuşturucu, kumar, oyun; kurtulmanın yolu</span></a></li>
       <li data-c="ifade"><a href="#ifade"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg>Kendini ifade etmek <span>Sosyal kaygı, hazır cümleler</span></a></li>
-      <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Hak arama <span>Ücretsiz avukat, iş, burs, dolandırıcılık</span></a></li>
+      <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Hak arama <span>Ücretsiz avukat, okul, iş, burs, dolandırıcılık</span></a></li>
       <li data-c="rehber"><a href="#rehber"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg>Nereye başvurulur? <span>Tüm numaralar bir arada</span></a></li>
     </ol>
   </nav>
@@ -680,7 +688,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">81 il</span><span class="glance__txt">Sosyal Hizmet Merkezlerinde ücretsiz aile ve bireysel danışmanlık</span></li>
         <li><span class="glance__big">7/24</span><span class="glance__txt">ALO 183: istismar, ihmal ve aile içi şiddet için ücretsiz hat</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Aile: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#aile-1"><b>01</b>Bir ebeveynin olmaması ne değiştirir?</a><a href="#aile-2"><b>02</b>Örnek alacak birini kendin seçebilirsin</a><a href="#aile-sinir"><b>03</b>Ailenle anlaşamıyorsan: sınır koymak</a><a href="#aile-4"><b>04</b>Evde öğretilmeyenler: kime sorarsın?</a><a href="#aile-ayrilmak"><b>05</b>Ailenden ayrılmayı düşünüyorsan</a><a href="#aile-siddet"><b>06</b>Evde şiddet ya da ihmal varsa</a></nav>
+      <nav class="jump fade-up" aria-label="Aile: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#aile-1"><b>01</b>Bir ebeveynin olmaması ne değiştirir?</a><a href="#aile-haklar"><b>02</b>Annen ya da baban yanında yoksa: hakların</a><a href="#aile-3"><b>03</b>Örnek alacak birini kendin seçebilirsin</a><a href="#aile-sinir"><b>04</b>Ailenle anlaşamıyorsan: sınır koymak</a><a href="#aile-5"><b>05</b>Evde öğretilmeyenler: kime sorarsın?</a><a href="#aile-ayrilmak"><b>06</b>Ailenden ayrılmayı düşünüyorsan</a><a href="#aile-siddet"><b>07</b>Evde şiddet ya da ihmal varsa</a></nav>
     </div>
 
     <div class="blocks">
@@ -698,7 +706,23 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-2" data-k="rol model mentor abi abla örnek">Örnek alacak birini kendin seçebilirsin</h3>
+        <h3 id="aile-haklar" data-k="nafaka velayet yetim aylığı öksüz babalık davası soybağı babam para vermiyor boşanma ölüm aylığı maaş">Annen ya da baban yanında yoksa: hakların</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Nafaka.</strong> Bakımın ve eğitiminin giderlerini anne ve baban birlikte karşılamak zorunda. Yanında yaşadığın kişi diğerine senin adına nafaka davası açabilir; durumu anlayabilecek yaştaysan sen de açabilirsin.</li>
+            <li><strong>18'den sonra da sürer.</strong> Eğitimin devam ediyorsa anne ve baban, güçleri yettiğince, eğitimin bitene kadar sana bakmakla yükümlüdür.</li>
+            <li><strong>Velayet.</strong> Boşanmada velayet mahkemenin seni bıraktığı tarafta, anne ya da babandan biri vefat ettiyse diğerindedir. Anne ve baban evli değilse kural olarak annendedir.</li>
+            <li><strong>Görüşme.</strong> Yanında yaşamadığın anne ya da baban seninle görüşme hakkına sahiptir. Ama bu görüşme huzurunu tehlikeye atıyorsa mahkeme sınırlayabilir ya da kaldırabilir.</li>
+            <li><strong>Baban kayıtlarda görünmüyorsa</strong> baban olduğunun belirlenmesi için sen de dava açabilirsin. Annenin süresi doğumdan sonra 1 yıldır; çocuk için öngörülen süreyi Anayasa Mahkemesi iptal etti.</li>
+            <li><strong>Vefat ettiyse yetim aylığı.</strong> Annen ya da baban yeterli prim ödediyse (genelde 1800 gün; SSK'lıda 5 yıl sigortalılık ve 900 gün) aylık bağlanabilir. Çalışmıyorsan 18 yaşına, lisedeysen 20, üniversitedeysen 25 yaşına kadar alırsın. Kendiliğinden bağlanmaz, SGK'ya yazılı başvurman gerekir.</li>
+          </ul>
+          <p>Dava için paran yoksa <a href="#hayat-avukat">ücretsiz avukat</a> isteyebilirsin.</p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4721.pdf">Türk Medeni Kanunu, madde 301, 303, 323, 324, 327–329, 336 ve 337</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">5510 sayılı Kanun, madde 32 ve 34</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="aile-3" data-k="rol model mentor abi abla örnek">Örnek alacak birini kendin seçebilirsin</h3>
         <div class="prose">
           <p>Psikolojide aile dışından birinin gençlere yol göstermesine "doğal mentorluk" deniyor. 30 çalışmayı inceleyen bir meta-analiz, hayatında böyle biri olan gençlerin okulda, duygusal sağlıkta ve davranışlarda daha iyi sonuçlar elde ettiğini gösteriyor. Bu sonuç zor koşullarda büyüyen gençler için de geçerli. Araştırmalar, gencin bu kişiyi kendisinin seçtiği programların da işe yaradığını gösteriyor.</p>
           <ol class="n">
@@ -727,7 +751,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-4" data-k="kravat tıraş yemek bütçe para hijyen">Evde öğretilmeyenler: kime sorarsın?</h3>
+        <h3 id="aile-5" data-k="kravat tıraş yemek bütçe para hijyen">Evde öğretilmeyenler: kime sorarsın?</h3>
         <div class="prose">
           <p>Kravat bağlamak, tıraş olmak, musluk tamir etmek, yemek yapmak ya da bütçe tutmak gibi şeyleri kimse sana göstermediyse ayıp değil. Biz bunları burada anlatmak yerine işini iyi yapan kaynaklara yönlendiriyoruz:</p>
           <ul class="res">
@@ -797,9 +821,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <ul class="glance fade-up" aria-label="Kısaca">
         <li><span class="glance__big">322 milyon</span><span class="glance__txt">kişi dünyada depresyonla yaşıyor (Dünya Sağlık Örgütü)</span></li>
         <li><span class="glance__big">2 hafta</span><span class="glance__txt">neredeyse her gün süren çöküntü depresyon işareti olabilir</span></li>
-        <li><span class="glance__big">0 TL</span><span class="glance__txt">devlet hastanesinde ruh sağlığı randevusu: ALO 182 ya da MHRS</span></li>
+        <li><span class="glance__big">ALO 182</span><span class="glance__txt">devlet hastanesinden ruh sağlığı randevusu; aile hekimin ücretsiz</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Ruh sağlığı: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#ruh-kriz"><b>01</b>Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</a><a href="#ruh-arkadas"><b>02</b>Bir arkadaşın için endişeleniyorsan</a><a href="#ruh-3"><b>03</b>Bu senin suçun değil</a><a href="#ruh-4"><b>04</b>Üzüntü ile depresyon arasındaki fark</a><a href="#ruh-panik"><b>05</b>Panik atak geçiriyorsan</a><a href="#ruh-sinav"><b>06</b>Sınav kaygısı</a><a href="#ruh-yeme"><b>07</b>Yemekle ve bedeninle kavgalıysan</a><a href="#ruh-yas"><b>08</b>Birini kaybettiysen</a><a href="#ruh-9"><b>09</b>Psikolog mu, psikiyatrist mi?</a><a href="#ruh-10"><b>10</b>İlk randevuda ne olur?</a></nav>
+      <nav class="jump fade-up" aria-label="Ruh sağlığı: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#ruh-kriz"><b>01</b>Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</a><a href="#ruh-arkadas"><b>02</b>Bir arkadaşın için endişeleniyorsan</a><a href="#ruh-3"><b>03</b>Bu senin suçun değil</a><a href="#ruh-4"><b>04</b>Üzüntü ile depresyon arasındaki fark</a><a href="#ruh-panik"><b>05</b>Panik atak geçiriyorsan</a><a href="#ruh-sinav"><b>06</b>Sınav kaygısı</a><a href="#ruh-yalnizlik"><b>07</b>Yalnız hissediyorsan</a><a href="#ruh-yeme"><b>08</b>Yemekle ve bedeninle kavgalıysan</a><a href="#ruh-yas"><b>09</b>Birini kaybettiysen</a><a href="#ruh-10"><b>10</b>Psikolog mu, psikiyatrist mi?</a><a href="#ruh-11"><b>11</b>İlk randevuda ne olur?</a></nav>
     </div>
 
     <div class="blocks">
@@ -883,6 +907,21 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
+        <h3 id="ruh-yalnizlik" data-k="yalnızlık yalnızım arkadaşım yok arkadaş edinmek dışlanmış kimsem yok">Yalnız hissediyorsan</h3>
+        <div class="prose">
+          <p>Kalabalığın içinde de yalnız hissedebilirsin. Bu çok yaygın; özellikle 16–34 yaş arasında. Senin kusurun değil ve geçebilir.</p>
+          <ul class="d">
+            <li><strong>Küçük bir mesaj at.</strong> Uzun süredir konuşmadığın birine "aklıma geldin" yazmak yeter. Düzenli kısa sohbetler işe yarar.</li>
+            <li><strong>Ortak bir uğraş bul.</strong> Kulüp, spor, kurs, kütüphane ya da gönüllülük. Konuşacak konu hazır olur, kendini tanıtmak kolaylaşır.</li>
+            <li><strong>Kendi hızında git.</strong> İlk seferde yalnızca orada bulunmak bile yeterli. Çekiniyorsan <a href="#ifade-2">kendi merdivenini</a> kur.</li>
+            <li><strong>İnternetteki yabancıya dikkat.</strong> Yalnızken hızlı gelen yoğun ilgi iyi hissettirir. Görmediğin birine para ya da özel görüntü gönderme.</li>
+            <li><strong>Uzun sürüyorsa</strong> okul rehber öğretmenine ya da aile hekimine anlat. Uzun süren ağır yalnızlık kaygı ve depresyon riskini artırabilir.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.nhs.uk/every-mind-matters/lifes-challenges/loneliness/">NHS, Yalnızlıkla başa çıkmak</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
         <h3 id="ruh-yeme" data-k="yeme bozukluğu anoreksiya bulimiya kusmak kilo zayıflamak diyet şişman beden algısı tıkınırcasına">Yemekle ve bedeninle kavgalıysan</h3>
         <div class="prose">
           <p>Yeme bozukluğu bir heves ya da irade sorunu değil, ruh sağlığı sorunudur. Duygularla başa çıkmak için yemeği kontrol etmekle ilgilidir. Her bedende ve herkeste olabilir, en çok gençlerde görülür. Tedaviyle çoğu kişi iyileşir.</p>
@@ -911,7 +950,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-9" data-k="terapi terapist danışman">Psikolog mu, psikiyatrist mi?</h3>
+        <h3 id="ruh-10" data-k="terapi terapist danışman">Psikolog mu, psikiyatrist mi?</h3>
         <div class="prose">
           <div class="table-wrap">
             <table class="stack">
@@ -930,10 +969,11 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-10" data-k="randevu mhrs hastane terapi">İlk randevuda ne olur?</h3>
+        <h3 id="ruh-11" data-k="randevu mhrs hastane terapi">İlk randevuda ne olur?</h3>
         <div class="prose">
           <ol class="n">
-            <li><span>MHRS'den ya da <a href="tel:182">ALO 182</a>'yi arayarak devlet hastanesinde "Ruh Sağlığı ve Hastalıkları" bölümünden randevu alırsın. Ücretsizdir.</span></li>
+            <li><span>MHRS'den ya da <a href="tel:182">ALO 182</a>'yi arayarak devlet hastanesinde "Ruh Sağlığı ve Hastalıkları" bölümünden randevu alırsın.</span></li>
+            <li><span>SGK kapsamındaysan muayenede yalnızca bir katılım payı alınır: devlet hastanesinde 50 TL, eğitim ve araştırma hastanesinde 90 TL (Temmuz 2026). Aile hekimin sevk ederse yarısı alınır. Aile hekimine muayene olmak ücretsizdir.</span></li>
             <li><span>Doktor ne zamandır nasıl hissettiğini, uykunu, iştahını ve hayatında neler olduğunu sorar. Doğru ya da yanlış bir cevap yoktur.</span></li>
             <li><span>Her şeyi ilk gün anlatmak zorunda değilsin. İlk görüşme bir tanışmadır, mucize beklenmez.</span></li>
             <li><span>İlaç her zaman şart değildir. Doktor terapi, ilaç ya da ikisini birden önerebilir. Kararı birlikte verirsiniz.</span></li>
@@ -942,7 +982,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <p class="callout__t">Ağzını açamayacağından korkuyorsan</p>
             <p>Telefonuna önceden üç cümle yaz, örneğin: <q>İki aydır uyuyamıyorum. Hiçbir şeyden keyif almıyorum. Evde konuşabileceğim kimse yok.</q> Doktora "Anlatmakta zorlanıyorum, yazdım" deyip okuyabilirsin. Bu çok sık yapılan bir şeydir.</p>
           </div>
-          <p class="src">Randevu: <a href="https://www.mhrs.gov.tr/">MHRS</a>, ALO 182</p>
+          <details class="srcs"><summary>Kaynaklar (3)</summary><p class="src"><a href="https://www.mhrs.gov.tr/">MHRS</a> · <a href="https://www.alomaliye.com/2026/07/01/hastane-muayene-katilim-paylari-yeniden-belirlendi/">Alomaliye, SUT değişikliği (1 Temmuz 2026)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">5510 sayılı Kanun, madde 68 ve 69</a></p></details>
         </div>
       </div>
     </div>
@@ -950,9 +990,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <div class="help fade-up">
       <h3 class="label">Nereye başvurabilirsin?</h3>
       <ul>
-        <li><span class="help__name">Devlet hastanesi randevusu</span><a class="tel" href="tel:182">ALO 182</a><small>ya da MHRS. Ruh Sağlığı ve Hastalıkları bölümü, ücretsiz.</small></li>
+        <li><span class="help__name">Devlet hastanesi randevusu</span><a class="tel" href="tel:182">ALO 182</a><small>ya da MHRS. Ruh Sağlığı ve Hastalıkları bölümü.</small></li>
         <li><span class="help__name">Toplum Ruh Sağlığı Merkezi (TRSM)</span><small>Devlet hastanelerine bağlı. Şehrinde olup olmadığını hastaneye sorabilirsin.</small></li>
-        <li><span class="help__name">Aile hekimin</span><small>İlk adım için. Kim olduğunu e-Devlet'te "Aile Hekimi Bilgisi Sorgulama" ile öğrenebilirsin.</small></li>
+        <li><span class="help__name">Aile hekimin</span><small>Ücretsiz, ilk adım için. Kim olduğunu e-Devlet'te "Aile Hekimi Bilgisi Sorgulama" ile öğrenebilirsin.</small></li>
         <li><span class="help__name">Belediyeler ve üniversite hastaneleri</span><small>Birçoğunda ücretsiz psikolojik danışmanlık var.</small></li>
         <li><span class="help__name">Kendine zarar verme düşüncesi</span><a class="tel" href="tel:112">112</a><small>Beklemeden ara ya da en yakın acil servise git.</small></li>
       </ul>
@@ -980,7 +1020,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <div class="block fade-up">
         <h3 id="iliski-1" data-k="toksik manipülasyon kıskançlık sevgili flört">Kavramlar sözlüğü</h3>
         <div class="prose prose--wide">
-          <p style="max-width:38em">Aşağıda günümüz ilişkilerinde sık karşılaşılan kavramlar var. Hepsinin Türkçesi ve İngilizcesi yazılı, çünkü internette çoğunlukla İngilizce isimleriyle geçiyorlar. Her kavram için ne olduğu, bir örnek ve ne yapabileceğin anlatılıyor. Bir kişide bunlardan birini bir kez görmek onun kötü biri olduğunu göstermez. Önemli olan, bir davranışın <strong>tekrar edip etmediği</strong> ve sende korku, suçluluk ya da değersizlik hissi yaratıp yaratmadığıdır.</p>
+          <p style="max-width:38em">Aşağıda günümüz ilişkilerinde sık karşılaşılan kavramlar var. Hepsinin Türkçesi ve İngilizcesi yazılı, çünkü internette çoğunlukla İngilizce isimleriyle geçiyorlar.</p>
+          <p style="max-width:38em">Bir kişide bunlardan birini bir kez görmek onun kötü biri olduğunu göstermez. Önemli olan, bir davranışın <strong>tekrar edip etmediği</strong> ve sende korku, suçluluk ya da değersizlik hissi yaratıp yaratmadığıdır.</p>
           <div class="filters" data-filter="terms">
             <div class="tabs" role="group" aria-label="Kavramları filtrele">
               <button class="tab" type="button" data-f="all" aria-pressed="true">Hepsi</button>
@@ -1138,7 +1179,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p>Özel fotoğraf ya da video ile tehdit edilerek para, yeni görüntü ya da başka bir şey istenmesi. Türk Ceza Kanunu'na göre şantaj suçudur (TCK 107) ve şikâyete bağlı değildir.</p>
                 <p class="q"><span class="k">Örnek</span>“Para göndermezsen bu videoyu bütün takipçilerine atarım.”</p>
-                <p><span class="k">Ne yapabilirsin</span>Asla ödeme yapma, ödedikçe talep artar. Mesajları silme, ekran görüntüsü al, karakola ya da savcılığa başvur, platforma şikâyet et. Bu senin suçun değil.</p>
+                <p><span class="k">Ne yapabilirsin</span>Asla ödeme yapma, ödedikçe talep artar. Mesajları silme, yazışmanın ve kullanıcı adının ekran görüntüsünü al, karakola ya da savcılığa başvur, platforma şikâyet et. Görüntüdeki kişi 18 yaşından küçükse görüntünün kendisini kopyalama ve kimseye gönderme. Bu senin suçun değil.</p>
                 <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 107</a></p>
               </div>
             </details></li>
@@ -1147,8 +1188,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p>Özel görüntülerin rıza olmadan paylaşılması. Görüntüyü kendi rızanla göndermiş olsan bile paylaşılması suçtur (TCK 134/2). Şikâyete bağlıdır; öğrendiğin günden itibaren 6 ay içinde şikâyet et.</p>
                 <p class="q"><span class="k">Örnek</span>Ayrıldıktan sonra eski sevgilinin özel bir fotoğrafını bir gruba atması.</p>
-                <p><span class="k">Ne yapabilirsin</span>Linkleri ve ekran görüntülerini kaydet, savcılığa başvur ve platformdan kaldırılmasını iste. Avukat paran yoksa baro adli yardımına başvurabilirsin.</p>
-                <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 73, 134 ve 139</a></p>
+                <p><span class="k">Ne yapabilirsin</span>Linkleri, kullanıcı adlarını ve yazışmaları kaydet. 18 yaşından küçük birinin görüntüsünü kopyalama ve gönderme. Savcılığa başvur ve platformdan kaldırılmasını iste. Avukat paran yoksa baro adli yardımına başvurabilirsin.</p>
+                <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 73, 134, 139 ve 226</a> · <a href="https://stopncii.org/?lang=tr-tr">StopNCII (18 yaş üstü, Türkçe)</a></p></details>
               </div>
             </details></li>
             <li data-cat="dij"><details class="acc">
@@ -1174,7 +1215,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Mecbursan "gri taş" ol.</strong> Ortak iş, okul ya da çocuk yüzünden görüşmek zorundaysan cevaplarını kısa, sakin ve duygusuz tut: "Tamam", "Perşembe uygun". Tepki alamayan manipülasyon zayıflar.</span></li>
             <li><span><strong>Özlemek normal, geri dönmek şart değil.</strong> Travma bağında ayrılıktan sonra yoksunluk gibi yoğun bir özlem hissedilir. Bu, ilişkinin iyi olduğunu değil, döngünün güçlü olduğunu gösterir. Özlem dalgası gelince yazdığın notları oku.</span></li>
             <li><span><strong>Çevreni yeniden kur.</strong> Uzaklaştığın arkadaşlarına "Bir süredir kayboldum, özür dilerim, seni özledim" diye yazmak yeterlidir. Çoğu insan bunu anlar.</span></li>
-            <li><span><strong>Destek al.</strong> Hep benzer ilişkilere düşüyorsan bunun kökü çoğu zaman çocuklukta bakım verenlerle kurulan bağa dayanır. Bir terapistle bu örüntüyü çözmek mümkün. Ücretsiz seçenekler <a href="#ruh">Ruh sağlığı bölümünde</a>.</span></li>
+            <li><span><strong>Destek al.</strong> Hep benzer ilişkilere düşüyorsan bunun kökü çoğu zaman çocuklukta bakım verenlerle kurulan bağa dayanır. Bir terapistle bu örüntüyü çözmek mümkün. Başvuru yerleri <a href="#ruh">Ruh sağlığı bölümünde</a>.</span></li>
           </ol>
           <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a> · <a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a></p></details>
         </div>
@@ -1187,7 +1228,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <ul>
         <li><span class="help__name">Şiddetle Mücadele Hattı</span><a class="tel" href="tel:183">ALO 183</a><small>7/24, ücretsiz. Psikolojik şiddet de dahil.</small></li>
         <li><span class="help__name">Taciz, şiddet, takip ya da şantaj varsa</span><small><a href="#siddet">Taciz ve şiddet bölümü</a></small></li>
-        <li><span class="help__name">Konuşacak bir uzman</span><small><a href="#ruh">Ruh sağlığı bölümündeki</a> ücretsiz seçenekler</small></li>
+        <li><span class="help__name">Konuşacak bir uzman</span><small><a href="#ruh">Ruh sağlığı bölümündeki</a> başvuru yerleri</small></li>
         <li><span class="help__name">Acil tehlike</span><a class="tel" href="tel:112">112</a></li>
       </ul>
       <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
@@ -1222,12 +1263,13 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <ol class="n" style="margin-top:24px">
             <li><span><strong>Yalnız kalma.</strong> Güvendiğin birine haber ver ve yanında olmasını iste.</span></li>
             <li><span><strong>Cinsel saldırıdan sonra hastaneye git.</strong> Şikâyetçi olmayı düşünmesen bile yaralanma, enfeksiyon ve gebelik için muayene olman gerekir. Enfeksiyon için <a href="#cinsel-1">ilk 72 saat</a>, gebelik için <a href="#cinsel-gebelik">ertesi gün hapı</a> önemli; ne kadar erken gidersen o kadar iyi.</span></li>
+            <li><span><strong>Bildirimi önceden bil.</strong> Sağlık çalışanları bir suç belirtisi görürse bunu yetkililere bildirmek zorunda. Bu seni cezalandırmak için değildir; süreçte hangi haklarının olduğunu onlara sorabilirsin.</span></li>
             <li><span><strong>Mümkünse yıkanma, kıyafetini değiştirme.</strong> Muayenede toplanan izler delil olabilir. Yıkandıysan da geç değil, yine başvurabilirsin. Vücudunda iz olmaması saldırı olmadığı anlamına gelmez.</span></li>
             <li><span><strong>Kanıtı sakla.</strong> Mesajları ve arama kayıtlarını silme, ekran görüntüsü al. Yeri, saati ve gördüklerini hatırladığın kadar yaz. Çevredeki kameraların incelenmesini isteyebilirsin.</span></li>
             <li><span><strong>Başvur.</strong> Karakola, jandarmaya ya da savcılığa gidebilirsin; hastaneye gidersen polis sürece oradan da dahil olur. Ne yapacağını bilmiyorsan <a href="tel:183">ALO 183</a> yol gösterir.</span></li>
-            <li><span><strong>Kendine zaman tanı.</strong> Korku, uykusuzluk, utanç ya da hiçbir şey hissetmemek sık görülür. Ücretsiz destek için <a href="#ruh">Ruh sağlığı bölümüne</a> bak.</span></li>
+            <li><span><strong>Kendine zaman tanı.</strong> Korku, uykusuzluk, utanç ya da hiçbir şey hissetmemek sık görülür. Destek için <a href="#ruh">Ruh sağlığı bölümüne</a> bak.</span></li>
           </ol>
-          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Cinsel saldırıdan sonra yardım</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı avukatı Funda Ekin, bianet (2025)</a></p></details>
+          <details class="srcs"><summary>Kaynaklar (3)</summary><p class="src"><a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Cinsel saldırıdan sonra yardım</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı avukatı Funda Ekin, bianet (2025)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 280</a></p></details>
         </div>
       </div>
 
@@ -1235,7 +1277,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <h3 id="iliski-taciz-yasa" data-k="taciz tecavüz istismar ceza şikayet kanun tacizci">Taciz ve cinsel saldırıda hakların</h3>
         <div class="prose">
           <ul class="d">
-            <li><strong>Dokunmadan da taciz olur (TCK 105).</strong> Laf atmak, ısrarlı cinsel mesajlar ya da istenmeyen görüntü göndermek gibi cinsel amaçlı rahatsızlıklar cinsel taciz suçuna girebilir. Cezası 3 ay–2 yıl hapis ya da adli para cezası, çocuğa karşı 6 ay–3 yıl hapistir. Aile içinde, iş yerinde, öğretmen ya da bakıcı tarafından veya mesajla yapılırsa ceza yarı oranında artar. Şikâyete bağlıdır.</li>
+            <li><strong>Dokunmadan da taciz olur (TCK 105).</strong> Laf atmak, ısrarlı cinsel mesajlar ya da istenmeyen görüntü göndermek gibi cinsel amaçlı rahatsızlıklar cinsel taciz suçuna girebilir. Şikâyete bağlıdır.</li>
+            <li><strong>Cinsel tacizin cezası:</strong> 3 ay–2 yıl hapis ya da adli para cezası, çocuğa karşı 6 ay–3 yıl hapistir. Aile içinde, iş yerinde, öğretmen ya da bakıcı tarafından veya mesajla yapılırsa ceza yarı oranında artar.</li>
             <li><strong>İstemediğin bir cinsel dokunuş cinsel saldırıdır (TCK 102).</strong> Cezası 5–10 yıl, ani ve kısa bir dokunuş gibi sarkıntılık düzeyinde kalırsa 2–5 yıl hapistir ve şikâyete bağlıdır. Tecavüzde ceza en az 12 yıldır ve şikâyet aranmaz. Eşin yapması da suçtur; bu durumda şikâyetin gerekir.</li>
             <li><strong>18 yaşından küçüklere yapılan cinsel istismar suçtur (TCK 103).</strong> 15 yaşını doldurmamış birine yönelik her cinsel davranış istismardır; rızası geçerli değildir. 15–18 yaş arasında cebir, tehdit, hile ya da iradeyi etkileyen başka bir nedenle yapılan davranışlar istismardır.</li>
             <li><strong>Aileden biri yaptıysa</strong> bu yasada daha ağır sayılır. Kimsenin itibarını korumak zorunda değilsin. <a href="#aile">Aile bölümündeki</a> ALO 183 ve Çocuk İzlem Merkezleri bunun için var.</li>
@@ -1303,9 +1346,11 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <h3 id="iliski-hukuk" data-k="uzaklaştırma koruma kararı şikayet dava kanun ifşa tehdit şantaj stalk">Hukuki haklarını bil</h3>
         <div class="prose">
           <ul class="d">
-            <li><strong>Psikolojik şiddet de şiddettir.</strong> 6284 sayılı Kanun fiziksel, cinsel, psikolojik, sözlü ve ekonomik şiddeti kapsar. Kadınları, çocukları, aile bireylerini ve tek taraflı ısrarlı takibe uğrayan herkesi korur; şiddete uğrama tehlikesi de yeterlidir. Karakola, savcılığa, kaymakamlığa ya da valiliğe, aile mahkemesine veya ŞÖNİM'e başvurabilirsin. Koruyucu tedbir için delil ya da belge aranmaz; uzaklaştırma gibi önleyici tedbirler de geciktirilmeden verilir (madde 8).</li>
+            <li><strong>Psikolojik şiddet de şiddettir.</strong> 6284 sayılı Kanun fiziksel, cinsel, psikolojik, sözlü ve ekonomik şiddeti kapsar. Kadınları, çocukları, aile bireylerini ve tek taraflı ısrarlı takibe uğrayan herkesi korur; şiddete uğrama tehlikesi de yeterlidir.</li>
+            <li><strong>Koruma nasıl istenir?</strong> Karakola, savcılığa, kaymakamlığa ya da valiliğe, aile mahkemesine veya ŞÖNİM'e başvurabilirsin. Koruyucu tedbir için delil ya da belge aranmaz; uzaklaştırma gibi önleyici tedbirler de geciktirilmeden verilir (madde 8).</li>
             <li><strong>Israrlı takip suçtur (TCK 123/A).</strong> Israrla takip etmek ya da arayarak, mesajla, internetten veya başkaları üzerinden temas kurmaya çalışmak, sende ciddi huzursuzluk ya da güvenlik endişesi yaratıyorsa suçtur. Cezası 6 ay–2 yıl hapis; çocuğa, ayrılık kararı verilen ya da boşanılan eşe karşı işlenirse 1–3 yıl. Aranızda aile bağı olması gerekmez. Şikâyete bağlıdır.</li>
             <li><strong>Özel görüntülerini paylaşmak suçtur (TCK 134/2).</strong> Görüntü rızanla çekilmiş ya da gönderilmiş olsa bile, rızan olmadan başkalarına gösterilmesi ya da yayılması suçtur. Cezası 2–5 yıl hapis. Şikâyete bağlıdır. 18 yaşından küçüklerin müstehcen görüntüleri ayrıca TCK 226'ya girer; burada çocuğun rızası önemsizdir ve şikâyet aranmaz.</li>
+            <li><strong>Delil toplarken dikkat.</strong> 18 yaşından küçük birinin müstehcen görüntüsünü bulundurmak, çoğaltmak ve başkasına göndermek suçtur (TCK 226); görüntü sana ait olsa bile kopyalama ve kimseye gönderme. Link, kullanıcı adı ve yazışmanın ekran görüntüsü yeter; görüntüyü polis ya da savcılık inceler.</li>
             <li><strong>Görüntüyle şantaj suçtur (TCK 107).</strong> Çıkar sağlamak için görüntülerini yayınlamakla tehdit etmenin cezası 1–3 yıl hapis ve adli para cezasıdır. Şikâyete bağlı değildir, yani savcılık kendiliğinden soruşturma başlatabilir.</li>
             <li><strong>Süreyi kaçırma.</strong> Şikâyete bağlı suçlarda (123/A ve 134 gibi), olayı ve yapanı öğrendiğin günden itibaren 6 ay içinde şikâyet etmen gerekir (TCK 73).</li>
             <li><strong>Suçu işleyen 18 yaşından küçükse</strong> cezalar farklıdır (TCK 31). Yukarıdaki cezalar yetişkinler içindir.</li>
@@ -1320,9 +1365,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <ul>
         <li><span class="help__name">Şiddetle Mücadele Hattı</span><a class="tel" href="tel:183">ALO 183</a><small>7/24, ücretsiz. Psikolojik şiddet de dahil.</small></li>
         <li><span class="help__name">ALO 183 WhatsApp</span><a class="tel" href="https://wa.me/905011830183">0501 183 0 183</a><small>Sesli konuşamadığın durumlarda yazabilirsin.</small></li>
-        <li><span class="help__name">ŞÖNİM</span><small>Şiddet Önleme ve İzleme Merkezi. Danışmanlık ve koruma tedbirleri için, her ilde var.</small></li>
-        <li><span class="help__name">Dijital şantaj ve görüntü ifşası</span><small>Karakola ya da Cumhuriyet Başsavcılığına. Mesajları silme, ekran görüntüsü al, para gönderme.</small></li>
-        <li><span class="help__name">KADES</span><small>Kadınlar için tek tuşla polise ihbar uygulaması.</small></li>
+        <li><span class="help__name">ŞÖNİM</span><small>Şiddet Önleme ve İzleme Merkezi. Danışmanlık ve koruma tedbirleri için. <a href="https://aile.gov.tr/iletisim/bakanlik-iletisim-bilgileri/sonim/">Adres ve telefon listesi</a></small></li>
+        <li><span class="help__name">Dijital şantaj ve görüntü ifşası</span><small>Karakola ya da Cumhuriyet Başsavcılığına. Mesajları silme, yazışmanın ve linkin ekran görüntüsünü al, para gönderme. 18 yaşından büyüksen görüntünün yayılmasını önlemek için ücretsiz araç: <a href="https://stopncii.org/?lang=tr-tr">StopNCII (Türkçe)</a>.</small></li>
+        <li><span class="help__name">KADES</span><small>Emniyet'in kadınlar için tek tuşla ihbar uygulaması. Telefonunun uygulama mağazasında "KADES" diye ara.</small></li>
         <li><span class="help__name">Mor Çatı</span><small>Şiddete maruz kalan kadınlar için dayanışma. <a href="https://morcati.org.tr">morcati.org.tr</a></small></li>
         <li><span class="help__name">Acil tehlike</span><a class="tel" href="tel:112">112</a></li>
       </ul>
@@ -1343,10 +1388,57 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">4 / 8</span><span class="glance__txt">en sık görülen sekiz enfeksiyondan dördü ilaçla tamamen iyileşir</span></li>
         <li><span class="glance__big">Anonim</span><span class="glance__txt">GDTM'lerde kimlik vermeden, ücretsiz HIV testi</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Cinsel sağlık: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#cinsel-1"><b>01</b>Önce şunu bil</a><a href="#cinsel-2"><b>02</b>Hepsi bir arada: enfeksiyonlar</a><a href="#cinsel-3"><b>03</b>Neyle bulaşmaz?</a><a href="#cinsel-4"><b>04</b>Korunma: her biri ne işe yarar?</a><a href="#cinsel-gebelik"><b>05</b>Gebelikten korunma ve ertesi gün hapı</a><a href="#cinsel-18"><b>06</b>18 yaşından küçüksen</a><a href="#cinsel-7"><b>07</b>Ücretsiz ya da düşük maliyetli yollar</a></nav>
+      <nav class="jump fade-up" aria-label="Cinsel sağlık: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#beden-ergenlik"><b>01</b>Bedenin değişiyor: bu normal mi?</a><a href="#beden-adet"><b>02</b>İlk adet ve sonrası</a><a href="#cinsel-riza"><b>03</b>Rıza nedir?</a><a href="#cinsel-1"><b>04</b>Önce şunu bil</a><a href="#cinsel-5"><b>05</b>Hepsi bir arada: enfeksiyonlar</a><a href="#cinsel-6"><b>06</b>Neyle bulaşmaz?</a><a href="#cinsel-7"><b>07</b>Korunma: her biri ne işe yarar?</a><a href="#cinsel-gebelik"><b>08</b>Gebelikten korunma ve ertesi gün hapı</a><a href="#cinsel-18"><b>09</b>18 yaşından küçüksen</a><a href="#cinsel-10"><b>10</b>Ücretsiz ya da düşük maliyetli yollar</a></nav>
     </div>
 
     <div class="blocks">
+      <div class="block fade-up">
+        <h3 id="beden-ergenlik" data-k="ergenlik normal mi kıl tüy sakal ses sivilce ter koku boy meme penis ıslak rüya hijyen">Bedenin değişiyor: bu normal mi?</h3>
+        <div class="prose">
+          <p>Büyük olasılıkla evet. Ergenlik 8 ile 14 yaş arasında herhangi bir zamanda başlayabilir. Arkadaşından önce ya da sonra başlaman normaldir.</p>
+          <ul class="d">
+            <li><strong>Herkeste:</strong> koltuk altı ve cinsel bölgede tüylenme, hızlı boy uzaması, daha çok terleme, sivilce.</li>
+            <li><strong>Kızlarda:</strong> göğüslerin büyümesi, kalçanın genişlemesi, adetin başlaması.</li>
+            <li><strong>Erkeklerde:</strong> sesin çatallanıp kalınlaşması, penis ve testislerin büyümesi, sakal ve bıyık. Uykuda boşalma (ıslak rüya) olabilir; normaldir ve utanılacak bir şey değildir.</li>
+            <li><strong>Ter ve koku:</strong> koltuk altı, kasık ve ayaklarını sabunla yıkayıp iyice kurula, deodorant kullan, çamaşır ve çorabını sık değiştir.</li>
+            <li><strong>Sivilce</strong> çok yaygındır ve tedavisi var. Ağrılıysa, iz bırakıyorsa ya da seni üzüyorsa aile hekimine ya da cildiyeye git.</li>
+            <li><strong>Doktora git:</strong> ergenlik belirtileri 8 yaşından önce başladıysa ya da 15 yaşında hâlâ hiçbiri yoksa. Çoğu zaman endişelenecek bir şey çıkmaz.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (5)</summary><p class="src"><a href="https://www.nhs.uk/conditions/early-or-delayed-puberty/">NHS, Erken ve geç ergenlik</a> · <a href="https://kidshealth.org/en/parents/talk-about-puberty.html">KidsHealth, Ergenlik</a> · <a href="https://www.nhs.uk/symptoms/body-odour-bo/">NHS, Vücut kokusu</a> · <a href="https://www.nhs.uk/conditions/acne/">NHS, Sivilce</a> · <a href="https://hsgm.saglik.gov.tr/tr/dokumanlar-cocukergen/afisler-brosurler.html">Sağlık Bakanlığı, Ergen sağlığı broşürleri</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="beden-adet" data-k="adet regl aybaşı ped tampon adet sancısı ilk adet kanama periyot">İlk adet ve sonrası</h3>
+        <div class="prose">
+          <p>Adet bir hastalık ya da kirlenme değildir. Çoğu kişide 12 yaş civarında başlar; daha erken ya da geç başlaması genellikle sorun değildir.</p>
+          <ul class="d">
+            <li><strong>Ne kadar sürer?</strong> Genelde 21 ile 35 günde bir gelir ve 2 ile 7 gün sürer. İlk yıllarda düzensiz olabilir, çoğunlukla 16–18 yaşına kadar düzene girer.</li>
+            <li><strong>Ne kullanabilirim?</strong> Ped, tampon, adet kabı ya da adet külodu. Ped en kolayıdır: yapışkan tarafını külotuna yapıştır. Tamponun içeride kaybolması mümkün değildir.</li>
+            <li><strong>Yanında ped yoksa</strong> okulda rehber öğretmene, kadın bir öğretmene ya da arkadaşına söyle. Hepsi bunu bilir.</li>
+            <li><strong>Ağrı</strong> için sıcak su torbası (havluya sarılı), karın masajı ve hafif hareket iyi gelebilir. Ağrı kesici için eczacıya danış.</li>
+            <li><strong>Doktora git:</strong> ağrı ağrı kesiciyle geçmiyorsa ya da günlük hayatını engelliyorsa, kanaman çok arttıysa, iki adet arasında kanama oluyorsa.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.nhs.uk/conditions/periods/">NHS, Adet</a> · <a href="https://www.nhs.uk/symptoms/period-pain/">NHS, Adet ağrısı</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="cinsel-riza" data-k="rıza onay hayır demek istemiyorum zorlama evet">Rıza nedir?</h3>
+        <div class="prose">
+          <p>Rıza, isteyerek ve özgürce "evet" demektir. "Hayır" demediğin için evet demiş sayılmazsın.</p>
+          <ul class="d">
+            <li><strong>Rıza sayılmaz:</strong> susmak, donup kalmak, korktuğun ya da mecbur hissettiğin için kabul etmek, sarhoşken ya da uyurken olanlar.</li>
+            <li><strong>Geri alınabilir.</strong> Başta evet desen de istediğin an vazgeçebilirsin.</li>
+            <li><strong>Her seferinde yeniden sorulur.</strong> Daha önce evet demiş olman ya da sevgili, nişanlı, evli olmanız rıza yerine geçmez.</li>
+            <li><strong>Sen de sor.</strong> Emin değilsen dur ve sor: <q>Bunu istiyor musun?</q> Cevap net bir evet değilse devam etme.</li>
+            <li><strong>Yaş:</strong> 15 yaşını doldurmamış birinin rızası yasada geçerli değildir. 15–18 yaş için <a href="#cinsel-18">bu başlığa</a> bak.</li>
+            <li><strong>Rızan olmadan bir şey yaşadıysan</strong> <a href="#iliski-taciz">ne yapacağını buradan</a> okuyabilirsin. Senin suçun değil.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Rıza</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 103 ve 104</a></p></details>
+        </div>
+      </div>
+
       <div class="block fade-up">
         <h3 id="cinsel-1" data-k="cybe cyb zührevi bulaşıcı hastalık kondom yırtıldı pep">Önce şunu bil</h3>
         <div class="prose">
@@ -1360,7 +1452,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-2" data-k="akıntı kaşıntı siğil yara aids cybe cinsel hastalık">Hepsi bir arada: enfeksiyonlar</h3>
+        <h3 id="cinsel-5" data-k="akıntı kaşıntı siğil yara aids cybe cinsel hastalık">Hepsi bir arada: enfeksiyonlar</h3>
         <div class="prose prose--wide">
           <div class="filters" data-filter="stis" style="margin-top:0">
             <div class="tabs" role="group" aria-label="Enfeksiyonları filtrele">
@@ -1533,7 +1625,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-3" data-k="öpüşme tuvalet havuz tükürük bulaşır mı">Neyle bulaşmaz?</h3>
+        <h3 id="cinsel-6" data-k="öpüşme tuvalet havuz tükürük bulaşır mı">Neyle bulaşmaz?</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>HIV</strong> öpüşme, sarılma, el sıkışma, aynı eşyayı, yemeği ya da suyu paylaşmayla bulaşmaz. Tükürük, ter, öksürük, ortak tuvalet ve böcek sokması da bulaştırmaz.</li>
@@ -1546,7 +1638,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-4" data-k="prezervatif kondom aşı korunma">Korunma: her biri ne işe yarar?</h3>
+        <h3 id="cinsel-7" data-k="prezervatif kondom aşı korunma">Korunma: her biri ne işe yarar?</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Kondom.</strong> Vajinal, anal ve oral ilişkide her seferinde, baştan sona kullanılmalı. HIV'den korunmada en güvenilir yöntemdir. Ama frengi, uçuk ve HPV gibi ten temasıyla bulaşanlara karşı <strong>kısmen</strong> korur, çünkü kondomun örtmediği deri de bulaştırabilir.</li>
@@ -1583,18 +1675,19 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Doktora gidebilirsin, soru sorabilirsin.</strong> Tıbbi müdahalelerde kural olarak velinin izni istenir ama senin de bilgilendirilmen ve karara katılman gerekir. Velin yoksa ya da orada bulunamıyorsa izin şartı aranmaz. Bilincin kapalıysa ve hayati tehlike varsa müdahale izin beklenmeden yapılır.</li>
             <li><strong>Mahremiyet hakkın var.</strong> Muayenenin gizli bir ortamda yapılmasını isteyebilirsin.</li>
             <li><strong>Bildirim:</strong> Sağlık çalışanları, bir suç işlendiğine dair belirti görürse bunu yetkililere bildirmek zorunda. 15 yaşını doldurmamış birine yönelik her cinsel davranış, rızası olsa bile yasada istismar sayılır.</li>
+            <li><strong>15–18 yaş arası:</strong> 15 yaşını bitirmiş bir çocukla zorlama, tehdit ve hile olmadan cinsel ilişkiye girmek de şikâyet üzerine suçtur; cezası 2–5 yıl hapistir (TCK 104). Yapan evlenmenin yasak olduğu bir akrabaysa ya da seni koruyup gözetmekle yükümlü koruyucu aileyse şikâyet aranmaz ve ceza 10–15 yıldır. Yapan da 18 yaşından küçükse kurallar farklıdır (TCK 31).</li>
             <li><strong>Zarar gördüysen suçlu sen değilsin.</strong> 112, ALO 183 ya da hastane acili sana yardım eder. Riskli temasta 72 saati bekleme.</li>
           </ul>
-          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Hasta Hakları Yönetmeliği, madde 21 ve 24</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 103 ve 280</a></p></details>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Hasta Hakları Yönetmeliği, madde 21 ve 24</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 31, 103, 104 ve 280</a></p></details>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-7" data-k="ücretsiz test bedava">Ücretsiz ya da düşük maliyetli yollar</h3>
+        <h3 id="cinsel-10" data-k="ücretsiz test bedava">Ücretsiz ya da düşük maliyetli yollar</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Kimlik vermeden HIV testi.</strong> Sağlık Bakanlığı destekli Gönüllü Danışmanlık ve Test Merkezlerinde (GDTM) ücretsizdir ve adın sorulmaz. 2026'da 20 merkez hizmet veriyor. Bazıları hepatit ve frengi testi de yapıyor.</li>
-            <li><strong>Devlet hastaneleri ve aile hekimleri.</strong> Genel Sağlık Sigortası kapsamındaki testler ücretsizdir.</li>
+            <li><strong>Devlet hastaneleri ve aile hekimleri.</strong> Testler Genel Sağlık Sigortası kapsamındadır. Aile hekiminde muayene ücretsiz, hastanede küçük bir katılım payı alınır.</li>
             <li><strong>Tedavi.</strong> HIV ilaçları ve tedavisi SGK kapsamında ücretsizdir. Hepatit C'yi tamamen iyileştiren ilaçlar da SGK kapsamında.</li>
             <li><strong>Rahim ağzı kanseri (HPV) taraması.</strong> Kadınlar için KETEM'lerde ve aile sağlığı merkezlerinde ücretsiz yapılıyor.</li>
             <li><strong>Kondom.</strong> 2827 sayılı Kanun, Sağlık Bakanlığına gebeliği önleyici araçları ihtiyacı olanlara ücretsiz ya da ucuza verme yetkisi tanıyor. Her aile sağlığı merkezinde bulunmayabilir ama sormaya değer.</li>
@@ -1627,7 +1720,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <header class="chapter__head fade-up">
         <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg><span class="chapter__num">06</span><span class="chapter__name">Bağımlılık</span></p>
         <h2 id="madde-baslik">"Bundan bir şey olmaz" diye bir madde yok.</h2>
-        <p class="chapter__lead">Uyuşturucuyla ilgili en tehlikeli cümleler "bir kereden bir şey olmaz", "bu doğal, zararsız" ve "ben kontrol ederim". Bu bölüm o cümlelerin neden yanlış olduğunu resmi kaynaklarla anlatıyor. Başladıysan da yol bitmedi: ücretsiz tedavi var ve hakkında soruşturma başlamadan önce kendin başvurursan kullanmaktan ceza verilmiyor.</p>
+        <p class="chapter__lead">Uyuşturucuyla ilgili en tehlikeli cümleler "bir kereden bir şey olmaz", "bu doğal, zararsız" ve "ben kontrol ederim". Bu bölüm o cümlelerin neden yanlış olduğunu resmi kaynaklarla anlatıyor. Başladıysan da yol bitmedi: ücretsiz tedavi var ve hakkında soruşturma başlamadan önce kendin başvurursan kullanmaktan ceza verilmiyor. Kumar, oyun ve ekran bağımlılığı da bu bölümün sonunda.</p>
       </header>
       <ul class="glance fade-up" aria-label="Kısaca">
         <li><span class="glance__big">557</span><span class="glance__txt">kişi 2025'te Türkiye'de uyuşturucu nedeniyle hayatını kaybetti; 351'inde bonzaiye rastlandı</span></li>
@@ -1773,7 +1866,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <ol class="n">
             <li><span><strong>Bir kişiye söyle ya da ara.</strong> <a href="tel:191">ALO 191</a> 7/24 açık ve sabit hatlardan ücretsiz. Seni bilgilendirir ve tedavi için en uygun merkeze yönlendirir; kararsızsan da arayabilirsin. Yeşilay'ın <a href="tel:115">115</a> hattı da ücretsiz.</span></li>
             <li><span><strong>Ücretsiz psikolojik destek al.</strong> YEDAM, madde bağımlılığı yaşayan 12 yaş ve üzerindekilere tamamen ücretsiz, ayaktan destek veriyor. Bir psikologla değerlendirme görüşmesi yapılır ve tedavi planı birlikte hazırlanır.</span></li>
-            <li><span><strong>Gerekiyorsa tedavi merkezine başvur.</strong> Yetişkinler için AMATEM, çocuk ve ergenler için ÇEMATEM var. Ayaktan tedavi de mümkün. YEDAM'a göre yatarak tedavide 2–6 hafta arınma, ardından bir yıl psikososyal destek veriliyor; süre kişiye göre planlanıyor. Randevuyu ALO 191 ya da ALO 182'den alabilirsin. Bağımlılık tedavisinde prim günü ya da prim borcu aranmaz; tedavi ücretsizdir. 2024'te AMATEM'lere 373 bin kişi başvurdu; yalnız değilsin.</span></li>
+            <li><span><strong>Gerekiyorsa tedavi merkezine başvur.</strong> Yetişkinler için AMATEM, çocuk ve ergenler için ÇEMATEM var. Ayaktan tedavi de mümkün. Randevuyu ALO 191 ya da ALO 182'den alabilirsin.</span></li>
+            <li><span><strong>Tedavi ne kadar sürer, kaça mal olur?</strong> YEDAM'a göre yatarak tedavide 2–6 hafta arınma, ardından bir yıl psikososyal destek veriliyor; süre kişiye göre planlanıyor. Bağımlılık tedavisinde prim günü ya da prim borcu aranmaz; tedavi ücretsizdir. 2024'te AMATEM'lere 373 bin kişi başvurdu; yalnız değilsin.</span></li>
             <li><span><strong>Ortamını değiştir.</strong> Birlikte kullandığın kişilerin numaralarını sil, o mekânlara gitme. Bıraktığın ilk haftalarda seni tetikleyen yerlerden uzak dur.</span></li>
             <li><span><strong>Kayarsan vazgeçme.</strong> Yeşilay'a göre bağımlılık tedavi edilebilir ama tedavisi kolay değildir. Bir kayma her şeyin bittiği anlamına gelmez; uzmanına söyle ve devam et.</span></li>
           </ol>
@@ -1785,8 +1879,10 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <h3 id="madde-6" data-k="uyuşturucu ceza hapis yakalanmak">Tedavi istemek seni suçlu yapmaz</h3>
         <div class="prose">
           <ul class="d">
-            <li><strong>Soruşturma başlamadan kendin başvurursan ceza yok.</strong> Türk Ceza Kanunu'nun 192. maddesinin 4. fıkrasına göre, kullanmaktan dolayı hakkında soruşturma başlamadan önce resmi makamlara ya da sağlık kuruluşlarına başvurup tedavi olmak isteyen kişiye ceza verilmez. Bu durumda doktorların ve kamu görevlilerinin seni bildirme yükümlülüğü de doğmaz. Başvuru kendi isteğinle olmalı: hakkında verilmiş bir tedavi ya da denetimli serbestlik kararı yüzünden gitmek bu kapsama girmez.</li>
-            <li><strong>Yakalanırsan da tedavi yolu açık.</strong> Kullanmak için bulundurmanın cezası 2–5 yıl hapistir (TCK 191). Ancak dava açılması 5 yıl ertelenir, en az 1 yıl denetimli serbestlik uygulanır ve gerekirse tedavi görürsün. Kurallara uyarsan dava açılmaz. Uymamakta ısrar eder, yeniden kullanır, satın alır ya da bulundurursan dava açılır ve sonraki suçta bir daha erteleme verilmez.</li>
+            <li><strong>Soruşturma başlamadan kendin başvurursan ceza yok.</strong> Türk Ceza Kanunu'nun 192. maddesinin 4. fıkrasına göre, kullanmaktan dolayı hakkında soruşturma başlamadan önce resmi makamlara ya da sağlık kuruluşlarına başvurup tedavi olmak isteyen kişiye ceza verilmez. Bu durumda doktorların ve kamu görevlilerinin seni bildirme yükümlülüğü de doğmaz.</li>
+            <li><strong>Başvuru kendi isteğinle olmalı:</strong> hakkında verilmiş bir tedavi ya da denetimli serbestlik kararı yüzünden gitmek bu kapsama girmez.</li>
+            <li><strong>Yakalanırsan da tedavi yolu açık.</strong> Kullanmak için bulundurmanın cezası 2–5 yıl hapistir (TCK 191). Ancak dava açılması 5 yıl ertelenir, en az 1 yıl denetimli serbestlik uygulanır ve gerekirse tedavi görürsün.</li>
+            <li><strong>Kurallara uyarsan dava açılmaz.</strong> Uymamakta ısrar eder, yeniden kullanır, satın alır ya da bulundurursan dava açılır ve sonraki suçta bir daha erteleme verilmez.</li>
             <li><strong>Arkadaşına vermek de ticaret suçu olabilir.</strong> Başkasına vermek ya da satmak, TCK 188/3'e göre uyuşturucu ticareti suçudur ve cezası en az 10 yıl hapistir; verilen kişi çocuksa en az 15 yıl. Yargıtay'a göre karşılığında para almamak bunu değiştirmez.</li>
           </ul>
           <p>Yazılan cezalar yetişkinler içindir; 18 yaşından küçükler için ayrı kurallar uygulanır (TCK 31). Hukuki durumunla ilgili bir sorun varsa <a href="#hayat">Hak arama bölümündeki</a> ücretsiz baro adli yardımına başvurabilirsin.</p>
@@ -1841,7 +1937,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <h3 class="label">Nereye başvurabilirsin?</h3>
       <ul>
         <li><span class="help__name">Uyuşturucu Danışma Hattı (Sağlık Bakanlığı)</span><a class="tel" href="tel:191">ALO 191</a><small>7/24, sabit hatlardan ücretsiz. Kullanan kişi de ailesi de arayabilir.</small></li>
-        <li><span class="help__name">Yeşilay Danışma Hattı (YEDAM)</span><a class="tel" href="tel:115">115</a><small>Ücretsiz. 12 yaş ve üzeri için ücretsiz psikolojik destek ve randevu.</small></li>
+        <li><span class="help__name">Yeşilay Danışma Hattı (YEDAM)</span><a class="tel" href="tel:115">115</a><small>Ücretsiz. 12 yaş ve üzeri için ücretsiz psikolojik destek ve randevu. <a href="https://www.yedam.org.tr/iletisim">Şubeler</a></small></li>
         <li><span class="help__name">AMATEM / ÇEMATEM</span><a class="tel" href="tel:182">ALO 182</a><small>Devlet hastanelerinin bağımlılık tedavi merkezleri. ÇEMATEM çocuk ve ergenler için. Randevu ALO 191 ya da ALO 182'den (MHRS).</small></li>
         <li><span class="help__name">Sigarayı bırakmak için</span><a class="tel" href="tel:171">ALO 171</a><small>Sağlık Bakanlığı Sigara Bırakma Danışma Hattı, ücretsiz.</small></li>
         <li><span class="help__name">Aşırı doz, bilinç kaybı</span><a class="tel" href="tel:112">112</a><small>Beklemeden ara.</small></li>
@@ -1922,7 +2018,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <div class="help fade-up">
       <h3 class="label">Nereye başvurabilirsin?</h3>
       <ul>
-        <li><span class="help__name">Psikiyatri ya da psikolog</span><a class="tel" href="tel:182">ALO 182</a><small><a href="#ruh">Ruh sağlığı bölümündeki</a> ücretsiz seçeneklerin hepsi burada da geçerli. BDT bilen bir uzman isteyebilirsin.</small></li>
+        <li><span class="help__name">Psikiyatri ya da psikolog</span><a class="tel" href="tel:182">ALO 182</a><small><a href="#ruh">Ruh sağlığı bölümündeki</a> başvuru yerlerinin hepsi burada da geçerli. BDT bilen bir uzman isteyebilirsin.</small></li>
         <li><span class="help__name">Üniversitedeysen</span><small>Çoğu üniversitede öğrencilere ücretsiz psikolojik danışmanlık birimi var.</small></li>
         <li><span class="help__name">Belediye kursları ve gönüllülük</span><small>Ortak bir uğraş üzerinden insanlarla tanışmak, doğrudan sohbet etmekten daha kolay gelebilir.</small></li>
       </ul>
@@ -1943,7 +2039,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">10 gün</span><span class="glance__txt">başvurun reddedilirse baro başkanına itiraz süresi</span></li>
         <li><span class="glance__big">ALO 144</span><span class="glance__txt">hangi sosyal yardımlardan yararlanabileceğini sor</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Hak arama: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#hayat-avukat"><b>01</b>Ücretsiz avukat: adli yardım</a><a href="#hayat-para"><b>02</b>Maddi olarak çok zordaysan</a><a href="#hayat-is"><b>03</b>İşe başlarken: sigorta ve şikâyet</a><a href="#hayat-cocuk-isci"><b>04</b>18 yaşından küçük çalışıyorsan</a><a href="#hayat-dolandiricilik"><b>05</b>İnternette dolandırıldıysan</a><a href="#hayat-burs"><b>06</b>Üniversite için burs ve kredi</a><a href="#hayat-7"><b>07</b>Resmi bir işte ne yapacağını bilmiyorsan</a></nav>
+      <nav class="jump fade-up" aria-label="Hak arama: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#hayat-avukat"><b>01</b>Ücretsiz avukat: adli yardım</a><a href="#hayat-para"><b>02</b>Maddi olarak çok zordaysan</a><a href="#hayat-okul"><b>03</b>Okulla ilgili sorunların</a><a href="#hayat-is"><b>04</b>İşe başlarken: sigorta ve şikâyet</a><a href="#hayat-cocuk-isci"><b>05</b>18 yaşından küçük çalışıyorsan</a><a href="#hayat-dolandiricilik"><b>06</b>İnternette dolandırıldıysan</a><a href="#hayat-burs"><b>07</b>Üniversite için burs ve kredi</a><a href="#hayat-8"><b>08</b>Resmi bir işte ne yapacağını bilmiyorsan</a></nav>
     </div>
 
     <div class="blocks">
@@ -1965,6 +2061,20 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <div class="prose">
           <p><a class="tel" href="tel:144">ALO 144</a> Sosyal Yardım Hattı'nı arayıp hangi yardımlardan yararlanabileceğini sorabilirsin. Hafta içi 08.00–19.00 arası açık ve ücretsiz.</p>
           <p class="src">Kaynak: <a href="https://alo144.aile.gov.tr/">Aile ve Sosyal Hizmetler Bakanlığı, ALO 144</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-okul" data-k="okul okulu bırakmak devamsızlık sınıfta kalmak açık lise açıköğretim bursluluk lise bursu disiplin">Okulla ilgili sorunların</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Devamsızlık (lise):</strong> özürsüz 10 günü ya da toplam 30 günü aşarsan notların ne olursa olsun başarısız sayılırsın. Rapor ve izin belgelerini zamanında ver.</li>
+            <li><strong>Süresi uzayanlar:</strong> birinci derece yakınını kaybettiysen toplam sınır 40 gün. Sürekli ya da yatarak tedavi görüyorsan veya resmi raporla koruma altına alındıysan 60 gün. Bu durumunu okula mutlaka bildir.</li>
+            <li><strong>Okulu bırakmayı düşünüyorsan</strong> önce rehber öğretmeninle konuş. Para, evdeki sorunlar, zorbalık ya da çalışmak zorunda olmak için başka çözümler bulunabilir.</li>
+            <li><strong>Açık lise:</strong> geçiş şartları sık değişiyor ve yaşına göre sınırlı. Güncel şartları <a href="https://aol.meb.gov.tr/">aol.meb.gov.tr</a> adresinden ya da halk eğitim merkezinden öğren.</li>
+            <li><strong>Burs:</strong> Millî Eğitim Bakanlığı'nın yılda bir yapılan bursluluk sınavı (İOKBS) için başvuru tarihini okul müdürlüğüne sor. Maddi zorlukta <a href="tel:144">ALO 144</a>'ü de ara.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/MevzuatMetin/yonetmelik/7.5.18812.pdf">Millî Eğitim Bakanlığı Ortaöğretim Kurumları Yönetmeliği, madde 36</a> · <a href="https://aol.meb.gov.tr/">MEB, Açık Öğretim Lisesi</a></p></details>
         </div>
       </div>
 
@@ -2019,7 +2129,6 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <ul class="d">
             <li><strong>Burs</strong> karşılıksızdır, <strong>öğrenim kredisi</strong> ise sonra geri ödenir. İkisine de Gençlik ve Spor Bakanlığı'na e-Devlet üzerinden başvurulur.</li>
             <li><strong>Tarihi kaçırma.</strong> Başvuru yılda bir kez, kısa süre açık kalır. Üniversiteyi kazandığında Bakanlığın duyurularını takip et.</li>
-            <li><strong>Devlet korumasındaysan ya da şehit, gazi yakınıysan</strong> başvururken bunu mutlaka belirt; öncelik hakkın olup olmadığını sor.</li>
             <li><strong>Yurt</strong> için <a href="#aile-ayrilmak">bu başlığa</a> bak.</li>
           </ul>
           <p class="src">Kaynak: <a href="https://www.turkiye.gov.tr/genclik-ve-spor-bakanligi">e-Devlet, Gençlik ve Spor Bakanlığı hizmetleri</a></p>
@@ -2027,7 +2136,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="hayat-7" data-k="edevlet devlet dairesi belge">Resmi bir işte ne yapacağını bilmiyorsan</h3>
+        <h3 id="hayat-8" data-k="edevlet devlet dairesi belge">Resmi bir işte ne yapacağını bilmiyorsan</h3>
         <div class="prose">
           <p>Görevliye "İlk kez yapıyorum, nereden başlamalıyım?" diye sormak tamamen normaldir. Birçok işlemi e-Devlet'ten evden yapabilirsin. Gittiğin her yerde aldığın evrakın fotoğrafını çek ve görüştüğün kişinin adını not al.</p>
         </div>
@@ -2065,12 +2174,13 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <tr><th scope="row">Taciz, cinsel saldırı, tecavüz</th><td data-label="Nereye">Hastane acil servisi, karakol ya da savcılık; danışmak için ALO 183</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">Mümkünse yıkanmadan; ilk 72 saat. <a href="#iliski-taciz">Adım adım</a></td></tr>
           <tr><th scope="row">Zorla ya da erken yaşta evlendirme</th><td data-label="Nereye">Şiddetle Mücadele Hattı</td><td data-label="Numara"><a class="tel" href="tel:183">ALO 183</a></td><td data-label="Not">Tehlike yakınsa 112. <a href="#siddet-evlilik">Adım adım</a></td></tr>
           <tr><th scope="row">İşitme ya da konuşma engeli</th><td data-label="Nereye">ALO 183 işaret dili hattı</td><td data-label="Numara"><a class="tel" href="tel:+905493810183">0549 381 0 183</a></td><td data-label="Not">Görüntülü görüşme; hafta içi 08.00–24.00, cumartesi 08.00–17.00</td></tr>
-          <tr><th scope="row">Görüntüyle şantaj, ifşa, ısrarlı takip</th><td data-label="Nereye">Karakol ya da Cumhuriyet Başsavcılığı</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">Delilleri silme, para gönderme</td></tr>
+          <tr><th scope="row">Yabancı ya da göçmensen</th><td data-label="Nereye">YİMER 157, Yabancılar İletişim Merkezi</td><td data-label="Numara"><a class="tel" href="tel:157">157</a></td><td data-label="Not">Türkçe, İngilizce, Arapça, Rusça, Farsça</td></tr>
+          <tr><th scope="row">Görüntüyle şantaj, ifşa, ısrarlı takip</th><td data-label="Nereye">En yakın karakol ya da Cumhuriyet Başsavcılığı</td><td data-label="Numara">Danışmak için <a class="tel" href="tel:183">ALO 183</a></td><td data-label="Not">Acil tehlikede 112. Delilleri silme, para gönderme</td></tr>
           <tr><th scope="row">Aile içi sorunlar, anlaşamama</th><td data-label="Nereye">Sosyal Hizmet Merkezi (aile ve bireysel danışmanlık)</td><td data-label="Numara"><a href="https://www.turkiye.gov.tr">e-Devlet</a></td><td data-label="Not">Ücretsiz</td></tr>
           <tr><th scope="row">Uyuşturucu, madde bağımlılığı (kendin ya da yakının için)</th><td data-label="Nereye">Sağlık Bakanlığı Uyuşturucu Danışma Hattı</td><td data-label="Numara"><a class="tel" href="tel:191">ALO 191</a></td><td data-label="Not">7/24, sabit hatlardan ücretsiz. Yeşilay: <a href="tel:115">115</a></td></tr>
           <tr><th scope="row">Aşırı doz, bilinç kaybı</th><td data-label="Nereye">Acil Çağrı Merkezi</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">Ne aldığını sağlık ekibine söyle</td></tr>
           <tr><th scope="row">Kumar, sanal bahis, oyun ve internet bağımlılığı</th><td data-label="Nereye">Yeşilay Danışma Hattı (YEDAM)</td><td data-label="Numara"><a class="tel" href="tel:115">115</a></td><td data-label="Not">Ücretsiz, 12 yaş ve üzeri</td></tr>
-          <tr><th scope="row">Psikiyatri ya da psikolog</th><td data-label="Nereye">Devlet hastanesi (MHRS)</td><td data-label="Numara"><a class="tel" href="tel:182">ALO 182</a></td><td data-label="Not">Ücretsiz</td></tr>
+          <tr><th scope="row">Psikiyatri ya da psikolog</th><td data-label="Nereye">Devlet hastanesi (MHRS)</td><td data-label="Numara"><a class="tel" href="tel:182">ALO 182</a></td><td data-label="Not">Küçük bir katılım payı var; aile hekimi ücretsiz</td></tr>
           <tr><th scope="row">Riskli cinsel temas</th><td data-label="Nereye">Hastane acil servisi</td><td data-label="Numara">İlk 72 saat</td><td data-label="Not">İdeali ilk 24 saat</td></tr>
           <tr><th scope="row">Anonim HIV testi</th><td data-label="Nereye">Gönüllü Danışmanlık ve Test Merkezi</td><td data-label="Numara"><a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Bakanlık listesi</a></td><td data-label="Not">Kimlik gerekmez, ücretsiz</td></tr>
           <tr><th scope="row">Cinsel sağlık sorusu</th><td data-label="Nereye">TAP Vakfı Bilgi Hattı</td><td data-label="Numara"><a class="tel" href="tel:4446539">444 65 39</a></td><td data-label="Not">Hafta içi 09.00–18.00</td></tr>
@@ -2087,7 +2197,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="gizlilik" class="privacy grid" data-c="rehber" data-k="gizli gizlilik geçmiş silmek gizli sekme takip izleniyorum çerez" aria-labelledby="gizlilik-baslik">
     <h2 id="gizlilik-baslik" class="fade-up">Bu sayfaya girdiğin bilinmesin istiyorsan</h2>
     <ul class="d fade-up">
-      <li><strong>Hızlı çık</strong> düğmesi seni hemen hava durumu sayfasına götürür. Yanına biri geldiğinde işe yarar ama tarayıcı geçmişini silmez.</li>
+      <li><strong>Hızlı çık</strong> düğmesi ya da bilgisayarda Delete tuşu seni hemen hava durumu sayfasına götürür. Yanına biri geldiğinde işe yarar ama tarayıcı geçmişini silmez.</li>
       <li><strong>Gizli sekme kullan.</strong> Gizli sekmede gezdiğin sayfalar tarayıcı geçmişine yazılmaz.</li>
       <li><strong>Geçmişten sil.</strong> Güvenliyse bu sayfayı tarayıcı geçmişinden çıkar. Aradığın numaralar telefonun arama kaydında görünür.</li>
       <li><strong>Telefonunun izlendiğinden şüpheleniyorsan</strong> başka bir cihaz kullan. Gizli sekme bu durumda seni korumaz.</li>
@@ -2171,6 +2281,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <li><a href="tel:115"><span class="n">115</span><span class="go">Ara</span><span class="s">Yeşilay danışma hattı · ücretsiz</span></a></li>
       <li><a href="tel:182"><span class="n">ALO 182</span><span class="go">Ara</span><span class="s">Devlet hastanesi randevusu, ruh sağlığı dahil</span></a></li>
       <li><a href="tel:4446539"><span class="n">444 65 39</span><span class="go">Ara</span><span class="s">TAP Vakfı cinsel sağlık hattı · hafta içi 09.00–18.00</span></a></li>
+      <li><a href="tel:157"><span class="n">157</span><span class="go">Ara</span><span class="s">Yabancılar İletişim Merkezi · İngilizce, Arapça, Rusça, Farsça da konuşuluyor</span></a></li>
       <li><a href="tel:144"><span class="n">ALO 144</span><span class="go">Ara</span><span class="s">Sosyal yardım ve maddi zorluk</span></a></li>
     </ul>
   </div>
@@ -2312,13 +2423,19 @@ tbody th { font-weight: 600; white-space: nowrap; }
   }
 
   /* hızlı çık: bu sayfanın geçmişteki yerine hava durumu geçer (geri tuşu buraya dönmez) */
+  function leave() {
+    document.documentElement.style.display = "none";
+    location.replace($("#quick-exit").href);
+  }
   $$("[data-exit]").forEach(function (x) {
-    x.addEventListener("click", function (e) {
-      e.preventDefault();
-      document.documentElement.style.display = "none";
-      location.replace(this.href);
-    });
+    x.addEventListener("click", function (e) { e.preventDefault(); leave(); });
   });
+  /* bilgisayarda tek tuş: Delete. Dolu bir yazı kutusunda harf silmeye devam eder */
+  addEventListener("keydown", function (e) {
+    if (e.key !== "Delete" || e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return;
+    if (/INPUT|TEXTAREA/.test(e.target.tagName) && e.target.value) return;
+    e.preventDefault(); leave();
+  }, true);
   /* dil: aynı başlığın diğer dildeki karşılığına git (kimlikler iki dilde aynı) */
   $("[data-lang]").addEventListener("click", function (e) {
     if (e.ctrlKey || e.metaKey || e.shiftKey) return;

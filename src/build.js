@@ -36,7 +36,7 @@ const TSRC = {
   "Trauma bonding": [L("https://health.clevelandclinic.org/trauma-bonding", "Cleveland Clinic, Trauma bonding"), L("https://www.psychologytoday.com/us/basics/trauma-bonding", "Psychology Today, Trauma bonding")],
   "Ghosting / Orbiting / Zombieing": [L("https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope", "Colorado Üniversitesi, Ghosting ve orbiting")],
   "Sextortion": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 107")],
-  "Revenge porn / Image-based abuse": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 73, 134 ve 139")],
+  "Revenge porn / Image-based abuse": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 73, 134, 139 ve 226"), L("https://stopncii.org/?lang=tr-tr", "StopNCII (18 yaş üstü, Türkçe)")],
   "Cyberstalking": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 123/A")],
   "Hoovering": [L("https://health.clevelandclinic.org/hoovering", "Cleveland Clinic, Hoovering")],
 };
@@ -212,6 +212,13 @@ console.log("ok", lang, html.length);
 
 build("tr");
 build("en");
+// arama motorları için (alan adı değişince SITE'ı güncellemek yeter)
+fs.writeFileSync(path.join(ROOT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${["", "en/"].map((x) => `<url><loc>${SITE}${x}</loc><xhtml:link rel="alternate" hreflang="tr" href="${SITE}"/><xhtml:link rel="alternate" hreflang="en" href="${SITE}en/"/></url>`).join("\n")}
+</urlset>
+`);
+fs.writeFileSync(path.join(ROOT, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${SITE}sitemap.xml\n`);
 if (miss.size) {
   fs.writeFileSync(path.join(__dirname, "missing.json"), JSON.stringify([...miss.keys()], null, 1));
   console.warn("Çevrilmemiş:", miss.size, "→ src/missing.json");

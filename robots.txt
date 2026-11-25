@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://enobas5.github.io/yalniz-degilsin/sitemap.xml
