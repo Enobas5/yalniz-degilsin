@@ -184,8 +184,8 @@ function translate(html) {
   return (head + keep + out + js)
     .replace('<html lang="tr"', '<html lang="en"')
     .replace(/(["(])(fonts|img)\//g, "$1../$2/")
-    // İngilizce menü daha uzun: mobil düzene ve ikonsuz menüye daha erken geç
-    .replaceAll("max-width: 1190px", "max-width: 1340px").replaceAll("max-width: 1490px", "max-width: 1640px");
+    // İngilizce menü daha uzun: sıkışık düzene daha erken geç
+    .replaceAll("max-width: 1190px", "max-width: 1205px").replaceAll("min-width: 1190.02px", "min-width: 1205.02px").replaceAll("max-width: 1265px", "max-width: 1410px").replaceAll("max-width: 1490px", "max-width: 1660px");
 }
 const JS = ["Koyu tema", "Açık tema", "Sonuç sayısı: ", "Sonuç yok", " · kart", " kavram gösteriliyor", " enfeksiyon gösteriliyor", "Hepsini kapat", "Hepsini aç"];
 

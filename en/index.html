@@ -444,7 +444,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 }
 
 /* ---------- tablet ---------- */
-@media (max-width: 1340px) {
+@media (max-width: 1205px) {
   :root { --margin: 32px; --section: 96px; --label: 56px; }
   .intro__text { grid-column: 1 / -1; }
   .intro__lead, .intro__urgent { grid-column: 2 / -1; }
@@ -455,18 +455,32 @@ tbody th { font-weight: 600; white-space: nowrap; }
 }
 
 /* dar masaüstü: menü ikonları gizlenir, aralık daralır */
-@media (max-width: 1640px) {
-  .bar { gap: 20px; }
-  .menu ul { gap: 16px; }
-  .menu .ico { display: none; }
+@media (min-width: 1205.02px) and (max-width: 1660px) {
+  /* simgeler hep kalır; yer açmak için aralıklar ve yazı küçülür */
+  .bar { gap: 14px; }
+  .menu ul { gap: 13px; }
+  .menu a, .bar-btn, .bar .theme-toggle, .lang, .bar .exit { font-size: 0.875rem; }
+  .menu a { gap: 5px; }
+  .menu .ico { width: 16px; height: 16px; }
+  .bar-btn kbd { display: none; }
+  .bar .theme-toggle { padding-left: 14px; }
+}
+@media (min-width: 1205.02px) and (max-width: 1410px) {
+  .bar { gap: 12px; padding-inline: 24px; }
+  .menu ul { gap: 11px; }
+  .menu a, .bar-btn, .bar .theme-toggle, .lang, .bar .exit { font-size: 0.8125rem; }
+  .menu a { gap: 4px; }
+  .wordmark { font-size: 1.375rem; }
+  .bar-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .bar .theme-toggle { padding-left: 12px; }
 }
 
 /* dar ekran: üst menü yerine alt çubuk */
-@media (max-width: 1340px) {
+@media (max-width: 1205px) {
   :root { --nav-h: calc(64px + env(safe-area-inset-bottom)); }
   .menu, .bar-btn, html.js .bar .theme-toggle { display: none; }
   html:not(.js) .menu { display: flex; }
-  .bar { justify-content: space-between; }
+  .bar { justify-content: space-between; gap: 12px; }
   .dock {
     display: grid; grid-template-columns: repeat(4, 1fr);
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
