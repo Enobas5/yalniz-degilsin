@@ -71,7 +71,7 @@
   --rule: rgb(255 255 255 / 0.14); --rule-strong: rgb(255 255 255 / 0.4);
   --accent: #5fe08f; --focus: #ffffff;
   --c-aile: #f5b860; --c-ruh: #86bfff; --c-iliski: #ff9db0; --c-cinsel: #5fe08f;
-  --c-ifade: #bba4ff; --c-hayat: #ffa577; --c-rehber: #ffffff; --c-madde: #ff8578;
+  --c-ifade: #bba4ff; --c-hayat: #ffa577; --c-rehber: #ffffff; --c-madde: #ff8578; --c-siddet: #5fd6d2;
   --tint: 11%;
 }
 [data-theme="light"] {
@@ -81,14 +81,14 @@
   --rule: rgb(0 0 0 / 0.12); --rule-strong: rgb(0 0 0 / 0.45);
   --accent: #086b33; --focus: #1e251d;
   --c-aile: #985200; --c-ruh: #1d5aa8; --c-iliski: #b02146; --c-cinsel: #086b33;
-  --c-ifade: #5a3bc2; --c-hayat: #a33f12; --c-rehber: #1e251d; --c-madde: #b3261e;
+  --c-ifade: #5a3bc2; --c-hayat: #a33f12; --c-rehber: #1e251d; --c-madde: #b3261e; --c-siddet: #0a6468;
   --tint: 9%;
 }
 /* her bölüm kendi rengini --c olarak taşır */
 [data-c="aile"] { --c: var(--c-aile); } [data-c="ruh"] { --c: var(--c-ruh); }
 [data-c="iliski"] { --c: var(--c-iliski); } [data-c="cinsel"] { --c: var(--c-cinsel); }
 [data-c="ifade"] { --c: var(--c-ifade); } [data-c="hayat"] { --c: var(--c-hayat); }
-[data-c="rehber"] { --c: var(--c-rehber); } [data-c="madde"] { --c: var(--c-madde); }
+[data-c="rehber"] { --c: var(--c-rehber); } [data-c="madde"] { --c: var(--c-madde); } [data-c="siddet"] { --c: var(--c-siddet); }
 :root { --c: var(--accent); }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -181,6 +181,13 @@ h1 em { color: var(--accent); }
 @keyframes pulse { 0% { scale: 1; opacity: 0.6; } 70%, 100% { scale: 3.2; opacity: 0; } }
 
 /* ---------- içindekiler: renkli satırlar ---------- */
+.now { padding-block: 40px 72px; align-items: start; row-gap: 14px; }
+.now .label { grid-column: 1 / span 2; padding-top: 10px; font-size: clamp(1.5rem, 2vw, 1.875rem); line-height: 1.15; color: var(--text); }
+.now ul { list-style: none; grid-column: 3 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(16px, 3vw, 40px); border-top: 1px solid var(--rule); }
+.now a { display: flex; align-items: center; gap: 10px; height: 100%; min-height: 48px; padding-block: 8px; font-size: 0.9375rem; line-height: 1.3; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.now a::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.now a:hover { color: var(--c); }
+
 .index { padding-top: 96px; }
 .index .label { grid-column: 1 / span 1; font-family: var(--font); font-size: 0.8125rem; }
 .index ol { grid-column: 2 / -1; list-style: none; border-top: 1px solid var(--rule); }
@@ -381,6 +388,21 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .privacy ul { grid-column: 3 / span 4; max-width: 40em; }
 .privacy .src { grid-column: 3 / span 4; margin-top: 0; }
 .callout .tel { font-weight: 400; }
+.srcs { margin-top: 18px; font-size: 0.8125rem; }
+.srcs > summary { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; cursor: pointer; color: var(--muted); list-style: none; }
+.srcs > summary::-webkit-details-marker { display: none; }
+.srcs > summary::before { content: "+"; width: 1ch; color: var(--c); }
+.srcs[open] > summary::before { content: "–"; }
+.srcs > summary:hover { color: var(--text); text-decoration: underline; }
+.srcs > .src { margin-top: 4px; }
+@media print { .srcs::details-content { content-visibility: visible; block-size: auto; } }
+@media (max-width: 720px) { .blocks { row-gap: 44px; } html.js .jump { display: none; } }
+.fold__btn { all: unset; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; min-height: 48px; cursor: pointer; }
+.fold__btn::after { content: "+"; flex: none; font: 400 1.5rem/1 var(--font); color: var(--c); }
+.fold__btn[aria-expanded="true"]::after { content: "–"; }
+.fold__btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.fold__body[hidden="until-found"] { display: block; content-visibility: hidden; }
+@supports not (content-visibility: hidden) { .fold__body[hidden] { display: none; } }
 .checked { margin-top: 14px; font-size: 0.8125rem; color: var(--muted); }
 .footer { padding-block: 96px 48px; row-gap: 12px; font-size: 0.875rem; color: var(--muted); }
 .footer p { grid-column: span 3; max-width: 38em; }
@@ -447,6 +469,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 @media (max-width: 1190px) {
   :root { --margin: 32px; --section: 96px; --label: 56px; }
   .intro__text { grid-column: 1 / -1; }
+  .now .label, .now ul { grid-column: 1 / -1; }
   .intro__lead, .intro__urgent { grid-column: 2 / -1; }
   .chapter__head, .blocks, .help, .privacy h2, .privacy ul, .privacy .src { grid-column: 1 / -1; }
   .help { position: static; }
@@ -455,7 +478,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 }
 
 /* dar masaüstü: menü ikonları gizlenir, aralık daralır */
-@media (min-width: 1190.02px) and (max-width: 1490px) {
+@media (min-width: 1190.02px) and (max-width: 1630px) {
   /* simgeler hep kalır; yer açmak için aralıklar ve yazı küçülür */
   .bar { gap: 14px; }
   .menu ul { gap: 13px; }
@@ -465,7 +488,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   .bar-btn kbd { display: none; }
   .bar .theme-toggle { padding-left: 14px; }
 }
-@media (min-width: 1190.02px) and (max-width: 1265px) {
+@media (min-width: 1190.02px) and (max-width: 1345px) {
   .bar { gap: 12px; padding-inline: 24px; }
   .menu ul { gap: 11px; }
   .menu a, .bar-btn, .bar .theme-toggle, .lang, .bar .exit { font-size: 0.8125rem; }
@@ -573,8 +596,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Aile</a></li>
       <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Ruh sağlığı</a></li>
       <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>İlişkiler</a></li>
+      <li data-c="siddet"><a href="#siddet"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.7 5.7 3.8 3.8M14.5 14.5l3.8 3.8M18.3 5.7l-3.8 3.8M9.5 14.5l-3.8 3.8"/></svg>Şiddet</a></li>
       <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Cinsel sağlık</a></li>
-      <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Madde</a></li>
+      <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Bağımlılık</a></li>
       <li data-c="ifade"><a href="#ifade"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg>Kendini ifade</a></li>
       <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Hak arama</a></li>
       <li data-c="rehber"><a href="#rehber"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg>Rehber</a></li>
@@ -598,6 +622,26 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <p class="intro__urgent intro__exit fade-up">Yanına biri gelirse <b>Hızlı çık</b>'a dokun; hava durumu sayfası açılır. <a href="#gizlilik">Gizli kalmak</a></p>
   </section>
 
+  <nav class="now grid fade-up" aria-labelledby="now-baslik">
+    <h2 class="label" id="now-baslik">Şu an ne yaşıyorsun?</h2>
+    <ul>
+      <li data-c="aile"><a href="#aile-siddet">Evde şiddet görüyorum</a></li>
+      <li data-c="siddet"><a href="#iliski-taciz">Tacize ya da saldırıya uğradım</a></li>
+      <li data-c="ruh"><a href="#ruh-kriz">Yaşamak istemiyorum</a></li>
+      <li data-c="ruh"><a href="#ruh-arkadas">Arkadaşım için korkuyorum</a></li>
+      <li data-c="siddet"><a href="#terim-santaj">Fotoğrafımla tehdit ediliyorum</a></li>
+      <li data-c="siddet"><a href="#iliski-zorbalik">Zorbalığa uğruyorum</a></li>
+      <li data-c="siddet"><a href="#siddet-evlilik">Zorla evlendirmek istiyorlar</a></li>
+      <li data-c="cinsel"><a href="#cinsel-gebelik">Hamile olabilirim</a></li>
+      <li data-c="cinsel"><a href="#cinsel-1">Korunmasız ilişkim oldu</a></li>
+      <li data-c="madde"><a href="#madde-birak">Uyuşturucuyu bırakmak istiyorum</a></li>
+      <li data-c="madde"><a href="#bagimlilik-kumar">Kumarı bırakamıyorum</a></li>
+      <li data-c="ruh"><a href="#ruh-panik">Panik atak geçiriyorum</a></li>
+      <li data-c="aile"><a href="#aile-sinir">Ailemle anlaşamıyorum</a></li>
+      <li data-c="hayat"><a href="#hayat-avukat">Avukata param yok</a></li>
+    </ul>
+  </nav>
+
   <figure class="hero fade-up" aria-labelledby="hero-cap">
     <svg class="dots dots--lg" viewBox="0 0 1152 312" role="img" aria-label="Soluk noktalarla dolu bir ızgara. Ortadaki tek yeşil noktanın çevresindeki noktalar parlak; yeşil nokta yalnız değil.">
       <circle cx="12" cy="12" r="3"/><circle cx="36" cy="12" r="3"/><circle cx="60" cy="12" r="3"/><circle cx="84" cy="12" r="3"/><circle cx="108" cy="12" r="3"/><circle cx="132" cy="12" r="3"/><circle cx="156" cy="12" r="3"/><circle cx="180" cy="12" r="3"/><circle cx="204" cy="12" r="3"/><circle cx="228" cy="12" r="3"/><circle cx="252" cy="12" r="3"/><circle cx="276" cy="12" r="3"/><circle cx="300" cy="12" r="3"/><circle cx="324" cy="12" r="3"/><circle cx="348" cy="12" r="3"/><circle cx="372" cy="12" r="3"/><circle cx="396" cy="12" r="3"/><circle cx="420" cy="12" r="3"/><circle cx="444" cy="12" r="3"/><circle cx="468" cy="12" r="3"/><circle cx="492" cy="12" r="3"/><circle cx="516" cy="12" r="3"/><circle class="on" style="--d:10.0" cx="540" cy="12" r="3"/><circle cx="564" cy="12" r="3"/><circle cx="588" cy="12" r="3"/><circle cx="612" cy="12" r="3"/><circle class="on" style="--d:7.2" cx="636" cy="12" r="3"/><circle cx="660" cy="12" r="3"/><circle class="on" style="--d:6.3" cx="684" cy="12" r="3"/><circle cx="708" cy="12" r="3"/><circle cx="732" cy="12" r="3"/><circle class="on" style="--d:6.1" cx="756" cy="12" r="3"/><circle class="on" style="--d:6.3" cx="780" cy="12" r="3"/><circle cx="804" cy="12" r="3"/><circle cx="828" cy="12" r="3"/><circle class="on" style="--d:7.8" cx="852" cy="12" r="3"/><circle cx="876" cy="12" r="3"/><circle cx="900" cy="12" r="3"/><circle cx="924" cy="12" r="3"/><circle cx="948" cy="12" r="3"/><circle cx="972" cy="12" r="3"/><circle cx="996" cy="12" r="3"/><circle cx="1020" cy="12" r="3"/><circle cx="1044" cy="12" r="3"/><circle cx="1068" cy="12" r="3"/><circle cx="1092" cy="12" r="3"/><circle cx="1116" cy="12" r="3"/><circle cx="1140" cy="12" r="3"/><circle cx="12" cy="36" r="3"/><circle cx="36" cy="36" r="3"/><circle cx="60" cy="36" r="3"/><circle cx="84" cy="36" r="3"/><circle cx="108" cy="36" r="3"/><circle cx="132" cy="36" r="3"/><circle cx="156" cy="36" r="3"/><circle cx="180" cy="36" r="3"/><circle cx="204" cy="36" r="3"/><circle cx="228" cy="36" r="3"/><circle cx="252" cy="36" r="3"/><circle cx="276" cy="36" r="3"/><circle cx="300" cy="36" r="3"/><circle cx="324" cy="36" r="3"/><circle cx="348" cy="36" r="3"/><circle cx="372" cy="36" r="3"/><circle cx="396" cy="36" r="3"/><circle cx="420" cy="36" r="3"/><circle cx="444" cy="36" r="3"/><circle cx="468" cy="36" r="3"/><circle cx="492" cy="36" r="3"/><circle cx="516" cy="36" r="3"/><circle cx="540" cy="36" r="3"/><circle cx="564" cy="36" r="3"/><circle cx="588" cy="36" r="3"/><circle cx="612" cy="36" r="3"/><circle class="on" style="--d:6.4" cx="636" cy="36" r="3"/><circle cx="660" cy="36" r="3"/><circle class="on" style="--d:5.4" cx="684" cy="36" r="3"/><circle class="on" style="--d:5.1" cx="708" cy="36" r="3"/><circle cx="732" cy="36" r="3"/><circle cx="756" cy="36" r="3"/><circle class="on" style="--d:5.4" cx="780" cy="36" r="3"/><circle class="on" style="--d:5.8" cx="804" cy="36" r="3"/><circle class="on" style="--d:6.4" cx="828" cy="36" r="3"/><circle cx="852" cy="36" r="3"/><circle cx="876" cy="36" r="3"/><circle class="on" style="--d:8.6" cx="900" cy="36" r="3"/><circle cx="924" cy="36" r="3"/><circle cx="948" cy="36" r="3"/><circle cx="972" cy="36" r="3"/><circle cx="996" cy="36" r="3"/><circle cx="1020" cy="36" r="3"/><circle cx="1044" cy="36" r="3"/><circle cx="1068" cy="36" r="3"/><circle cx="1092" cy="36" r="3"/><circle cx="1116" cy="36" r="3"/><circle cx="1140" cy="36" r="3"/><circle cx="12" cy="60" r="3"/><circle cx="36" cy="60" r="3"/><circle cx="60" cy="60" r="3"/><circle cx="84" cy="60" r="3"/><circle cx="108" cy="60" r="3"/><circle cx="132" cy="60" r="3"/><circle cx="156" cy="60" r="3"/><circle cx="180" cy="60" r="3"/><circle cx="204" cy="60" r="3"/><circle cx="228" cy="60" r="3"/><circle cx="252" cy="60" r="3"/><circle cx="276" cy="60" r="3"/><circle cx="300" cy="60" r="3"/><circle cx="324" cy="60" r="3"/><circle cx="348" cy="60" r="3"/><circle cx="372" cy="60" r="3"/><circle cx="396" cy="60" r="3"/><circle cx="420" cy="60" r="3"/><circle cx="444" cy="60" r="3"/><circle cx="468" cy="60" r="3"/><circle cx="492" cy="60" r="3"/><circle cx="516" cy="60" r="3"/><circle cx="540" cy="60" r="3"/><circle class="on" style="--d:8.1" cx="564" cy="60" r="3"/><circle class="on" style="--d:7.2" cx="588" cy="60" r="3"/><circle cx="612" cy="60" r="3"/><circle cx="636" cy="60" r="3"/><circle cx="660" cy="60" r="3"/><circle cx="684" cy="60" r="3"/><circle class="on" style="--d:4.1" cx="708" cy="60" r="3"/><circle cx="732" cy="60" r="3"/><circle class="on" style="--d:4.1" cx="756" cy="60" r="3"/><circle cx="780" cy="60" r="3"/><circle class="on" style="--d:5.0" cx="804" cy="60" r="3"/><circle cx="828" cy="60" r="3"/><circle cx="852" cy="60" r="3"/><circle cx="876" cy="60" r="3"/><circle cx="900" cy="60" r="3"/><circle cx="924" cy="60" r="3"/><circle cx="948" cy="60" r="3"/><circle class="on" style="--d:10.8" cx="972" cy="60" r="3"/><circle cx="996" cy="60" r="3"/><circle cx="1020" cy="60" r="3"/><circle cx="1044" cy="60" r="3"/><circle cx="1068" cy="60" r="3"/><circle cx="1092" cy="60" r="3"/><circle cx="1116" cy="60" r="3"/><circle cx="1140" cy="60" r="3"/><circle cx="12" cy="84" r="3"/><circle cx="36" cy="84" r="3"/><circle cx="60" cy="84" r="3"/><circle cx="84" cy="84" r="3"/><circle cx="108" cy="84" r="3"/><circle cx="132" cy="84" r="3"/><circle cx="156" cy="84" r="3"/><circle cx="180" cy="84" r="3"/><circle cx="204" cy="84" r="3"/><circle cx="228" cy="84" r="3"/><circle cx="252" cy="84" r="3"/><circle cx="276" cy="84" r="3"/><circle cx="300" cy="84" r="3"/><circle cx="324" cy="84" r="3"/><circle cx="348" cy="84" r="3"/><circle cx="372" cy="84" r="3"/><circle cx="396" cy="84" r="3"/><circle cx="420" cy="84" r="3"/><circle cx="444" cy="84" r="3"/><circle cx="468" cy="84" r="3"/><circle cx="492" cy="84" r="3"/><circle cx="516" cy="84" r="3"/><circle cx="540" cy="84" r="3"/><circle cx="564" cy="84" r="3"/><circle cx="588" cy="84" r="3"/><circle class="on" style="--d:5.8" cx="612" cy="84" r="3"/><circle class="on" style="--d:5.0" cx="636" cy="84" r="3"/><circle cx="660" cy="84" r="3"/><circle class="on" style="--d:3.6" cx="684" cy="84" r="3"/><circle class="on" style="--d:3.2" cx="708" cy="84" r="3"/><circle cx="732" cy="84" r="3"/><circle class="on" style="--d:3.2" cx="756" cy="84" r="3"/><circle class="on" style="--d:3.6" cx="780" cy="84" r="3"/><circle class="on" style="--d:4.2" cx="804" cy="84" r="3"/><circle cx="828" cy="84" r="3"/><circle cx="852" cy="84" r="3"/><circle class="on" style="--d:6.7" cx="876" cy="84" r="3"/><circle cx="900" cy="84" r="3"/><circle cx="924" cy="84" r="3"/><circle class="on" style="--d:9.5" cx="948" cy="84" r="3"/><circle cx="972" cy="84" r="3"/><circle cx="996" cy="84" r="3"/><circle cx="1020" cy="84" r="3"/><circle cx="1044" cy="84" r="3"/><circle cx="1068" cy="84" r="3"/><circle cx="1092" cy="84" r="3"/><circle cx="1116" cy="84" r="3"/><circle cx="1140" cy="84" r="3"/><circle cx="12" cy="108" r="3"/><circle cx="36" cy="108" r="3"/><circle cx="60" cy="108" r="3"/><circle cx="84" cy="108" r="3"/><circle cx="108" cy="108" r="3"/><circle cx="132" cy="108" r="3"/><circle cx="156" cy="108" r="3"/><circle cx="180" cy="108" r="3"/><circle cx="204" cy="108" r="3"/><circle cx="228" cy="108" r="3"/><circle cx="252" cy="108" r="3"/><circle cx="276" cy="108" r="3"/><circle cx="300" cy="108" r="3"/><circle cx="324" cy="108" r="3"/><circle cx="348" cy="108" r="3"/><circle cx="372" cy="108" r="3"/><circle cx="396" cy="108" r="3"/><circle cx="420" cy="108" r="3"/><circle cx="444" cy="108" r="3"/><circle cx="468" cy="108" r="3"/><circle cx="492" cy="108" r="3"/><circle cx="516" cy="108" r="3"/><circle cx="540" cy="108" r="3"/><circle cx="564" cy="108" r="3"/><circle class="on" style="--d:6.3" cx="588" cy="108" r="3"/><circle class="on" style="--d:5.4" cx="612" cy="108" r="3"/><circle class="on" style="--d:4.5" cx="636" cy="108" r="3"/><circle cx="660" cy="108" r="3"/><circle class="on" style="--d:2.8" cx="684" cy="108" r="3"/><circle cx="708" cy="108" r="3"/><circle class="on" style="--d:2.0" cx="732" cy="108" r="3"/><circle class="on" style="--d:2.2" cx="756" cy="108" r="3"/><circle class="on" style="--d:2.8" cx="780" cy="108" r="3"/><circle cx="804" cy="108" r="3"/><circle class="on" style="--d:4.5" cx="828" cy="108" r="3"/><circle class="on" style="--d:5.4" cx="852" cy="108" r="3"/><circle cx="876" cy="108" r="3"/><circle cx="900" cy="108" r="3"/><circle cx="924" cy="108" r="3"/><circle cx="948" cy="108" r="3"/><circle cx="972" cy="108" r="3"/><circle cx="996" cy="108" r="3"/><circle cx="1020" cy="108" r="3"/><circle cx="1044" cy="108" r="3"/><circle cx="1068" cy="108" r="3"/><circle cx="1092" cy="108" r="3"/><circle cx="1116" cy="108" r="3"/><circle cx="1140" cy="108" r="3"/><circle cx="12" cy="132" r="3"/><circle cx="36" cy="132" r="3"/><circle cx="60" cy="132" r="3"/><circle cx="84" cy="132" r="3"/><circle cx="108" cy="132" r="3"/><circle cx="132" cy="132" r="3"/><circle cx="156" cy="132" r="3"/><circle cx="180" cy="132" r="3"/><circle cx="204" cy="132" r="3"/><circle cx="228" cy="132" r="3"/><circle cx="252" cy="132" r="3"/><circle cx="276" cy="132" r="3"/><circle cx="300" cy="132" r="3"/><circle cx="324" cy="132" r="3"/><circle cx="348" cy="132" r="3"/><circle cx="372" cy="132" r="3"/><circle cx="396" cy="132" r="3"/><circle cx="420" cy="132" r="3"/><circle cx="444" cy="132" r="3"/><circle cx="468" cy="132" r="3"/><circle cx="492" cy="132" r="3"/><circle cx="516" cy="132" r="3"/><circle cx="540" cy="132" r="3"/><circle class="on" style="--d:7.1" cx="564" cy="132" r="3"/><circle cx="588" cy="132" r="3"/><circle cx="612" cy="132" r="3"/><circle class="on" style="--d:4.1" cx="636" cy="132" r="3"/><circle class="on" style="--d:3.2" cx="660" cy="132" r="3"/><circle class="on" style="--d:2.2" cx="684" cy="132" r="3"/><circle class="on" style="--d:1.4" cx="708" cy="132" r="3"/><circle class="on" style="--d:1.0" cx="732" cy="132" r="3"/><circle class="on" style="--d:1.4" cx="756" cy="132" r="3"/><circle class="on" style="--d:2.2" cx="780" cy="132" r="3"/><circle cx="804" cy="132" r="3"/><circle class="on" style="--d:4.1" cx="828" cy="132" r="3"/><circle cx="852" cy="132" r="3"/><circle cx="876" cy="132" r="3"/><circle cx="900" cy="132" r="3"/><circle class="on" style="--d:8.1" cx="924" cy="132" r="3"/><circle cx="948" cy="132" r="3"/><circle cx="972" cy="132" r="3"/><circle cx="996" cy="132" r="3"/><circle cx="1020" cy="132" r="3"/><circle cx="1044" cy="132" r="3"/><circle cx="1068" cy="132" r="3"/><circle cx="1092" cy="132" r="3"/><circle cx="1116" cy="132" r="3"/><circle cx="1140" cy="132" r="3"/><circle cx="12" cy="156" r="3"/><circle cx="36" cy="156" r="3"/><circle cx="60" cy="156" r="3"/><circle cx="84" cy="156" r="3"/><circle cx="108" cy="156" r="3"/><circle cx="132" cy="156" r="3"/><circle cx="156" cy="156" r="3"/><circle cx="180" cy="156" r="3"/><circle cx="204" cy="156" r="3"/><circle cx="228" cy="156" r="3"/><circle cx="252" cy="156" r="3"/><circle cx="276" cy="156" r="3"/><circle cx="300" cy="156" r="3"/><circle cx="324" cy="156" r="3"/><circle cx="348" cy="156" r="3"/><circle cx="372" cy="156" r="3"/><circle cx="396" cy="156" r="3"/><circle cx="420" cy="156" r="3"/><circle cx="444" cy="156" r="3"/><circle cx="468" cy="156" r="3"/><circle cx="492" cy="156" r="3"/><circle cx="516" cy="156" r="3"/><circle cx="540" cy="156" r="3"/><circle cx="564" cy="156" r="3"/><circle cx="588" cy="156" r="3"/><circle class="on" style="--d:5.0" cx="612" cy="156" r="3"/><circle cx="636" cy="156" r="3"/><circle cx="660" cy="156" r="3"/><circle class="on" style="--d:2.0" cx="684" cy="156" r="3"/><circle class="on" style="--d:1.0" cx="708" cy="156" r="3"/><circle class="ring" cx="732" cy="156" r="9"/><circle class="you" cx="732" cy="156" r="6"/><circle class="on" style="--d:1.0" cx="756" cy="156" r="3"/><circle cx="780" cy="156" r="3"/><circle class="on" style="--d:3.0" cx="804" cy="156" r="3"/><circle class="on" style="--d:4.0" cx="828" cy="156" r="3"/><circle class="on" style="--d:5.0" cx="852" cy="156" r="3"/><circle class="on" style="--d:6.0" cx="876" cy="156" r="3"/><circle class="on" style="--d:7.0" cx="900" cy="156" r="3"/><circle cx="924" cy="156" r="3"/><circle cx="948" cy="156" r="3"/><circle cx="972" cy="156" r="3"/><circle cx="996" cy="156" r="3"/><circle cx="1020" cy="156" r="3"/><circle cx="1044" cy="156" r="3"/><circle cx="1068" cy="156" r="3"/><circle cx="1092" cy="156" r="3"/><circle cx="1116" cy="156" r="3"/><circle cx="1140" cy="156" r="3"/><circle cx="12" cy="180" r="3"/><circle cx="36" cy="180" r="3"/><circle cx="60" cy="180" r="3"/><circle cx="84" cy="180" r="3"/><circle cx="108" cy="180" r="3"/><circle cx="132" cy="180" r="3"/><circle cx="156" cy="180" r="3"/><circle cx="180" cy="180" r="3"/><circle cx="204" cy="180" r="3"/><circle cx="228" cy="180" r="3"/><circle cx="252" cy="180" r="3"/><circle cx="276" cy="180" r="3"/><circle cx="300" cy="180" r="3"/><circle cx="324" cy="180" r="3"/><circle cx="348" cy="180" r="3"/><circle cx="372" cy="180" r="3"/><circle cx="396" cy="180" r="3"/><circle cx="420" cy="180" r="3"/><circle cx="444" cy="180" r="3"/><circle cx="468" cy="180" r="3"/><circle class="on" style="--d:10.0" cx="492" cy="180" r="3"/><circle cx="516" cy="180" r="3"/><circle cx="540" cy="180" r="3"/><circle cx="564" cy="180" r="3"/><circle cx="588" cy="180" r="3"/><circle class="on" style="--d:5.1" cx="612" cy="180" r="3"/><circle class="on" style="--d:4.1" cx="636" cy="180" r="3"/><circle class="on" style="--d:3.2" cx="660" cy="180" r="3"/><circle class="on" style="--d:2.2" cx="684" cy="180" r="3"/><circle cx="708" cy="180" r="3"/><circle cx="732" cy="180" r="3"/><circle class="on" style="--d:1.4" cx="756" cy="180" r="3"/><circle class="on" style="--d:2.2" cx="780" cy="180" r="3"/><circle class="on" style="--d:3.2" cx="804" cy="180" r="3"/><circle cx="828" cy="180" r="3"/><circle cx="852" cy="180" r="3"/><circle class="on" style="--d:6.1" cx="876" cy="180" r="3"/><circle cx="900" cy="180" r="3"/><circle cx="924" cy="180" r="3"/><circle cx="948" cy="180" r="3"/><circle cx="972" cy="180" r="3"/><circle cx="996" cy="180" r="3"/><circle cx="1020" cy="180" r="3"/><circle cx="1044" cy="180" r="3"/><circle cx="1068" cy="180" r="3"/><circle cx="1092" cy="180" r="3"/><circle cx="1116" cy="180" r="3"/><circle cx="1140" cy="180" r="3"/><circle cx="12" cy="204" r="3"/><circle cx="36" cy="204" r="3"/><circle cx="60" cy="204" r="3"/><circle cx="84" cy="204" r="3"/><circle cx="108" cy="204" r="3"/><circle cx="132" cy="204" r="3"/><circle cx="156" cy="204" r="3"/><circle cx="180" cy="204" r="3"/><circle cx="204" cy="204" r="3"/><circle cx="228" cy="204" r="3"/><circle cx="252" cy="204" r="3"/><circle cx="276" cy="204" r="3"/><circle cx="300" cy="204" r="3"/><circle cx="324" cy="204" r="3"/><circle cx="348" cy="204" r="3"/><circle cx="372" cy="204" r="3"/><circle cx="396" cy="204" r="3"/><circle cx="420" cy="204" r="3"/><circle cx="444" cy="204" r="3"/><circle cx="468" cy="204" r="3"/><circle cx="492" cy="204" r="3"/><circle cx="516" cy="204" r="3"/><circle class="on" style="--d:8.2" cx="540" cy="204" r="3"/><circle class="on" style="--d:7.3" cx="564" cy="204" r="3"/><circle class="on" style="--d:6.3" cx="588" cy="204" r="3"/><circle cx="612" cy="204" r="3"/><circle class="on" style="--d:4.5" cx="636" cy="204" r="3"/><circle cx="660" cy="204" r="3"/><circle class="on" style="--d:2.8" cx="684" cy="204" r="3"/><circle class="on" style="--d:2.2" cx="708" cy="204" r="3"/><circle class="on" style="--d:2.0" cx="732" cy="204" r="3"/><circle class="on" style="--d:2.2" cx="756" cy="204" r="3"/><circle class="on" style="--d:2.8" cx="780" cy="204" r="3"/><circle class="on" style="--d:3.6" cx="804" cy="204" r="3"/><circle class="on" style="--d:4.5" cx="828" cy="204" r="3"/><circle class="on" style="--d:5.4" cx="852" cy="204" r="3"/><circle class="on" style="--d:6.3" cx="876" cy="204" r="3"/><circle cx="900" cy="204" r="3"/><circle cx="924" cy="204" r="3"/><circle class="on" style="--d:9.2" cx="948" cy="204" r="3"/><circle cx="972" cy="204" r="3"/><circle cx="996" cy="204" r="3"/><circle cx="1020" cy="204" r="3"/><circle cx="1044" cy="204" r="3"/><circle cx="1068" cy="204" r="3"/><circle cx="1092" cy="204" r="3"/><circle cx="1116" cy="204" r="3"/><circle cx="1140" cy="204" r="3"/><circle cx="12" cy="228" r="3"/><circle cx="36" cy="228" r="3"/><circle cx="60" cy="228" r="3"/><circle cx="84" cy="228" r="3"/><circle cx="108" cy="228" r="3"/><circle cx="132" cy="228" r="3"/><circle cx="156" cy="228" r="3"/><circle cx="180" cy="228" r="3"/><circle cx="204" cy="228" r="3"/><circle cx="228" cy="228" r="3"/><circle cx="252" cy="228" r="3"/><circle cx="276" cy="228" r="3"/><circle cx="300" cy="228" r="3"/><circle cx="324" cy="228" r="3"/><circle cx="348" cy="228" r="3"/><circle cx="372" cy="228" r="3"/><circle cx="396" cy="228" r="3"/><circle cx="420" cy="228" r="3"/><circle cx="444" cy="228" r="3"/><circle cx="468" cy="228" r="3"/><circle cx="492" cy="228" r="3"/><circle cx="516" cy="228" r="3"/><circle cx="540" cy="228" r="3"/><circle cx="564" cy="228" r="3"/><circle cx="588" cy="228" r="3"/><circle class="on" style="--d:5.8" cx="612" cy="228" r="3"/><circle class="on" style="--d:5.0" cx="636" cy="228" r="3"/><circle class="on" style="--d:4.2" cx="660" cy="228" r="3"/><circle class="on" style="--d:3.6" cx="684" cy="228" r="3"/><circle cx="708" cy="228" r="3"/><circle cx="732" cy="228" r="3"/><circle cx="756" cy="228" r="3"/><circle class="on" style="--d:3.6" cx="780" cy="228" r="3"/><circle cx="804" cy="228" r="3"/><circle cx="828" cy="228" r="3"/><circle class="on" style="--d:5.8" cx="852" cy="228" r="3"/><circle class="on" style="--d:6.7" cx="876" cy="228" r="3"/><circle cx="900" cy="228" r="3"/><circle class="on" style="--d:8.5" cx="924" cy="228" r="3"/><circle cx="948" cy="228" r="3"/><circle cx="972" cy="228" r="3"/><circle cx="996" cy="228" r="3"/><circle cx="1020" cy="228" r="3"/><circle cx="1044" cy="228" r="3"/><circle cx="1068" cy="228" r="3"/><circle cx="1092" cy="228" r="3"/><circle cx="1116" cy="228" r="3"/><circle cx="1140" cy="228" r="3"/><circle cx="12" cy="252" r="3"/><circle cx="36" cy="252" r="3"/><circle cx="60" cy="252" r="3"/><circle cx="84" cy="252" r="3"/><circle cx="108" cy="252" r="3"/><circle cx="132" cy="252" r="3"/><circle cx="156" cy="252" r="3"/><circle cx="180" cy="252" r="3"/><circle cx="204" cy="252" r="3"/><circle cx="228" cy="252" r="3"/><circle cx="252" cy="252" r="3"/><circle cx="276" cy="252" r="3"/><circle cx="300" cy="252" r="3"/><circle cx="324" cy="252" r="3"/><circle cx="348" cy="252" r="3"/><circle cx="372" cy="252" r="3"/><circle cx="396" cy="252" r="3"/><circle cx="420" cy="252" r="3"/><circle cx="444" cy="252" r="3"/><circle cx="468" cy="252" r="3"/><circle cx="492" cy="252" r="3"/><circle cx="516" cy="252" r="3"/><circle cx="540" cy="252" r="3"/><circle cx="564" cy="252" r="3"/><circle class="on" style="--d:7.2" cx="588" cy="252" r="3"/><circle class="on" style="--d:6.4" cx="612" cy="252" r="3"/><circle cx="636" cy="252" r="3"/><circle class="on" style="--d:5.0" cx="660" cy="252" r="3"/><circle class="on" style="--d:4.5" cx="684" cy="252" r="3"/><circle class="on" style="--d:4.1" cx="708" cy="252" r="3"/><circle cx="732" cy="252" r="3"/><circle cx="756" cy="252" r="3"/><circle class="on" style="--d:4.5" cx="780" cy="252" r="3"/><circle class="on" style="--d:5.0" cx="804" cy="252" r="3"/><circle cx="828" cy="252" r="3"/><circle cx="852" cy="252" r="3"/><circle cx="876" cy="252" r="3"/><circle cx="900" cy="252" r="3"/><circle cx="924" cy="252" r="3"/><circle class="on" style="--d:9.8" cx="948" cy="252" r="3"/><circle cx="972" cy="252" r="3"/><circle cx="996" cy="252" r="3"/><circle cx="1020" cy="252" r="3"/><circle cx="1044" cy="252" r="3"/><circle cx="1068" cy="252" r="3"/><circle cx="1092" cy="252" r="3"/><circle cx="1116" cy="252" r="3"/><circle cx="1140" cy="252" r="3"/><circle cx="12" cy="276" r="3"/><circle cx="36" cy="276" r="3"/><circle cx="60" cy="276" r="3"/><circle cx="84" cy="276" r="3"/><circle cx="108" cy="276" r="3"/><circle cx="132" cy="276" r="3"/><circle cx="156" cy="276" r="3"/><circle cx="180" cy="276" r="3"/><circle cx="204" cy="276" r="3"/><circle cx="228" cy="276" r="3"/><circle cx="252" cy="276" r="3"/><circle cx="276" cy="276" r="3"/><circle cx="300" cy="276" r="3"/><circle cx="324" cy="276" r="3"/><circle cx="348" cy="276" r="3"/><circle cx="372" cy="276" r="3"/><circle cx="396" cy="276" r="3"/><circle cx="420" cy="276" r="3"/><circle cx="444" cy="276" r="3"/><circle cx="468" cy="276" r="3"/><circle cx="492" cy="276" r="3"/><circle cx="516" cy="276" r="3"/><circle cx="540" cy="276" r="3"/><circle class="on" style="--d:8.6" cx="564" cy="276" r="3"/><circle cx="588" cy="276" r="3"/><circle cx="612" cy="276" r="3"/><circle cx="636" cy="276" r="3"/><circle cx="660" cy="276" r="3"/><circle cx="684" cy="276" r="3"/><circle cx="708" cy="276" r="3"/><circle class="on" style="--d:5.0" cx="732" cy="276" r="3"/><circle class="on" style="--d:5.1" cx="756" cy="276" r="3"/><circle cx="780" cy="276" r="3"/><circle cx="804" cy="276" r="3"/><circle class="on" style="--d:6.4" cx="828" cy="276" r="3"/><circle cx="852" cy="276" r="3"/><circle class="on" style="--d:7.8" cx="876" cy="276" r="3"/><circle cx="900" cy="276" r="3"/><circle class="on" style="--d:9.4" cx="924" cy="276" r="3"/><circle cx="948" cy="276" r="3"/><circle cx="972" cy="276" r="3"/><circle cx="996" cy="276" r="3"/><circle cx="1020" cy="276" r="3"/><circle cx="1044" cy="276" r="3"/><circle cx="1068" cy="276" r="3"/><circle cx="1092" cy="276" r="3"/><circle cx="1116" cy="276" r="3"/><circle cx="1140" cy="276" r="3"/><circle cx="12" cy="300" r="3"/><circle cx="36" cy="300" r="3"/><circle cx="60" cy="300" r="3"/><circle cx="84" cy="300" r="3"/><circle cx="108" cy="300" r="3"/><circle cx="132" cy="300" r="3"/><circle cx="156" cy="300" r="3"/><circle cx="180" cy="300" r="3"/><circle cx="204" cy="300" r="3"/><circle cx="228" cy="300" r="3"/><circle cx="252" cy="300" r="3"/><circle cx="276" cy="300" r="3"/><circle cx="300" cy="300" r="3"/><circle cx="324" cy="300" r="3"/><circle cx="348" cy="300" r="3"/><circle cx="372" cy="300" r="3"/><circle cx="396" cy="300" r="3"/><circle cx="420" cy="300" r="3"/><circle cx="444" cy="300" r="3"/><circle cx="468" cy="300" r="3"/><circle cx="492" cy="300" r="3"/><circle cx="516" cy="300" r="3"/><circle cx="540" cy="300" r="3"/><circle cx="564" cy="300" r="3"/><circle class="on" style="--d:8.5" cx="588" cy="300" r="3"/><circle cx="612" cy="300" r="3"/><circle cx="636" cy="300" r="3"/><circle class="on" style="--d:6.7" cx="660" cy="300" r="3"/><circle cx="684" cy="300" r="3"/><circle cx="708" cy="300" r="3"/><circle cx="732" cy="300" r="3"/><circle class="on" style="--d:6.1" cx="756" cy="300" r="3"/><circle cx="780" cy="300" r="3"/><circle class="on" style="--d:6.7" cx="804" cy="300" r="3"/><circle cx="828" cy="300" r="3"/><circle cx="852" cy="300" r="3"/><circle cx="876" cy="300" r="3"/><circle cx="900" cy="300" r="3"/><circle cx="924" cy="300" r="3"/><circle cx="948" cy="300" r="3"/><circle cx="972" cy="300" r="3"/><circle cx="996" cy="300" r="3"/><circle cx="1020" cy="300" r="3"/><circle cx="1044" cy="300" r="3"/><circle cx="1068" cy="300" r="3"/><circle cx="1092" cy="300" r="3"/><circle cx="1116" cy="300" r="3"/><circle cx="1140" cy="300" r="3"/>
@@ -612,12 +656,13 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <h2 class="label" id="index-baslik">Bu sayfada</h2>
     <ol>
       <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Aile <span>Eksik ya da zor bir aile, sınır koymak, şiddet</span></a></li>
-      <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Ruh sağlığı <span>Depresyon, ilk randevu</span></a></li>
-      <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>İlişkiler <span>Kavramlar sözlüğü, taciz, zorbalık, hukuki haklar</span></a></li>
+      <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Ruh sağlığı <span>Kriz, depresyon, panik, yas, ilk randevu</span></a></li>
+      <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>İlişkiler <span>Kavramlar sözlüğü, toksik ilişkiden çıkmak</span></a></li>
+      <li data-c="siddet"><a href="#siddet"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.7 5.7 3.8 3.8M14.5 14.5l3.8 3.8M18.3 5.7l-3.8 3.8M9.5 14.5l-3.8 3.8"/></svg>Taciz ve şiddet <span>Taciz, zorbalık, zorla evlilik, hakların</span></a></li>
       <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Cinsel sağlık <span>Enfeksiyonlar, korunma, ücretsiz test</span></a></li>
-      <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Madde bağımlılığı <span>Efsaneler, maddeler, kurtulmanın yolu</span></a></li>
+      <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Bağımlılık <span>Uyuşturucu, kumar, oyun; kurtulmanın yolu</span></a></li>
       <li data-c="ifade"><a href="#ifade"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg>Kendini ifade etmek <span>Sosyal kaygı, hazır cümleler</span></a></li>
-      <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Hak arama <span>Ücretsiz avukat, sosyal yardım</span></a></li>
+      <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Hak arama <span>Ücretsiz avukat, iş, burs, dolandırıcılık</span></a></li>
       <li data-c="rehber"><a href="#rehber"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg>Nereye başvurulur? <span>Tüm numaralar bir arada</span></a></li>
     </ol>
   </nav>
@@ -635,7 +680,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">81 il</span><span class="glance__txt">Sosyal Hizmet Merkezlerinde ücretsiz aile ve bireysel danışmanlık</span></li>
         <li><span class="glance__big">7/24</span><span class="glance__txt">ALO 183: istismar, ihmal ve aile içi şiddet için ücretsiz hat</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Aile: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#aile-1"><b>01</b>Bir ebeveynin olmaması ne değiştirir?</a><a href="#aile-2"><b>02</b>Örnek alacak birini kendin seçebilirsin</a><a href="#aile-3"><b>03</b>Ailenle anlaşamıyorsan: sınır koymak</a><a href="#aile-4"><b>04</b>Evde öğretilmeyenler: kime sorarsın?</a><a href="#aile-5"><b>05</b>Ailenden ayrılmayı düşünüyorsan</a><a href="#aile-6"><b>06</b>Evde şiddet ya da ihmal varsa</a></nav>
+      <nav class="jump fade-up" aria-label="Aile: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#aile-1"><b>01</b>Bir ebeveynin olmaması ne değiştirir?</a><a href="#aile-2"><b>02</b>Örnek alacak birini kendin seçebilirsin</a><a href="#aile-sinir"><b>03</b>Ailenle anlaşamıyorsan: sınır koymak</a><a href="#aile-4"><b>04</b>Evde öğretilmeyenler: kime sorarsın?</a><a href="#aile-ayrilmak"><b>05</b>Ailenden ayrılmayı düşünüyorsan</a><a href="#aile-siddet"><b>06</b>Evde şiddet ya da ihmal varsa</a></nav>
     </div>
 
     <div class="blocks">
@@ -648,7 +693,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <p class="callout__t">Bu sana neden önemli?</p>
             <p>Eksik olanı geri getiremezsin ama yerine başka bağlar kurabilirsin. Bu bağlar da gerçekten işe yarar. Bu bölümdeki her şey bu fikre dayanıyor.</p>
           </div>
-          <p class="src">Kaynak: <a href="https://dergipark.org.tr/en/download/article-file/3994007">Demirel ve Boduroğlu (2025), Tek ebeveynli ailelerdeki üniversite öğrencileri</a> · <a href="https://dergipark.org.tr/tr/pub/jmtpr/article/1292156">Tek ebeveynle yaşamanın çocuk ve ergenlere etkileri</a> · <a href="https://developingchild.harvard.edu/wp-content/uploads/2024/10/The-Science-of-Resilience2.pdf">Harvard Gelişen Çocuk Merkezi, Psikolojik sağlamlığın bilimi</a></p>
+          <details class="srcs"><summary>Kaynaklar (3)</summary><p class="src"><a href="https://dergipark.org.tr/en/download/article-file/3994007">Demirel ve Boduroğlu (2025), Tek ebeveynli ailelerdeki üniversite öğrencileri</a> · <a href="https://dergipark.org.tr/tr/pub/jmtpr/article/1292156">Tek ebeveynle yaşamanın çocuk ve ergenlere etkileri</a> · <a href="https://developingchild.harvard.edu/wp-content/uploads/2024/10/The-Science-of-Resilience2.pdf">Harvard Gelişen Çocuk Merkezi, Psikolojik sağlamlığın bilimi</a></p></details>
         </div>
       </div>
 
@@ -661,12 +706,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Küçük bir şey sor.</strong> "Bu konuda bana bir fikir verebilir misiniz?" demek yeterli. Çoğu insan yardım istendiğinde bundan onur duyar.</span></li>
             <li><span><strong>Bağı zamanla büyüt.</strong> Teşekkür et, gelişmelerini anlat ve bir sonraki soruyu sor. Mentorluk bir anda değil, yavaş yavaş oluşur.</span></li>
           </ol>
-          <p class="src">Kaynak: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6174947/">Van Dam ve ark. (2018), Doğal mentorluk meta-analizi</a> · <a href="https://www.ojp.gov/library/publications/youth-initiated-mentoring-meta-analytic-study-hybrid-approach-youth-mentoring">ABD Adalet Bakanlığı, Gencin seçtiği mentorluk meta-analizi</a></p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6174947/">Van Dam ve ark. (2018), Doğal mentorluk meta-analizi</a> · <a href="https://www.ojp.gov/library/publications/youth-initiated-mentoring-meta-analytic-study-hybrid-approach-youth-mentoring">ABD Adalet Bakanlığı, Gencin seçtiği mentorluk meta-analizi</a></p></details>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-3" data-k="kavga baskı anlaşamamak annem babam izin vermiyor">Ailenle anlaşamıyorsan: sınır koymak</h3>
+        <h3 id="aile-sinir" data-k="kavga baskı anlaşamamak annem babam izin vermiyor">Ailenle anlaşamıyorsan: sınır koymak</h3>
         <div class="prose">
           <p>Sınır koymak aileni reddetmek demek değil. Ne istediğini, nelere izin verdiğini ve nelere vermediğini bilip bunu sakin ve açık bir şekilde söylemektir. Psikologların önerileri şöyle:</p>
           <ul class="d">
@@ -677,7 +722,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Tutarlı ol.</strong> Sınırını sakin bir şekilde tekrar tekrar söylemen gerekebilir. Tartışmaya girme, sadece tekrarla.</li>
           </ul>
           <p>Aile içindeki sorunlar için Aile ve Sosyal Hizmetler Bakanlığı'nın <strong>ücretsiz aile danışmanlığı ve bireysel danışmanlık</strong> hizmeti var. Sosyal Hizmet Merkezlerinde 81 ilde veriliyor ve e-Devlet'ten başvurulabiliyor. Ailen gelmek istemezse tek başına da gidebilirsin.</p>
-          <p class="src">Kaynak: <a href="https://www.psychologytoday.com/us/basics/boundaries">Psychology Today, Sınır koymak</a> · <a href="https://screening.mhanational.org/content/how-can-i-set-boundaries-my-family/">Mental Health America, Aileyle sınır koymak</a> · <a href="https://www.aile.gov.tr/media/315999/aile-danismanligi-hizmeti.pdf">Aile ve Sosyal Hizmetler Bakanlığı, Aile danışmanlığı</a></p>
+          <details class="srcs"><summary>Kaynaklar (3)</summary><p class="src"><a href="https://www.psychologytoday.com/us/basics/boundaries">Psychology Today, Sınır koymak</a> · <a href="https://screening.mhanational.org/content/how-can-i-set-boundaries-my-family/">Mental Health America, Aileyle sınır koymak</a> · <a href="https://www.aile.gov.tr/media/315999/aile-danismanligi-hizmeti.pdf">Aile ve Sosyal Hizmetler Bakanlığı, Aile danışmanlığı</a></p></details>
         </div>
       </div>
 
@@ -698,7 +743,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-5" data-k="evden kaçmak evden ayrılmak kaçtım yurt ev taşınmak">Ailenden ayrılmayı düşünüyorsan</h3>
+        <h3 id="aile-ayrilmak" data-k="evden kaçmak evden ayrılmak kaçtım yurt ev taşınmak">Ailenden ayrılmayı düşünüyorsan</h3>
         <div class="prose">
           <p>18 yaşını doldurduğunda nerede yaşayacağına kendin karar verebilirsin. Ama ani bir ayrılık seni zor durumda bırakabilir. Şiddet yoksa önce bir plan yap:</p>
           <ol class="n">
@@ -708,12 +753,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Destek.</strong> Sosyal Hizmet Merkezleri danışmanlık verir ve seni ihtiyacına uygun hizmetlere yönlendirir. Maddi destek için <a href="tel:144">ALO 144</a>'ü arayabilirsin.</span></li>
           </ol>
           <p>Devlet korumasında büyüdüysen, Aile ve Sosyal Hizmetler Bakanlığı'nın gençler için hazırladığı <a href="https://aile.gov.tr/media/58208/genclere-yonelik-hayata-hazirlama-rehberi.pdf">Hayata Hazırlama Rehberi<span class="visually-hidden"> (PDF)</span></a> barınma, eğitim ve iş konusundaki haklarını anlatıyor. Devlet koruması altındaki gençler KYK yurtlarında ücretsiz kalabiliyor.</p>
-          <p class="src">Kaynak: <a href="https://kygm.gsb.gov.tr/Sayfalar/2678/2388/sikca-sorulan-sorular-yurt.aspx">Gençlik ve Spor Bakanlığı, KYK yurtları</a> · <a href="https://alo144.aile.gov.tr/">ALO 144</a></p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://kygm.gsb.gov.tr/Sayfalar/2678/2388/sikca-sorulan-sorular-yurt.aspx">Gençlik ve Spor Bakanlığı, KYK yurtları</a> · <a href="https://alo144.aile.gov.tr/">ALO 144</a></p></details>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-6" data-k="dayak dövüyor dövmek vurmak tokat istismar ensest taciz tecavüz korkuyorum">Evde şiddet ya da ihmal varsa</h3>
+        <h3 id="aile-siddet" data-k="dayak dövüyor dövmek vurmak tokat istismar ensest taciz tecavüz korkuyorum">Evde şiddet ya da ihmal varsa</h3>
         <div class="prose">
           <p>Kimse sana vurmayı, seni aç bırakmayı ya da korkutmayı hak etmez. Bu "aile meselesi" değildir. <strong>18 yaşından küçüksen</strong>, 5395 sayılı Çocuk Koruma Kanunu'na göre devlet senin için danışmanlık, eğitim, bakım, sağlık ve barınma tedbirleri alabilir. Bu tedbirlerde öncelik, mümkünse kendi aile ortamında korunmandır.</p>
           <ul class="d">
@@ -722,8 +767,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Cinsel istismar:</strong> Hastanelerdeki Çocuk İzlem Merkezlerinde (ÇİM) ifade, muayene ve diğer işlemler tek bir yerde, uzmanlar eşliğinde yapılır. Böylece yaşadığını defalarca anlatmak zorunda kalmazsın.</li>
             <li><strong>Hayati tehlike:</strong> <a href="tel:112">112</a>.</li>
           </ul>
-          <p><strong>18 yaşından büyüksen</strong> <a href="#iliski-hukuk">İlişkiler bölümündeki</a> 6284 sayılı Kanun hakları senin için de geçerli. Bu kanun çocukları da yetişkin aile bireylerini de ev içi şiddete karşı koruyor. ŞÖNİM ve ALO 183 bu konuda da yardımcı olur.</p>
-          <p class="src">Kaynak: <a href="https://hsgm.saglik.gov.tr/depo/Mevzuat/Kanunlar/Cocuk_Koruma_Kanunu_5395.pdf">5395 sayılı Çocuk Koruma Kanunu</a> · <a href="https://aile.gov.tr/sss/cocuk-hizmetleri-genel-mudurlugu/koruyucu-ve-onleyici-hizmetler/">Bakanlık, Çocuk İzlem Merkezleri</a></p>
+          <p><strong>18 yaşından büyüksen</strong> <a href="#iliski-hukuk">Taciz ve şiddet bölümündeki</a> 6284 sayılı Kanun hakları senin için de geçerli. Bu kanun çocukları da yetişkin aile bireylerini de ev içi şiddete karşı koruyor. ŞÖNİM ve ALO 183 bu konuda da yardımcı olur.</p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://hsgm.saglik.gov.tr/depo/Mevzuat/Kanunlar/Cocuk_Koruma_Kanunu_5395.pdf">5395 sayılı Çocuk Koruma Kanunu</a> · <a href="https://aile.gov.tr/sss/cocuk-hizmetleri-genel-mudurlugu/koruyucu-ve-onleyici-hizmetler/">Bakanlık, Çocuk İzlem Merkezleri</a></p></details>
         </div>
       </div>
     </div>
@@ -754,12 +799,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">2 hafta</span><span class="glance__txt">neredeyse her gün süren çöküntü depresyon işareti olabilir</span></li>
         <li><span class="glance__big">0 TL</span><span class="glance__txt">devlet hastanesinde ruh sağlığı randevusu: ALO 182 ya da MHRS</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Ruh sağlığı: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#ruh-kriz"><b>01</b>Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</a><a href="#ruh-arkadas"><b>02</b>Bir arkadaşın için endişeleniyorsan</a><a href="#ruh-3"><b>03</b>Bu senin suçun değil</a><a href="#ruh-4"><b>04</b>Üzüntü ile depresyon arasındaki fark</a><a href="#ruh-5"><b>05</b>Psikolog mu, psikiyatrist mi?</a><a href="#ruh-6"><b>06</b>İlk randevuda ne olur?</a></nav>
+      <nav class="jump fade-up" aria-label="Ruh sağlığı: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#ruh-kriz"><b>01</b>Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</a><a href="#ruh-arkadas"><b>02</b>Bir arkadaşın için endişeleniyorsan</a><a href="#ruh-3"><b>03</b>Bu senin suçun değil</a><a href="#ruh-4"><b>04</b>Üzüntü ile depresyon arasındaki fark</a><a href="#ruh-panik"><b>05</b>Panik atak geçiriyorsan</a><a href="#ruh-sinav"><b>06</b>Sınav kaygısı</a><a href="#ruh-yeme"><b>07</b>Yemekle ve bedeninle kavgalıysan</a><a href="#ruh-yas"><b>08</b>Birini kaybettiysen</a><a href="#ruh-9"><b>09</b>Psikolog mu, psikiyatrist mi?</a><a href="#ruh-10"><b>10</b>İlk randevuda ne olur?</a></nav>
     </div>
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="ruh-kriz" data-k="intihar ölmek istiyorum kendini öldürmek yaşamak istemiyorum jilet kendini kesmek kriz">Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</h3>
+        <h3 id="ruh-kriz" data-acik data-k="intihar ölmek istiyorum kendini öldürmek yaşamak istemiyorum jilet kendini kesmek kriz">Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</h3>
         <div class="prose">
           <p>Bunu düşünmek bir zayıflık değil ve suçlu hissetmeni gerektirmez. Dünya Sağlık Örgütü bunu ağır bir duygusal sıkıntının işareti olarak tanımlıyor. Bunu yaşayıp yardım alan ve iyileşen çok insan var.</p>
           <div class="callout" role="note">
@@ -787,7 +832,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Yalnız bırakma, sır tutma.</strong> Bir yetişkine ya da sağlık çalışanına birlikte gidin. Bu, arkadaşına ihanet değildir.</span></li>
             <li><span><strong>Tehlike varsa</strong> yanından ayrılma ve <a href="tel:112">112</a>'yi ara.</span></li>
           </ol>
-          <p class="src">Kaynak: <a href="https://www.who.int/news-room/questions-and-answers/item/suicide">Dünya Sağlık Örgütü, İntihar: sorular ve cevaplar (2026)</a> · <a href="https://diyarbakiriasb.saglik.gov.tr/TR,149667/intihar-ve-intihari-onleme.html">Sağlık Bakanlığı, Diyarbakır İl Ambulans Servisi</a></p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.who.int/news-room/questions-and-answers/item/suicide">Dünya Sağlık Örgütü, İntihar: sorular ve cevaplar (2026)</a> · <a href="https://diyarbakiriasb.saglik.gov.tr/TR,149667/intihar-ve-intihari-onleme.html">Sağlık Bakanlığı, Diyarbakır İl Ambulans Servisi</a></p></details>
         </div>
       </div>
 
@@ -809,7 +854,64 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-5" data-k="terapi terapist danışman">Psikolog mu, psikiyatrist mi?</h3>
+        <h3 id="ruh-panik" data-k="panik atak panik nöbeti nefes alamıyorum kalp çarpıntısı korku krizi">Panik atak geçiriyorsan</h3>
+        <div class="prose">
+          <p>Panik atak, birdenbire gelen çok yoğun korku ve beden belirtileridir: çarpıntı, nefes darlığı, titreme, terleme, baş dönmesi, göğüs ağrısı, çok kötü bir şey olacakmış hissi. Çoğu 5 ile 20 dakika arasında sürer. Çok korkutucudur ama panik atağın kendisi bedenine zarar vermez.</p>
+          <ol class="n">
+            <li><span><strong>Adını koy.</strong> Kendine <q>Bu bir panik atak, geçecek</q> de.</span></li>
+            <li><span><strong>Nefesini yavaşlat.</strong> Burnundan sakince al, ağzından daha uzun sürede ver. Zorlama, birkaç dakika sürdür.</span></li>
+            <li><span><strong>Bitince doktora anlat.</strong> Tekrarlıyorsa aile hekimine ya da ALO 182'den ruh sağlığı bölümüne git. Konuşma terapisi ve gerekirse ilaçla tedavi edilebilir.</span></li>
+          </ol>
+          <p>Aynı belirtiler başka bir sağlık sorunundan da kaynaklanabilir. Göğüs ağrısı ya da nefes darlığını ilk kez yaşıyorsan veya geçmiyorsa <a href="tel:112">112</a>'yi ara.</p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.nhs.uk/mental-health/conditions/panic-disorder/">NHS, Panik bozukluk</a> · <a href="https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/">NHS, Nefes egzersizi</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-sinav" data-k="sınav kaygısı sınav stresi yks lgs ders okul başarısızlık">Sınav kaygısı</h3>
+        <div class="prose">
+          <p>Sürekli endişe, baş ve karın ağrısı, uykusuzluk, sinirlilik, sevdiğin şeylerden keyif alamama ve gelecekle ilgili umutsuzluk sınav stresinin belirtileri olabilir. Bir sınav senin değerini ölçmez.</p>
+          <ul class="d">
+            <li><strong>Küçük parçalara böl.</strong> Gerçekçi bir çalışma planı yap, dersleri karıştır.</li>
+            <li><strong>Sık ve kısa molalar ver.</strong> Saatlerce ara vermeden çalışmak hem odağını bozar hem kaygını artırır.</li>
+            <li><strong>Uyu.</strong> Gençlerin çoğunun gecede 8–10 saat uykuya ihtiyacı var.</li>
+            <li><strong>Anlamadığını sor.</strong> Ezberlemek yerine öğretmeninden ya da arkadaşından yardım iste.</li>
+            <li><strong>Konuş.</strong> Evde baskı varsa ya da başa çıkamıyorsan okul rehber öğretmenine anlat. Umutsuzluk ağır basıyorsa <a href="#ruh-kriz">bu başlığa</a> bak.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.nhs.uk/mental-health/children-and-young-adults/help-for-teenagers-young-adults-and-students/tips-on-preparing-for-exams/">NHS, Sınava hazırlık</a> · <a href="https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/help-your-child-beat-exam-stress/">NHS, Sınav stresi</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-yeme" data-k="yeme bozukluğu anoreksiya bulimiya kusmak kilo zayıflamak diyet şişman beden algısı tıkınırcasına">Yemekle ve bedeninle kavgalıysan</h3>
+        <div class="prose">
+          <p>Yeme bozukluğu bir heves ya da irade sorunu değil, ruh sağlığı sorunudur. Duygularla başa çıkmak için yemeği kontrol etmekle ilgilidir. Her bedende ve herkeste olabilir, en çok gençlerde görülür. Tedaviyle çoğu kişi iyileşir.</p>
+          <ul class="d">
+            <li><strong>İşaretler:</strong> kilonu ve bedenini sürekli düşünmek, yemek olan ortamlardan kaçmak, çok az yemek, kontrolsüzce çok yemek, yedikten sonra kusmak, aşırı spor yapmak, adetin kesilmesi, üşüme, baş dönmesi.</li>
+            <li><strong>Ne yapabilirsin?</strong> Güvendiğin birine söyle ve onunla birlikte aile hekimine git ya da ALO 182'den ruh sağlığı bölümüne randevu al. Mümkün olduğunca erken başvur.</li>
+            <li><strong>Bayılıyorsan, kalbin çok hızlı atıyorsa ya da çok güçsüzsen</strong> bekleme, acil servise git ya da <a href="tel:112">112</a>'yi ara.</li>
+            <li><strong>Arkadaşın için endişeleniyorsan</strong> <q>Senin için endişeleniyorum, yanındayım</q> de ve doktora birlikte gitmeyi öner. İnkâr edebilir ya da savunmaya geçebilir; bu sık görülür.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/behaviours/eating-disorders/overview/">NHS, Yeme bozuklukları</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-yas" data-k="yas kayıp vefat cenaze annem öldü babam öldü arkadaşım öldü özlem">Birini kaybettiysen</h3>
+        <div class="prose">
+          <p>Yasın doğru ya da yanlış bir yolu yok. Şok, hiçbir şey hissetmeme, ağlama, yorgunluk, öfke ve suçluluk normaldir. Bu duygular bazen hiç beklemediğin anda gelir. Zamanla yoğunluğu azalır.</p>
+          <ul class="d">
+            <li><strong>Konuş.</strong> Bir arkadaşın, yakının ya da öğretmeninle onun hakkında konuşabilirsin.</li>
+            <li><strong>Küçük hedefler koy.</strong> Her şeyi bir anda yapmaya çalışma. Yemek, uyku ve biraz hareket yeter.</li>
+            <li><strong>Acıyı alkol, sigara, madde ya da kumarla bastırma.</strong> Ruh sağlığını daha kötü etkiler.</li>
+            <li><strong>Yardım al.</strong> Günlük hayatını sürdüremiyorsan aile hekimine, ALO 182'ye ya da okul rehber öğretmenine başvur. Yaşamak istemediğini düşünüyorsan <a href="#ruh-kriz">hemen buraya bak</a>.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/grief-bereavement-loss/">NHS, Yas ve kayıp</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-9" data-k="terapi terapist danışman">Psikolog mu, psikiyatrist mi?</h3>
         <div class="prose">
           <div class="table-wrap">
             <table class="stack">
@@ -828,7 +930,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-6" data-k="randevu mhrs hastane terapi">İlk randevuda ne olur?</h3>
+        <h3 id="ruh-10" data-k="randevu mhrs hastane terapi">İlk randevuda ne olur?</h3>
         <div class="prose">
           <ol class="n">
             <li><span>MHRS'den ya da <a href="tel:182">ALO 182</a>'yi arayarak devlet hastanesinde "Ruh Sağlığı ve Hastalıkları" bölümünden randevu alırsın. Ücretsizdir.</span></li>
@@ -867,11 +969,11 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <p class="chapter__lead">Sevgisiz ya da sert bir evde büyüyen biri, kontrol edilmeyi "önemsenmek", kıskançlığı "sevgi" sanabilir. Yaşadığın şeyin bir adı olduğunu bilmek, onu fark etmenin ilk adımıdır.</p>
       </header>
       <ul class="glance fade-up" aria-label="Kısaca">
-        <li><span class="glance__big">23</span><span class="glance__txt">kavram, Türkçe ve İngilizce adlarıyla: gaslighting, ghosting, DARVO…</span></li>
-        <li><span class="glance__big">6284</span><span class="glance__txt">sayılı Kanun psikolojik şiddeti de kapsar; kadınları, çocukları ve aile bireylerini korur</span></li>
-        <li><span class="glance__big">WhatsApp</span><span class="glance__txt">sesli konuşamıyorsan ALO 183'e yazabilirsin: 0501 183 0 183</span></li>
+        <li><span class="glance__big">19</span><span class="glance__txt">kavram, Türkçe ve İngilizce adlarıyla: gaslighting, ghosting, DARVO…</span></li>
+        <li><span class="glance__big">Tekrar</span><span class="glance__txt">asıl işaret bu: bir kez değil, tekrar eden davranış</span></li>
+        <li><span class="glance__big">ALO 183</span><span class="glance__txt">psikolojik şiddet için de 7/24 arayabilirsin</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="İlişkiler: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#iliski-1"><b>01</b>Kavramlar sözlüğü</a><a href="#iliski-2"><b>02</b>Bunlardan nasıl kurtulur, nasıl aşarsın?</a><a href="#iliski-taciz"><b>03</b>Taciz ya da cinsel saldırıya uğradıysan</a><a href="#iliski-taciz-yasa"><b>04</b>Taciz ve cinsel saldırıda hakların</a><a href="#iliski-taciz-arkadas"><b>05</b>Biri sana taciz ya da saldırıyı anlattıysa</a><a href="#iliski-zorbalik"><b>06</b>Okulda ve internette zorbalık</a><a href="#iliski-hukuk"><b>07</b>Hukuki haklarını bil</a></nav>
+      <nav class="jump fade-up" aria-label="İlişkiler: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#iliski-1"><b>01</b>Kavramlar sözlüğü</a><a href="#iliski-2"><b>02</b>Bunlardan nasıl kurtulur, nasıl aşarsın?</a></nav>
     </div>
 
     <div class="blocks">
@@ -893,23 +995,15 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <input type="search" placeholder="Kavram ara: ghosting, şantaj…" autocomplete="off">
             </label>
           </div>
-          <p class="meta-row"><span id="terms-count" role="status">23 kavram gösteriliyor</span><button class="link-btn" type="button" data-toggle-all="terms" aria-controls="terms">Hepsini aç</button></p>
+          <p class="meta-row"><span id="terms-count" role="status">19 kavram gösteriliyor</span><button class="link-btn" type="button" data-toggle-all="terms" aria-controls="terms">Hepsini aç</button></p>
           <ul class="acc-list" id="terms">
             <li data-cat="bas"><details class="acc">
-              <summary><span><span class="acc__t">Sevgi bombardımanı</span><span class="acc__en" lang="en">Love bombing</span></span><span class="acc__cat">Tanışma ve başlangıç</span></summary>
+              <summary><span><span class="acc__t">Sevgi bombardımanı ve sahte gelecek vaadi</span><span class="acc__en" lang="en">Love bombing / Future faking</span></span><span class="acc__cat">Tanışma ve başlangıç</span></summary>
               <div class="acc__body">
-                <p>İlişkinin başında aşırı ilgi, iltifat, hediye ve sürekli mesajla karşındakini etkilemek. Amaç sevgi değil, kontrol kurmak ve seni ona borçlu hissettirmektir. Genellikle arkasından değersizleştirme gelir.</p>
-                <p class="q"><span class="k">Örnek</span>İkinci haftada “Sen benim ruh eşimsin, seninle evlenmek istiyorum” ve günde yüz mesaj.</p>
-                <p><span class="k">Ne yapabilirsin</span>“Biraz yavaş gidelim” de ve tepkisine bak. Gerçek ilgi bekler, sevgi bombardımanı yapan kişi öfkelenir ya da seni suçlar.</p>
+                <p>İlişkinin başında aşırı ilgi, iltifat, hediye, sürekli mesaj ve hiç gerçekleşmeyecek planlarla (ev, evlilik, tatil) karşındakini etkilemek. Amaç sevgi değil, kontrol kurmak ve seni ona borçlu hissettirmektir. Genellikle arkasından değersizleştirme gelir.</p>
+                <p class="q"><span class="k">Örnek</span>İkinci haftada “Sen benim ruh eşimsin, yazın ailemle tanışacaksın, birlikte eve çıkarız” ve günde yüz mesaj.</p>
+                <p><span class="k">Ne yapabilirsin</span>“Biraz yavaş gidelim” de ve tepkisine bak. Gerçek ilgi bekler; sevgi bombardımanı yapan kişi öfkelenir ya da seni suçlar. Sözlere değil davranışlara bak, vaatler somut bir adıma dönüşmüyorsa not al.</p>
                 <p class="src">Kaynak: <a href="https://health.clevelandclinic.org/love-bombing">Cleveland Clinic, Love bombing</a></p>
-              </div>
-            </details></li>
-            <li data-cat="bas"><details class="acc">
-              <summary><span><span class="acc__t">Sahte gelecek vaadi</span><span class="acc__en" lang="en">Future faking</span></span><span class="acc__cat">Tanışma ve başlangıç</span></summary>
-              <div class="acc__body">
-                <p>Hiç gerçekleşmeyecek ortak planlarla (ev, evlilik, tatil) seni ilişkiye bağlamak. Sevgi bombardımanıyla sık görülür.</p>
-                <p class="q"><span class="k">Örnek</span>“Yazın seni ailemle tanıştıracağım, sonra birlikte eve çıkarız.” Yaz gelir, hep bir bahane çıkar.</p>
-                <p><span class="k">Ne yapabilirsin</span>Sözlere değil davranışlara bak. Vaatler hiç somut bir adıma dönüşmüyorsa not al.</p>
               </div>
             </details></li>
             <li data-cat="bas"><details class="acc">
@@ -1002,23 +1096,15 @@ tbody th { font-weight: 600; white-space: nowrap; }
                 <p>İyi ve kötü günlerin sırayla geldiği bir döngüde, sana zarar veren kişiye güçlü bir bağlılık hissetmek. “Neden ayrılamıyorum?” sorusunun cevabı çoğu zaman budur. Kökü çocukluktaki bakım verenlerle kurulan bağda olabilir.</p>
                 <p class="q"><span class="k">Örnek</span>Kavga, ardından özür ve çok güzel bir hafta, sonra yine kavga. Her “iyi gün” seni biraz daha bağlıyor.</p>
                 <p><span class="k">Ne yapabilirsin</span>Bu bir zayıflık değil, beynin ödül ve ceza döngüsüne verdiği tepkidir. Teması kes, notlarını oku ve bir terapistten destek al.</p>
-                <p class="src">Kaynak: <a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a> · <a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a></p>
+                <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a> · <a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a></p></details>
               </div>
             </details></li>
             <li data-cat="ic"><details class="acc">
-              <summary><span><span class="acc__t">Ekmek kırıntısı</span><span class="acc__en" lang="en">Breadcrumbing</span></span><span class="acc__cat">İlişkinin içinde</span></summary>
+              <summary><span><span class="acc__t">Oyalama: ekmek kırıntısı ve yedek kulübesi</span><span class="acc__en" lang="en">Breadcrumbing / Benching</span></span><span class="acc__cat">İlişkinin içinde</span></summary>
               <div class="acc__body">
-                <p>Seni elinde tutmaya yetecek kadar ama asla netleşmeyecek kadar az ilgi göstermek: ara sıra bir mesaj, bir beğeni, bir “özledim”.</p>
-                <p class="q"><span class="k">Örnek</span>Haftalarca ses yok, sen tam vazgeçerken gece yarısı “naber” geliyor.</p>
-                <p><span class="k">Ne yapabilirsin</span>Kendine şunu sor: “Bu ilişkiden ne istiyorum, ne alıyorum?” Cevaplar uyuşmuyorsa netlik iste ya da bırak.</p>
-              </div>
-            </details></li>
-            <li data-cat="ic"><details class="acc">
-              <summary><span><span class="acc__t">Yedek kulübesi</span><span class="acc__en" lang="en">Benching</span></span><span class="acc__cat">İlişkinin içinde</span></summary>
-              <div class="acc__body">
-                <p>Seni bir B planı gibi kenarda tutmak. Hiç kopmadan, ama ilişkiye de hiç girmeden.</p>
-                <p class="q"><span class="k">Örnek</span>Planları hep son dakika iptal oluyor ama arada “sen bambaşkasın” mesajları geliyor.</p>
-                <p><span class="k">Ne yapabilirsin</span>Önceliği olmadığın bir ilişkide bekleyip zamanını harcama.</p>
+                <p>Seni elinde tutmaya yetecek kadar ama asla netleşmeyecek kadar az ilgi göstermek (ekmek kırıntısı) ya da seni bir B planı gibi kenarda tutmak (yedek kulübesi).</p>
+                <p class="q"><span class="k">Örnek</span>Haftalarca ses yok, sen tam vazgeçerken gece yarısı “naber” geliyor. Planlar hep son dakika iptal oluyor.</p>
+                <p><span class="k">Ne yapabilirsin</span>Kendine şunu sor: “Bu ilişkiden ne istiyorum, ne alıyorum?” Cevaplar uyuşmuyorsa netlik iste ya da bırak. Önceliği olmadığın bir ilişkide bekleyip zamanını harcama.</p>
               </div>
             </details></li>
             <li data-cat="ic"><details class="acc">
@@ -1030,29 +1116,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
               </div>
             </details></li>
             <li data-cat="son"><details class="acc">
-              <summary><span><span class="acc__t">Hayalet gibi kaybolma</span><span class="acc__en" lang="en">Ghosting</span></span><span class="acc__cat">Ayrılık ve sonrası</span></summary>
+              <summary><span><span class="acc__t">Hayalet gibi kaybolma ve geri dönme</span><span class="acc__en" lang="en">Ghosting / Orbiting / Zombieing</span></span><span class="acc__cat">Ayrılık ve sonrası</span></summary>
               <div class="acc__body">
-                <p>Hiçbir açıklama yapmadan birdenbire iletişimi kesmek. Geride cevapsız sorular bırakır ve genellikle “ben ne yaptım?” düşüncesine yol açar.</p>
-                <p class="q"><span class="k">Örnek</span>Dün akşam güzel bir sohbet ettiniz, bugün mesajların görülüyor ama cevap yok, sonra engelleniyorsun.</p>
-                <p><span class="k">Ne yapabilirsin</span>Kaybolmak onun iletişim becerisini gösterir, senin değerini değil. Kapanışı kendin yap: kendine bir veda mektubu yaz ve gönderme.</p>
+                <p>Hiçbir açıklama yapmadan iletişimi kesmek (ghosting). Bazen kişi yazmadığı hâlde hikâyelerini izlemeye devam eder (orbiting) ya da aylar sonra hiçbir şey olmamış gibi döner (zombieing). Araştırmalar, uzaktan izlemenin doğrudan reddedilmekten daha fazla kafa karıştırdığını gösteriyor.</p>
+                <p class="q"><span class="k">Örnek</span>Dün akşam güzel bir sohbet ettiniz, bugün mesajların görülüyor ama cevap yok. Altı ay sonra: “Selam yabancı, aklıma geldin.”</p>
+                <p><span class="k">Ne yapabilirsin</span>Kaybolmak onun iletişim becerisini gösterir, senin değerini değil. Hikâyelerini ondan gizle ya da engelle. Açıklama ve özür olmadan geri dönmeyi kabul etmek zorunda değilsin; cevap vermemek de bir cevaptır.</p>
                 <p class="src">Kaynak: <a href="https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope">Colorado Üniversitesi, Ghosting ve orbiting</a></p>
-              </div>
-            </details></li>
-            <li data-cat="son"><details class="acc">
-              <summary><span><span class="acc__t">Yörüngede dolaşma</span><span class="acc__en" lang="en">Orbiting</span></span><span class="acc__cat">Ayrılık ve sonrası</span></summary>
-              <div class="acc__body">
-                <p>Seninle iletişimi kesip yine de sosyal medyanı takip etmek: hikâyelerini izlemek, arada bir beğeni bırakmak. Araştırmalar bunun doğrudan reddedilmekten daha fazla kafa karıştırdığını gösteriyor.</p>
-                <p class="q"><span class="k">Örnek</span>Üç aydır yazmıyor ama her hikâyeni ilk izleyenlerden biri o.</p>
-                <p><span class="k">Ne yapabilirsin</span>Hikâyelerini ondan gizle ya da onu engelle. Görmediğin şey, yarayı yeniden açmaz.</p>
-                <p class="src">Kaynak: <a href="https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope">Colorado Üniversitesi, Ghosting ve orbiting</a></p>
-              </div>
-            </details></li>
-            <li data-cat="son"><details class="acc">
-              <summary><span><span class="acc__t">Hortlama / Denizaltı</span><span class="acc__en" lang="en">Zombieing / Submarining</span></span><span class="acc__cat">Ayrılık ve sonrası</span></summary>
-              <div class="acc__body">
-                <p>Ghosting yapan kişinin aylar sonra hiçbir şey olmamış gibi geri dönmesi.</p>
-                <p class="q"><span class="k">Örnek</span>Altı ay sonra: “Selam yabancı, aklıma geldin.”</p>
-                <p><span class="k">Ne yapabilirsin</span>Açıklama ve özür olmadan geri dönmeyi kabul etmek zorunda değilsin. Cevap vermemek de bir cevaptır.</p>
               </div>
             </details></li>
             <li data-cat="son"><details class="acc">
@@ -1064,7 +1133,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
                 <p class="src">Kaynak: <a href="https://health.clevelandclinic.org/hoovering">Cleveland Clinic, Hoovering</a></p>
               </div>
             </details></li>
-            <li data-cat="dij"><details class="acc">
+            <li id="terim-santaj" data-cat="dij"><details class="acc">
               <summary><span><span class="acc__t">Cinsel içerikli şantaj</span><span class="acc__en" lang="en">Sextortion</span></span><span class="acc__cat">Dijital</span></summary>
               <div class="acc__body">
                 <p>Özel fotoğraf ya da video ile tehdit edilerek para, yeni görüntü ya da başka bir şey istenmesi. Türk Ceza Kanunu'na göre şantaj suçudur (TCK 107) ve şikâyete bağlı değildir.</p>
@@ -1107,12 +1176,43 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Çevreni yeniden kur.</strong> Uzaklaştığın arkadaşlarına "Bir süredir kayboldum, özür dilerim, seni özledim" diye yazmak yeterlidir. Çoğu insan bunu anlar.</span></li>
             <li><span><strong>Destek al.</strong> Hep benzer ilişkilere düşüyorsan bunun kökü çoğu zaman çocuklukta bakım verenlerle kurulan bağa dayanır. Bir terapistle bu örüntüyü çözmek mümkün. Ücretsiz seçenekler <a href="#ruh">Ruh sağlığı bölümünde</a>.</span></li>
           </ol>
-          <p class="src">Kaynak: <a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a> · <a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a></p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a> · <a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a></p></details>
         </div>
       </div>
 
+    </div>
+
+    <div class="help fade-up">
+      <h3 class="label">Nereye başvurabilirsin?</h3>
+      <ul>
+        <li><span class="help__name">Şiddetle Mücadele Hattı</span><a class="tel" href="tel:183">ALO 183</a><small>7/24, ücretsiz. Psikolojik şiddet de dahil.</small></li>
+        <li><span class="help__name">Taciz, şiddet, takip ya da şantaj varsa</span><small><a href="#siddet">Taciz ve şiddet bölümü</a></small></li>
+        <li><span class="help__name">Konuşacak bir uzman</span><small><a href="#ruh">Ruh sağlığı bölümündeki</a> ücretsiz seçenekler</small></li>
+        <li><span class="help__name">Acil tehlike</span><a class="tel" href="tel:112">112</a></li>
+      </ul>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
+    </div>
+  </section>
+
+  <!-- TACİZ VE ŞİDDET -->
+  <section id="siddet" class="chapter grid" data-c="siddet" aria-labelledby="siddet-baslik">
+    <div class="band">
+      <header class="chapter__head fade-up">
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.7 5.7 3.8 3.8M14.5 14.5l3.8 3.8M18.3 5.7l-3.8 3.8M9.5 14.5l-3.8 3.8"/></svg><span class="chapter__num">04</span><span class="chapter__name">Taciz ve şiddet</span></p>
+        <h2 id="siddet-baslik">Sana yapılan senin suçun değil.</h2>
+        <p class="chapter__lead">Taciz, saldırı, zorbalık, takip ya da zorla evlendirme. Yapan kim olursa olsun ve ne zaman olmuş olursa olsun yardım isteyebilirsin. Burada ilk ne yapacağın, hakların ve seni dinleyecek yerler var.</p>
+      </header>
+      <ul class="glance fade-up" aria-label="Kısaca">
+        <li><span class="glance__big">72 saat</span><span class="glance__txt">cinsel saldırıdan sonra hastaneye gitmek için en önemli süre</span></li>
+        <li><span class="glance__big">6284</span><span class="glance__txt">sayılı Kanun psikolojik şiddeti de kapsar; kadınları, çocukları ve aile bireylerini korur</span></li>
+        <li><span class="glance__big">WhatsApp</span><span class="glance__txt">sesli konuşamıyorsan ALO 183'e yazabilirsin: 0501 183 0 183</span></li>
+      </ul>
+      <nav class="jump fade-up" aria-label="Taciz ve şiddet: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#iliski-taciz"><b>01</b>Taciz ya da cinsel saldırıya uğradıysan</a><a href="#iliski-taciz-yasa"><b>02</b>Taciz ve cinsel saldırıda hakların</a><a href="#iliski-taciz-arkadas"><b>03</b>Biri sana taciz ya da saldırıyı anlattıysa</a><a href="#siddet-evlilik"><b>04</b>Zorla ya da erken yaşta evlendirilmek istiyorlarsa</a><a href="#iliski-zorbalik"><b>05</b>Okulda ve internette zorbalık</a><a href="#siddet-kimlik"><b>06</b>Cinsel yönelimin ya da cinsiyet kimliğin yüzünden şiddet görüyorsan</a><a href="#iliski-hukuk"><b>07</b>Hukuki haklarını bil</a></nav>
+    </div>
+
+    <div class="blocks">
       <div class="block fade-up">
-        <h3 id="iliski-taciz" data-k="taciz tecavüz istismar elle taciz sarkıntılık zorla dokundu cinsel şiddet sapık ensest">Taciz ya da cinsel saldırıya uğradıysan</h3>
+        <h3 id="iliski-taciz" data-acik data-k="taciz tecavüz istismar elle taciz sarkıntılık zorla dokundu cinsel şiddet sapık ensest">Taciz ya da cinsel saldırıya uğradıysan</h3>
         <div class="prose">
           <p>Suçlu sen değilsin. Ne giydiğin, orada neden bulunduğun, içmiş olman, donup kalman ya da bağıramaman bunu değiştirmez. Daha önce evet demiş olman ya da sevgili olmanız da rıza sayılmaz. Bunu yapanların çoğu yabancı değil; partner, akraba, arkadaş ya da iş arkadaşı gibi tanıdık kişilerdir. Kız ya da erkek, her yaştan herkesin başına gelebilir.</p>
           <div class="callout" role="note">
@@ -1127,7 +1227,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Başvur.</strong> Karakola, jandarmaya ya da savcılığa gidebilirsin; hastaneye gidersen polis sürece oradan da dahil olur. Ne yapacağını bilmiyorsan <a href="tel:183">ALO 183</a> yol gösterir.</span></li>
             <li><span><strong>Kendine zaman tanı.</strong> Korku, uykusuzluk, utanç ya da hiçbir şey hissetmemek sık görülür. Ücretsiz destek için <a href="#ruh">Ruh sağlığı bölümüne</a> bak.</span></li>
           </ol>
-          <p class="src">Kaynak: <a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Cinsel saldırıdan sonra yardım</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı avukatı Funda Ekin, bianet (2025)</a></p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Cinsel saldırıdan sonra yardım</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı avukatı Funda Ekin, bianet (2025)</a></p></details>
         </div>
       </div>
 
@@ -1146,7 +1246,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Süre.</strong> Şikâyete bağlı olanlarda, olayı ve yapanı öğrendiğin günden itibaren 6 ay içinde şikâyet et (TCK 73). Süre geçtiyse de bir avukata sor; her durum aynı değildir.</li>
           </ul>
           <p>Yazılan cezalar yetişkinler içindir; yapan 18 yaşından küçükse kurallar farklıdır (TCK 31).</p>
-          <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 31, 73, 102, 103 ve 105</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5271.pdf">Ceza Muhakemesi Kanunu, madde 158, 234, 236 ve 239</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">6284 sayılı Kanun, madde 1, 5 ve 8</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4857.pdf">4857 sayılı İş Kanunu, madde 24</a></p>
+          <details class="srcs"><summary>Kaynaklar (4)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 31, 73, 102, 103 ve 105</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5271.pdf">Ceza Muhakemesi Kanunu, madde 158, 234, 236 ve 239</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">6284 sayılı Kanun, madde 1, 5 ve 8</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4857.pdf">4857 sayılı İş Kanunu, madde 24</a></p></details>
         </div>
       </div>
 
@@ -1164,6 +1264,26 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
+        <h3 id="siddet-evlilik" data-k="zorla evlendirmek evlendiriyorlar görücü nişan çocuk gelin imam nikahı erken evlilik berdel kuma">Zorla ya da erken yaşta evlendirilmek istiyorlarsa</h3>
+        <div class="prose">
+          <p>Evlenip evlenmeyeceğine, kiminle ve ne zaman evleneceğine sen karar verirsin. Gelenek, borç ya da "aile sözü" bunu değiştirmez.</p>
+          <ul class="d">
+            <li><strong>Yaş sınırı var.</strong> 17 yaşını doldurmayan evlenemez. 16 yaşını dolduran biri için yalnızca hâkim, olağanüstü durumda ve çok önemli bir sebeple izin verebilir. 18 yaşından küçüksen velinin izni de gerekir ama velinin istemesi senin yerine geçmez.</li>
+            <li><strong>15 yaşını doldurmamış biriyle</strong> her cinsel davranış istismardır (TCK 103). Düğün yapılması ya da dini nikâh kıyılması bunu değiştirmez.</li>
+            <li><strong>Korkutularak evlendirildiysen</strong> evliliğin iptali için dava açabilirsin. Hayatına, sağlığına ya da onuruna yönelik yakın ve ağır bir tehlikeyle korkutulmuş olman gerekir. Süre, korkunun etkisi geçtikten sonra 6 ay, her hâlde evlilikten sonra 5 yıldır.</li>
+            <li><strong>Tehdit etmek ve bir yerde zorla tutmak suçtur</strong> (TCK 106 ve 109).</li>
+          </ul>
+          <ol class="n">
+            <li><span><strong>Birine söyle.</strong> Okul rehber öğretmenin, öğretmenin ya da güvendiğin bir akraba olabilir.</span></li>
+            <li><span><strong>Ara.</strong> <a href="tel:183">ALO 183</a> 7/24 açık ve ücretsiz. Tehlike yakınsa ya da seni bir yere götürüyorlarsa <a href="tel:112">112</a>.</span></li>
+            <li><span><strong>Koruma iste.</strong> Karakol, savcılık ya da ŞÖNİM üzerinden koruma ve barınma talep edebilirsin. 18 yaşından küçüksen 5395 sayılı Çocuk Koruma Kanunu tedbirleri de uygulanabilir.</span></li>
+            <li><span><strong>Kimliğini yanında tut.</strong> Güvenliyse kimliğin, telefonun ve bir yakınının numarası elinin altında olsun.</span></li>
+          </ol>
+          <details class="srcs"><summary>Kaynaklar (4)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4721.pdf">Türk Medeni Kanunu, madde 124, 126, 151 ve 152</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 103, 106 ve 109</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">6284 sayılı Kanun</a> · <a href="https://hsgm.saglik.gov.tr/depo/Mevzuat/Kanunlar/Cocuk_Koruma_Kanunu_5395.pdf">5395 sayılı Çocuk Koruma Kanunu</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
         <h3 id="iliski-zorbalik" data-k="akran zorbalığı dalga geçmek alay dışlanma siber mobbing küfür lakap">Okulda ve internette zorbalık</h3>
         <div class="prose">
           <p>"Şakaydı" denmesi onu şaka yapmaz. Durmasını söylediğin hâlde sürüyorsa ve seni incitiyorsa zorbalıktır. İnternette olunca evde bile kaçış yokmuş gibi gelebilir. Bu senin suçun değil ve geçebilir.</p>
@@ -1175,7 +1295,22 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Tehdit, hakaret, ısrarlı takip ya da görüntü paylaşımı varsa</strong> bunlar suç olabilir. Karakola ya da savcılığa başvurabilirsin; acil tehlikede 112.</span></li>
           </ol>
           <p>İnternetteki çocuk istismarı, müstehcenlik ya da intihara yönlendirme içeriklerini <a href="https://www.ihbarweb.org.tr/">ihbarweb.org.tr</a>'den bildirebilirsin. Arkadaşın zorbalığa uğruyorsa onu dinle ve yardım istemeye birlikte gidin.</p>
-          <p class="src">Kaynak: <a href="https://www.unicef.org/turkiye/siber-zorbal%C4%B1k-nedir-ve-nas%C4%B1l-%C3%B6nlenir">UNICEF Türkiye, Siber zorbalık</a> · <a href="https://orgm.meb.gov.tr/meb_iys_dosyalar/2022_08/23142552_Siber_ZorbalYk-_Lise_OYretmen_Sunumu.pdf">Millî Eğitim Bakanlığı, Siber zorbalık (lise)</a> · <a href="https://www.guvenliweb.org.tr/">Güvenli Web</a></p>
+          <details class="srcs"><summary>Kaynaklar (3)</summary><p class="src"><a href="https://www.unicef.org/turkiye/siber-zorbal%C4%B1k-nedir-ve-nas%C4%B1l-%C3%B6nlenir">UNICEF Türkiye, Siber zorbalık</a> · <a href="https://orgm.meb.gov.tr/meb_iys_dosyalar/2022_08/23142552_Siber_ZorbalYk-_Lise_OYretmen_Sunumu.pdf">Millî Eğitim Bakanlığı, Siber zorbalık (lise)</a> · <a href="https://www.guvenliweb.org.tr/">Güvenli Web</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="siddet-kimlik" data-k="eşcinsel gay lezbiyen biseksüel trans lgbt cinsel yönelim cinsiyet kimliği queer">Cinsel yönelimin ya da cinsiyet kimliğin yüzünden şiddet görüyorsan</h3>
+        <div class="prose">
+          <p>Kim olduğun, sana şiddet uygulanmasını, aşağılanmanı ya da evden atılmanı haklı çıkarmaz. Aşağıdaki haklar herkes için geçerli.</p>
+          <ul class="d">
+            <li><strong>Hastalık değil.</strong> Dünya Sağlık Örgütü eşcinselliği 1990'da ruhsal bozukluklar listesinden çıkardı. ICD-11'e göre trans ve cinsiyet çeşitliliği gösteren kimlikler de ruhsal hastalık sayılmıyor. "Tedavi" vaadiyle yapılan uygulamaların tıbbi dayanağı yok ve sağlığa zarar verebilir.</li>
+            <li><strong>Kimseye açıklamak zorunda değilsin.</strong> Ne zaman ve kime anlatacağına sen karar verirsin. Anlatmadan önce evde güvende olup olmayacağını düşün.</li>
+            <li><strong>"Ailene söylerim" diye bir şey yaptırmak</strong> şantaj suçu olabilir (TCK 107). Mesajları silme, ekran görüntüsü al.</li>
+            <li><strong>Hakaret, tehdit ve şiddet suçtur.</strong> Okuldaysa <a href="#iliski-zorbalik">zorbalık</a>, evdeyse <a href="#aile-siddet">evde şiddet</a> başlığındaki adımlar senin için de geçerli. Acil tehlikede <a href="tel:112">112</a>.</li>
+            <li><strong>Konuşacak biri:</strong> SPoD Danışma Hattı <a href="tel:08508885269">0850 888 52 69</a>; cuma, cumartesi ve pazar 12.00–18.00 (resmi tatiller hariç). Akran zorbalığı, şiddet, hukuki ve psikolojik destek konularında bilgi veriyor.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (4)</summary><p class="src"><a href="https://www.paho.org/en/news/17-5-2012-therapies-change-sexual-orientation-lack-medical-justification-and-threaten-health">Dünya Sağlık Örgütü Amerika Bölgesi (PAHO)</a> · <a href="https://www.who.int/standards/classifications/frequently-asked-questions/gender-incongruence-and-transgender-health-in-the-icd">DSÖ, ICD-11 soru-cevap</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 106, 107 ve 125</a> · <a href="https://spod-tr.org/">SPoD</a></p></details>
         </div>
       </div>
 
@@ -1190,7 +1325,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Süreyi kaçırma.</strong> Şikâyete bağlı suçlarda (123/A ve 134 gibi), olayı ve yapanı öğrendiğin günden itibaren 6 ay içinde şikâyet etmen gerekir (TCK 73).</li>
             <li><strong>Suçu işleyen 18 yaşından küçükse</strong> cezalar farklıdır (TCK 31). Yukarıdaki cezalar yetişkinler içindir.</li>
           </ul>
-          <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">6284 sayılı Kanun, madde 1, 2 ve 8</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">5237 sayılı Türk Ceza Kanunu, madde 31, 73, 107, 123/A, 134, 139 ve 226</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/7542c190-ef19-4dbb-8954-7daf136d9e88">Yargıtay Hukuk Genel Kurulu, E. 2023/858, K. 2023/1399</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/0adbf607-f536-450b-a2c0-60872e2dbb84">Yargıtay 12. Ceza Dairesi, E. 2025/1439, K. 2026/1678</a> · <a href="https://karararama.yargitay.gov.tr/">Yargıtay karar arama</a>: 12. Ceza Dairesi, E. 2014/7978, K. 2014/26158 ve Ceza Genel Kurulu, E. 2014/603, K. 2015/66</p>
+          <details class="srcs"><summary>Kaynaklar (5)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">6284 sayılı Kanun, madde 1, 2 ve 8</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">5237 sayılı Türk Ceza Kanunu, madde 31, 73, 107, 123/A, 134, 139 ve 226</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/7542c190-ef19-4dbb-8954-7daf136d9e88">Yargıtay Hukuk Genel Kurulu, E. 2023/858, K. 2023/1399</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/0adbf607-f536-450b-a2c0-60872e2dbb84">Yargıtay 12. Ceza Dairesi, E. 2025/1439, K. 2026/1678</a> · <a href="https://karararama.yargitay.gov.tr/">Yargıtay karar arama</a>: 12. Ceza Dairesi, E. 2014/7978, K. 2014/26158 ve Ceza Genel Kurulu, E. 2014/603, K. 2015/66</p></details>
         </div>
       </div>
     </div>
@@ -1214,7 +1349,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="cinsel" class="chapter grid" data-c="cinsel" aria-labelledby="cinsel-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg><span class="chapter__num">04</span><span class="chapter__name">Cinsel sağlık</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg><span class="chapter__num">05</span><span class="chapter__name">Cinsel sağlık</span></p>
         <h2 id="cinsel-baslik">Cinsel sağlık da sağlıktır. Sormak ayıp değil.</h2>
         <p class="chapter__lead">Bazı enfeksiyonlar sadece ilişkiyle değil, ten tene temasla, ortak kullanılan jilet ve havluyla ya da kan yoluyla da bulaşır. Çoğu ilaçla tamamen iyileşir, iyileşmeyenler de kontrol altına alınabilir. Asıl tehlike utanıp doktora gitmemektir.</p>
       </header>
@@ -1408,7 +1543,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             </details></li>
           </ul>
           <p class="empty" id="stis-empty" hidden>Bu aramayla eşleşen sonuç yok. Başka bir kelime dene.</p>
-          <p class="src">Kaynak: <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı, Cinsel Yolla Aktarılan Enfeksiyonlar broşürü (2026)</a> · <a href="https://www.klimik.org.tr/">KLİMİK Derneği</a>. Bazı kartların kendi kaynağı kartın içinde.</p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı, Cinsel Yolla Aktarılan Enfeksiyonlar broşürü (2026)</a> · <a href="https://www.klimik.org.tr/">KLİMİK Derneği</a>. Bazı kartların kendi kaynağı kartın içinde.</p></details>
         </div>
       </div>
 
@@ -1421,7 +1556,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Dikkat:</strong> Hepatit A kirli su ve yiyecekle, yakın temasla bulaşabilir. Hepatit B, açık yara varsa tükürükle de bulaşabilir. İkisinin de aşısı var.</li>
             <li><strong>Uçuk</strong> öpüşmeyle bulaşabilir.</li>
           </ul>
-          <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/hiv-aids">DSÖ, HIV</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-a">Hepatit A</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-b">Hepatit B</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-c">Hepatit C</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/herpes-simplex-virus">Uçuk</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı broşürü (2026)</a></p>
+          <details class="srcs"><summary>Kaynaklar (6)</summary><p class="src"><a href="https://www.who.int/news-room/fact-sheets/detail/hiv-aids">DSÖ, HIV</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-a">Hepatit A</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-b">Hepatit B</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-c">Hepatit C</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/herpes-simplex-virus">Uçuk</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı broşürü (2026)</a></p></details>
         </div>
       </div>
 
@@ -1437,7 +1572,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Tedaviyi yarıda bırakma.</strong> Belirtiler geçse bile ilacı bitir. Partnerin de aynı anda tedavi olmalı, yoksa enfeksiyon ikinizin arasında gidip gelir.</li>
             <li><strong>Düzenli test.</strong> Yeni bir partnerin olduğunda ya da riskli bir durumdan sonra belirti beklemeden test yaptır.</li>
           </ul>
-          <p class="src">Kaynak: <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı broşürü (2026)</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/condoms">DSÖ, Kondom</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/sexually-transmitted-infections-%28stis%29">DSÖ, CYBE bilgi notu</a></p>
+          <details class="srcs"><summary>Kaynaklar (3)</summary><p class="src"><a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı broşürü (2026)</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/condoms">DSÖ, Kondom</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/sexually-transmitted-infections-%28stis%29">DSÖ, CYBE bilgi notu</a></p></details>
         </div>
       </div>
 
@@ -1452,7 +1587,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Adetin geciktiyse</strong> gebelik testi yap ve aile hekimine ya da kadın doğum bölümüne git. Erken öğrenmek seçeneklerini artırır.</li>
             <li><strong>İstenmeyen gebelikte yasa:</strong> 10. hafta dolana kadar gebelik, tıbbi sakınca yoksa kadının isteğiyle sonlandırılabilir. 18 yaşından küçüklerde kendi rızası ve velisinin izni, evlilerde eşin rızası gerekir; hayati acil durumda izin şart değildir. Gebelik bir suç sonucu oluştuysa süre 20 haftadır ve hastanede uzman hekim tarafından yapılmalıdır.</li>
           </ul>
-          <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/condoms">DSÖ, Kondom</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/family-planning-contraception">DSÖ, Korunma yöntemleri</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/emergency-contraception">DSÖ, Acil korunma</a> · <a href="https://titck.gov.tr/storage/kubKtAttachments/0T2ruJTzbm8oiv.pdf">TİTCK, kullanma talimatı</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">2827 sayılı Kanun, madde 5 ve 6</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 99</a></p>
+          <details class="srcs"><summary>Kaynaklar (6)</summary><p class="src"><a href="https://www.who.int/news-room/fact-sheets/detail/condoms">DSÖ, Kondom</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/family-planning-contraception">DSÖ, Korunma yöntemleri</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/emergency-contraception">DSÖ, Acil korunma</a> · <a href="https://titck.gov.tr/storage/kubKtAttachments/0T2ruJTzbm8oiv.pdf">TİTCK, kullanma talimatı</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">2827 sayılı Kanun, madde 5 ve 6</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 99</a></p></details>
         </div>
       </div>
 
@@ -1465,7 +1600,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Bildirim:</strong> Sağlık çalışanları, bir suç işlendiğine dair belirti görürse bunu yetkililere bildirmek zorunda. 15 yaşını doldurmamış birine yönelik her cinsel davranış, rızası olsa bile yasada istismar sayılır.</li>
             <li><strong>Zarar gördüysen suçlu sen değilsin.</strong> 112, ALO 183 ya da hastane acili sana yardım eder. Riskli temasta 72 saati bekleme.</li>
           </ul>
-          <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Hasta Hakları Yönetmeliği, madde 21 ve 24</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 103 ve 280</a></p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Hasta Hakları Yönetmeliği, madde 21 ve 24</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 103 ve 280</a></p></details>
         </div>
       </div>
 
@@ -1483,7 +1618,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Bilgi hattı.</strong> TAP Vakfı Cinsel Sağlık Bilgi Hattı <a href="tel:4446539">444 65 39</a>, hafta içi 09.00–18.00.</li>
           </ul>
           <p>Doktorlar bu soruları her gün duyar. Senin anlatacağın hiçbir şey onları şaşırtmaz.</p>
-          <p class="src">Kaynak: <a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Sağlık Bakanlığı HSGM, HIV/AIDS istatistikleri ve GDTM listesi (2026)</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı broşürü (2026)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">2827 sayılı Nüfus Planlaması Hakkında Kanun, madde 3</a></p>
+          <details class="srcs"><summary>Kaynaklar (3)</summary><p class="src"><a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Sağlık Bakanlığı HSGM, HIV/AIDS istatistikleri ve GDTM listesi (2026)</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı broşürü (2026)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">2827 sayılı Nüfus Planlaması Hakkında Kanun, madde 3</a></p></details>
         </div>
       </div>
     </div>
@@ -1505,7 +1640,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="madde" class="chapter grid" data-c="madde" aria-labelledby="madde-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg><span class="chapter__num">05</span><span class="chapter__name">Madde bağımlılığı</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg><span class="chapter__num">06</span><span class="chapter__name">Bağımlılık</span></p>
         <h2 id="madde-baslik">"Bundan bir şey olmaz" diye bir madde yok.</h2>
         <p class="chapter__lead">Uyuşturucuyla ilgili en tehlikeli cümleler "bir kereden bir şey olmaz", "bu doğal, zararsız" ve "ben kontrol ederim". Bu bölüm o cümlelerin neden yanlış olduğunu resmi kaynaklarla anlatıyor. Başladıysan da yol bitmedi: ücretsiz tedavi var ve hakkında soruşturma başlamadan önce kendin başvurursan kullanmaktan ceza verilmiyor.</p>
       </header>
@@ -1514,7 +1649,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">%8,1</span><span class="glance__txt">dünyada madde kullanım bozukluğu olanların yalnızca bu kadarı tedaviye ulaşabiliyor</span></li>
         <li><span class="glance__big">ALO 191</span><span class="glance__txt">Sağlık Bakanlığı uyuşturucu danışma hattı: 7 gün 24 saat, sabit hatlardan ücretsiz</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Madde bağımlılığı: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#madde-1"><b>01</b>Bağımlılık nasıl başlar?</a><a href="#madde-2"><b>02</b>Duyduğun yalanlar ve gerçekleri</a><a href="#madde-3"><b>03</b>"En hafif" sanılandan en ağırına</a><a href="#madde-4"><b>04</b>Bir arkadaşın kötüleşirse: aşırı doz</a><a href="#madde-5"><b>05</b>Bırakmak istiyorsan: adım adım</a><a href="#madde-6"><b>06</b>Tedavi istemek seni suçlu yapmaz</a><a href="#madde-7"><b>07</b>Sana teklif edilirse ne dersin?</a></nav>
+      <nav class="jump fade-up" aria-label="Bağımlılık: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#madde-1"><b>01</b>Bağımlılık nasıl başlar?</a><a href="#madde-2"><b>02</b>Duyduğun yalanlar ve gerçekleri</a><a href="#madde-3"><b>03</b>"En hafif" sanılandan en ağırına</a><a href="#madde-4"><b>04</b>Bir arkadaşın kötüleşirse: aşırı doz</a><a href="#madde-birak"><b>05</b>Bırakmak istiyorsan: adım adım</a><a href="#madde-6"><b>06</b>Tedavi istemek seni suçlu yapmaz</a><a href="#madde-7"><b>07</b>Sana teklif edilirse ne dersin?</a><a href="#bagimlilik-kumar"><b>08</b>Kumar ve sanal bahis</a><a href="#bagimlilik-ekran"><b>09</b>Oyun, telefon ve sosyal medya</a></nav>
     </div>
 
     <div class="blocks">
@@ -1527,7 +1662,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <p class="callout__t">Gençler için neden daha tehlikeli?</p>
             <p>Ergenlikte beyin hâlâ gelişiyor. Dünya Sağlık Örgütü'ne göre nikotin bile çocuk ve ergenlerde <strong>beyin gelişimini olumsuz etkiliyor</strong>, esrar da öğrenme becerisini bozuyor.</p>
           </div>
-          <p class="src">Kaynak: <a href="https://www.yedam.org.tr/bagimlilik-turleri/madde-bagimliligi">YEDAM, Madde bağımlılığı</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay, Madde bağımlılığı</a> · <a href="https://alo191.saglik.gov.tr/TR-50292/ne-kadar-madde-kullanilinca-bagimli-olunur.html">Sağlık Bakanlığı ALO 191</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucu2025.pdf">Hacettepe Halk Sağlığı (2025)</a> · <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">DSÖ, E-sigara</a> · <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">DSÖ, Esrar</a>. Bölüm başındaki rakamlar: <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Emniyet Genel Müdürlüğü, 2026 Türkiye Uyuşturucu Raporu</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı, UNODC 2025 özeti</a></p>
+          <details class="srcs"><summary>Kaynaklar (8)</summary><p class="src"><a href="https://www.yedam.org.tr/bagimlilik-turleri/madde-bagimliligi">YEDAM, Madde bağımlılığı</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay, Madde bağımlılığı</a> · <a href="https://alo191.saglik.gov.tr/TR-50292/ne-kadar-madde-kullanilinca-bagimli-olunur.html">Sağlık Bakanlığı ALO 191</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucu2025.pdf">Hacettepe Halk Sağlığı (2025)</a> · <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">DSÖ, E-sigara</a> · <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">DSÖ, Esrar</a>. Bölüm başındaki rakamlar: <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Emniyet Genel Müdürlüğü, 2026 Türkiye Uyuşturucu Raporu</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı, UNODC 2025 özeti</a></p></details>
         </div>
       </div>
 
@@ -1542,7 +1677,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <div><dt>"Herkes kullanıyor."</dt><dd>Kullanmıyor. Birleşmiş Milletler verilerine göre 2023'te dünyada 15–64 yaş arasındakilerin %6'sı uyuşturucu kullandı (alkol ve tütün hariç). Yani %94'ü kullanmadı.</dd></div>
             <div><dt>"Alkol ve elektronik sigara masum."</dt><dd>Dünya Sağlık Örgütü'ne göre sağlığı etkilemeyen güvenli bir alkol miktarı yok. Nikotin çok bağımlılık yapıyor ve e-sigara, sigara içmeyen gençlerde normal sigaraya başlamayı yaklaşık 3 kat artırıyor.</dd></div>
           </dl>
-          <p class="src">Kaynak: <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">DSÖ, Esrar</a> · <a href="https://nida.nih.gov/research-topics/inhalants">NIDA, Uçucu maddeler</a> · <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Kokain</a> · <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">DSÖ, Opioid aşırı dozu</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay</a> · <a href="https://www.unodc.org/unodc/en/press/releases/2025/June/unodc-world-drug-report-2025_-global-instability-compounding-social--economic-and-security-costs-of-the-world-drug-problem.html">UNODC, Dünya Uyuşturucu Raporu 2025</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">2026 Türkiye Uyuşturucu Raporu</a> · <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">DSÖ, E-sigara</a> · <a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">DSÖ Avrupa, Alkol</a></p>
+          <details class="srcs"><summary>Kaynaklar (10)</summary><p class="src"><a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">DSÖ, Esrar</a> · <a href="https://nida.nih.gov/research-topics/inhalants">NIDA, Uçucu maddeler</a> · <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Kokain</a> · <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">DSÖ, Opioid aşırı dozu</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay</a> · <a href="https://www.unodc.org/unodc/en/press/releases/2025/June/unodc-world-drug-report-2025_-global-instability-compounding-social--economic-and-security-costs-of-the-world-drug-problem.html">UNODC, Dünya Uyuşturucu Raporu 2025</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">2026 Türkiye Uyuşturucu Raporu</a> · <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">DSÖ, E-sigara</a> · <a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">DSÖ Avrupa, Alkol</a></p></details>
         </div>
       </div>
 
@@ -1565,7 +1700,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Azıcık içmekten bir şey olmaz.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Dünya Sağlık Örgütü'ne göre sağlığı etkilemeyen güvenli bir alkol miktarı yok; risk ilk yudumdan başlar.</li><li>Alkol en az yedi tür kansere yol açar.</li><li>Gençler alkolden orantısız biçimde zarar görüyor: alkole bağlı can kayıplarında en yüksek oran 20–39 yaş arasında.</li></ul></div>
-                <p class="src">Kaynak: <a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">DSÖ Avrupa, Güvenli alkol miktarı yok</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/alcohol">DSÖ, Alkol bilgi notu</a></p>
+                <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">DSÖ Avrupa, Güvenli alkol miktarı yok</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/alcohol">DSÖ, Alkol bilgi notu</a></p></details>
               </div>
             </details></li>
             <li id="madde-k3"><details class="acc">
@@ -1573,7 +1708,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Doğal bir bitki, bağımlılık yapmaz.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Dünyada en çok kullanılan uyuşturucu esrar; kullanmaya başlama yaşı da diğer maddelerden genelde daha düşük.</li><li>Dünya Sağlık Örgütü'ne göre esrar öğrenme becerisini bozar ve sürekli kullananlarda kontrolün kaybedildiği esrar bağımlılığı gelişebilir.</li><li>Şizofrenisi olan kişilerde hastalığı ağırlaştırabilir.</li></ul></div>
-                <p class="src">Kaynak: <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">DSÖ, Esrar</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı, UNODC 2025 özeti</a></p>
+                <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">DSÖ, Esrar</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı, UNODC 2025 özeti</a></p></details>
               </div>
             </details></li>
             <li id="madde-k4"><details class="acc">
@@ -1597,7 +1732,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Esrarın aynısı, sadece daha ucuzu.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Laboratuvarda üretilen bu kimyasallar kurutulmuş otlara katılarak ya da elektronik sigara sıvısı olarak satılır. Esrardakine benzer ama etkileri çoğu zaman çok farklıdır.</li><li>Ciddi sağlık sorunlarına yol açar ve hayatı tehdit edebilir.</li><li>Türkiye'de 2025'te uyuşturucu nedeniyle hayatını kaybeden 557 kişinin 351'inde (%63) bonzaiye rastlandı.</li></ul></div>
-                <p class="src">Kaynak: <a href="https://nida.nih.gov/research-topics/synthetic-cannabinoids">NIDA, Sentetik kannabinoidler</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Emniyet Genel Müdürlüğü, 2026 Türkiye Uyuşturucu Raporu</a></p>
+                <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://nida.nih.gov/research-topics/synthetic-cannabinoids">NIDA, Sentetik kannabinoidler</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Emniyet Genel Müdürlüğü, 2026 Türkiye Uyuşturucu Raporu</a></p></details>
               </div>
             </details></li>
             <li id="madde-k7"><details class="acc">
@@ -1613,7 +1748,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Ders çalışırken ya da uyanık kalmak için işe yarar.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Laboratuvarda üretilen, bağımlılık yapma potansiyeli yüksek bir uyarıcıdır.</li><li>Kısa vadede paranoya, kalp ritim bozukluğu, inme ve can kaybı; uzun vadede kalp yetmezliği, olmayan şeyleri görme/duyma (psikoz) ve diş kaybı görülür.</li><li>Türkiye'de 2025'te uyuşturucu nedeniyle hayatını kaybeden 557 kişinin 156'sında (%28) metamfetamine rastlandı.</li></ul></div>
-                <p class="src">Kaynak: <a href="https://nida.nih.gov/research-topics/methamphetamine">NIDA, Metamfetamin</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Emniyet Genel Müdürlüğü, 2026 Türkiye Uyuşturucu Raporu</a></p>
+                <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://nida.nih.gov/research-topics/methamphetamine">NIDA, Metamfetamin</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Emniyet Genel Müdürlüğü, 2026 Türkiye Uyuşturucu Raporu</a></p></details>
               </div>
             </details></li>
             <li id="madde-k9"><details class="acc">
@@ -1621,7 +1756,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Bir kere denemekle bağımlı olunmaz.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Opioidler dünyada uyuşturucuya bağlı can kayıplarının yaklaşık üçte ikisinden sorumlu; en çok can kaybına yol açan madde grubu.</li><li>Beynin solunumu düzenleyen bölümünü etkilerler. Aşırı doz belirtileri: iğne ucu gibi küçülmüş göz bebekleri, bilinç kaybı ve nefes almada zorluk.</li><li>Fentanil başka maddelere karıştırılabiliyor; testte fentanil çıkan birçok kişi onu aldığını bilmiyor.</li></ul></div>
-                <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">DSÖ, Opioid aşırı dozu</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı, UNODC 2025 özeti</a></p>
+                <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">DSÖ, Opioid aşırı dozu</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı, UNODC 2025 özeti</a></p></details>
               </div>
             </details></li>
           </ol>
@@ -1643,12 +1778,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Yalnız bırakma.</strong> Nefes alıyor ama bilinci kapalıysa yan yatır, kusarsa boğulmasın.</span></li>
             <li><span><strong>Ne aldığını biliyorsan saklama.</strong> Sağlık ekibinin bunu bilmesi hayat kurtarabilir.</span></li>
           </ol>
-          <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">DSÖ, Opioid aşırı dozu</a> · <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a> · <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Kokain</a> · <a href="https://alo191.saglik.gov.tr/TR-50331/acil-durumlarda-nereye-muracaat-etmeliyim.html">Sağlık Bakanlığı ALO 191, Acil durumlar</a></p>
+          <details class="srcs"><summary>Kaynaklar (4)</summary><p class="src"><a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">DSÖ, Opioid aşırı dozu</a> · <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a> · <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Kokain</a> · <a href="https://alo191.saglik.gov.tr/TR-50331/acil-durumlarda-nereye-muracaat-etmeliyim.html">Sağlık Bakanlığı ALO 191, Acil durumlar</a></p></details>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="madde-5" data-k="bırakmak tedavi amatem rehabilitasyon">Bırakmak istiyorsan: adım adım</h3>
+        <h3 id="madde-birak" data-k="bırakmak tedavi amatem rehabilitasyon">Bırakmak istiyorsan: adım adım</h3>
         <div class="prose">
           <ol class="n">
             <li><span><strong>Bir kişiye söyle ya da ara.</strong> <a href="tel:191">ALO 191</a> 7/24 açık ve sabit hatlardan ücretsiz. Seni bilgilendirir ve tedavi için en uygun merkeze yönlendirir; kararsızsan da arayabilirsin. Yeşilay'ın <a href="tel:115">115</a> hattı da ücretsiz.</span></li>
@@ -1657,7 +1792,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Ortamını değiştir.</strong> Birlikte kullandığın kişilerin numaralarını sil, o mekânlara gitme. Bıraktığın ilk haftalarda seni tetikleyen yerlerden uzak dur.</span></li>
             <li><span><strong>Kayarsan vazgeçme.</strong> Yeşilay'a göre bağımlılık tedavi edilebilir ama tedavisi kolay değildir. Bir kayma her şeyin bittiği anlamına gelmez; uzmanına söyle ve devam et.</span></li>
           </ol>
-          <p class="src">Kaynak: <a href="https://alo191.saglik.gov.tr/TR-100479/alo-191-uyusturucu-ile-mucadele-danisma-ve-destek-hatti-nedir.html">Sağlık Bakanlığı, ALO 191 nedir?</a> · <a href="https://alo191.saglik.gov.tr/TR-50330/tedavi-merkezlerine-nasil-muracaat-etmeliyim.html">ALO 191, Tedavi merkezlerine başvuru</a> · <a href="https://alo191.saglik.gov.tr/TR-50334/sss.html">ALO 191, Sık sorulan sorular</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">5510 sayılı Kanun, madde 67</a> · <a href="https://www.yedam.org.tr/bagimlilik-turleri/madde-bagimliligi">YEDAM, Madde bağımlılığı</a> · <a href="https://www.karar.com/saglik-haberleri/memisoglu-2024te-373-bin-bagimli-amatemlere-basvurdu-1939284">Sağlık Bakanı açıklaması, 2024 AMATEM başvuruları</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay</a></p>
+          <details class="srcs"><summary>Kaynaklar (7)</summary><p class="src"><a href="https://alo191.saglik.gov.tr/TR-100479/alo-191-uyusturucu-ile-mucadele-danisma-ve-destek-hatti-nedir.html">Sağlık Bakanlığı, ALO 191 nedir?</a> · <a href="https://alo191.saglik.gov.tr/TR-50330/tedavi-merkezlerine-nasil-muracaat-etmeliyim.html">ALO 191, Tedavi merkezlerine başvuru</a> · <a href="https://alo191.saglik.gov.tr/TR-50334/sss.html">ALO 191, Sık sorulan sorular</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">5510 sayılı Kanun, madde 67</a> · <a href="https://www.yedam.org.tr/bagimlilik-turleri/madde-bagimliligi">YEDAM, Madde bağımlılığı</a> · <a href="https://www.karar.com/saglik-haberleri/memisoglu-2024te-373-bin-bagimli-amatemlere-basvurdu-1939284">Sağlık Bakanı açıklaması, 2024 AMATEM başvuruları</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay</a></p></details>
         </div>
       </div>
 
@@ -1670,7 +1805,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Arkadaşına vermek de ticaret suçu olabilir.</strong> Başkasına vermek ya da satmak, TCK 188/3'e göre uyuşturucu ticareti suçudur ve cezası en az 10 yıl hapistir; verilen kişi çocuksa en az 15 yıl. Yargıtay'a göre karşılığında para almamak bunu değiştirmez.</li>
           </ul>
           <p>Yazılan cezalar yetişkinler içindir; 18 yaşından küçükler için ayrı kurallar uygulanır (TCK 31). Hukuki durumunla ilgili bir sorun varsa <a href="#hayat">Hak arama bölümündeki</a> ücretsiz baro adli yardımına başvurabilirsin.</p>
-          <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">5237 sayılı Türk Ceza Kanunu, madde 31, 188, 191 ve 192</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/e0056e4c-f10d-46ae-bdd1-163a72eabc8a">Yargıtay 8. Ceza Dairesi, E. 2024/25851, K. 2026/770</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/b4947bbd-ac5a-4f48-9ba3-eed3d14071b2">Yargıtay 20. Ceza Dairesi, E. 2015/6642, K. 2017/3576</a> · <a href="https://normkararlarbilgibankasi.anayasa.gov.tr/ND/2026/46">Anayasa Mahkemesi, E. 2026/42, K. 2026/46</a></p>
+          <details class="srcs"><summary>Kaynaklar (4)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">5237 sayılı Türk Ceza Kanunu, madde 31, 188, 191 ve 192</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/e0056e4c-f10d-46ae-bdd1-163a72eabc8a">Yargıtay 8. Ceza Dairesi, E. 2024/25851, K. 2026/770</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/b4947bbd-ac5a-4f48-9ba3-eed3d14071b2">Yargıtay 20. Ceza Dairesi, E. 2015/6642, K. 2017/3576</a> · <a href="https://normkararlarbilgibankasi.anayasa.gov.tr/ND/2026/46">Anayasa Mahkemesi, E. 2026/42, K. 2026/46</a></p></details>
         </div>
       </div>
 
@@ -1681,7 +1816,38 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <figure><blockquote><p>"Yarın maçım var" / "Yarın sınavım var."</p></blockquote><figcaption>Israr eden birinden kurtulmanın en kolay yolu konuyu kapatmaktır.</figcaption></figure>
           <figure><blockquote><p>"Gerçek arkadaş zorlamaz."</p></blockquote><figcaption>Seni zorlayan kişi, iyiliğini düşünen kişi değildir.</figcaption></figure>
           <p style="margin-top:32px">Ortam rahatsız ediyorsa oradan çıkmak da bir cevaptır. Ailen bilgi almak isterse Emniyet'in "En İyi Narkotik Polisi: Anne" programı var. <a href="tel:191">ALO 191</a> de yakınlara destek veriyor.</p>
-          <p class="src">Kaynak: <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı (2026)</a> · <a href="https://alo191.saglik.gov.tr/TR-50313/alo-191-uyusturucu-ile-mucadele-danisma-ve-destek-hatti-kimlere-hizmet-sunar-.html">Sağlık Bakanlığı, ALO 191 kimlere hizmet sunar?</a></p>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı (2026)</a> · <a href="https://alo191.saglik.gov.tr/TR-50313/alo-191-uyusturucu-ile-mucadele-danisma-ve-destek-hatti-kimlere-hizmet-sunar-.html">Sağlık Bakanlığı, ALO 191 kimlere hizmet sunar?</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="bagimlilik-kumar" data-k="kumar sanal bahis iddaa bahis casino slot rulet borç bet">Kumar ve sanal bahis</h3>
+        <div class="prose">
+          <p>Kumar bağımlılığı, uyuşturucu ve alkol gibi beynin ödül sistemini etkiler. Dünya Sağlık Örgütü kumar oynama bozukluğunu bir hastalık olarak tanımlıyor. "Son bir kez, kaybettiğimi geri alayım" düşüncesi bağımlılığın belirtilerindendir.</p>
+          <ul class="d">
+            <li><strong>İşaretler:</strong> giderek daha çok para yatırmak, kaybettiğinin peşinden koşmak, bırakmaya çalışıp başaramamak, oynadığını gizlemek için yalan söylemek, borç almak, okulu ya da işi aksatmak.</li>
+            <li><strong>Yasa dışı bahis oynamak da cezasız değil.</strong> Oynayana idari para cezası verilir. Reklamını yapmak 1–3 yıl, bahis parasının aktarılmasına aracılık etmek 3–5 yıl hapis cezası gerektirir. Hesabını "kiraya vermek" seni bu suça ortak edebilir.</li>
+          </ul>
+          <ol class="n">
+            <li><span><strong>Ulaşmayı zorlaştır.</strong> Uygulamaları sil, siteleri engelle, bahis hesaplarını ve gruplarını takipten çık.</span></li>
+            <li><span><strong>Parayı uzaklaştır.</strong> Yanında sadece günlük ihtiyacın kadar para tut. Kartlarını bir süre güvendiğin birine bırak.</span></li>
+            <li><span><strong>Birine söyle.</strong> Borcun ne kadar olursa olsun saklamak büyütür.</span></li>
+            <li><span><strong>Ücretsiz destek al.</strong> YEDAM, 12 yaş ve üzerine kumar için de ücretsiz psikolojik destek veriyor: <a href="tel:115">115</a>. Borç yüzünden yaşamak istemediğini düşünüyorsan <a href="tel:112">112</a>.</span></li>
+          </ol>
+          <details class="srcs"><summary>Kaynaklar (4)</summary><p class="src"><a href="https://www.yesilay.org.tr/bagimlilik/kumar-bagimliligi/">Yeşilay, Kumar bağımlılığı</a> · <a href="https://www.yedam.org.tr/bagimlilik-turleri/kumar-bagimliligi">YEDAM, Kumar bağımlılığı</a> · <a href="https://www.yedam.org.tr/nasil-yararlanabilirim">YEDAM, Nasıl yararlanabilirim?</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.3.7258.pdf">7258 sayılı Kanun, madde 5</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="bagimlilik-ekran" data-k="oyun bağımlılığı telefon bağımlılığı sosyal medya internet ekran dijital">Oyun, telefon ve sosyal medya</h3>
+        <div class="prose">
+          <p>Çok oynayan herkes bağımlı değildir. Dünya Sağlık Örgütü'nün tanımında ölçü süre değil, <strong>kontrolü kaybetmek</strong>: oyunun her şeyden önemli hâle gelmesi, zarar gördüğün hâlde duramamak, okulun, işin ve ilişkilerin bozulması. Bunun genellikle en az 12 ay sürmesi beklenir.</p>
+          <ul class="d">
+            <li><strong>Kendine sor:</strong> Bırakmayı deneyip başaramıyor muyum? Uykumdan, derslerimden, arkadaşlarımdan vazgeçiyor muyum? Bir sorundan kaçmak için mi açıyorum?</li>
+            <li><strong>Küçük başla.</strong> Bildirimleri kapat, yatarken telefonu başka odada bırak, boşalan saate yapacak bir şey koy.</li>
+            <li><strong>Ücretsiz destek al.</strong> YEDAM internet bağımlılığında da destek veriyor: <a href="tel:115">115</a>. Okul rehber öğretmenine de anlatabilirsin.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.yesilay.org.tr/bagimlilik/dijital-bagimliliklar/">Yeşilay, Dijital bağımlılıklar</a> · <a href="https://www.yedam.org.tr/nasil-yararlanabilirim">YEDAM, Nasıl yararlanabilirim?</a></p></details>
         </div>
       </div>
     </div>
@@ -1703,7 +1869,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="ifade" class="chapter grid" data-c="ifade" aria-labelledby="ifade-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg><span class="chapter__num">06</span><span class="chapter__name">Kendini ifade etmek</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg><span class="chapter__num">07</span><span class="chapter__name">Kendini ifade etmek</span></p>
         <h2 id="ifade-baslik">Konuşmak sana zor geliyorsa, bunun bir mekanizması var.</h2>
         <p class="chapter__lead">"Biraz cesaretlen" ya da "git birine selam ver" demek kolay. Ama sosyal kaygı yaşayan biri için bu adımlar dağ gibi gelebilir. Önce neden böyle hissettiğini anlamak işe yarar.</p>
       </header>
@@ -1783,7 +1949,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="hayat" class="chapter grid" data-c="hayat" aria-labelledby="hayat-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg><span class="chapter__num">07</span><span class="chapter__name">Hak arama</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg><span class="chapter__num">08</span><span class="chapter__name">Hak arama</span></p>
         <h2 id="hayat-baslik">Hakkını aramak için zengin olmana gerek yok.</h2>
         <p class="chapter__lead">Bunları evde kimse öğretmediyse sorun değil. Bilmemek ayıp değil, herkes bir yerden öğrenir.</p>
       </header>
@@ -1792,12 +1958,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">10 gün</span><span class="glance__txt">başvurun reddedilirse baro başkanına itiraz süresi</span></li>
         <li><span class="glance__big">ALO 144</span><span class="glance__txt">hangi sosyal yardımlardan yararlanabileceğini sor</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Hak arama: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#hayat-1"><b>01</b>Ücretsiz avukat: adli yardım</a><a href="#hayat-2"><b>02</b>Maddi olarak çok zordaysan</a><a href="#hayat-3"><b>03</b>Resmi bir işte ne yapacağını bilmiyorsan</a></nav>
+      <nav class="jump fade-up" aria-label="Hak arama: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#hayat-avukat"><b>01</b>Ücretsiz avukat: adli yardım</a><a href="#hayat-para"><b>02</b>Maddi olarak çok zordaysan</a><a href="#hayat-is"><b>03</b>İşe başlarken: sigorta ve şikâyet</a><a href="#hayat-cocuk-isci"><b>04</b>18 yaşından küçük çalışıyorsan</a><a href="#hayat-dolandiricilik"><b>05</b>İnternette dolandırıldıysan</a><a href="#hayat-burs"><b>06</b>Üniversite için burs ve kredi</a><a href="#hayat-7"><b>07</b>Resmi bir işte ne yapacağını bilmiyorsan</a></nav>
     </div>
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="hayat-1" data-k="bedava avukat baro dava mahkeme">Ücretsiz avukat: adli yardım</h3>
+        <h3 id="hayat-avukat" data-k="bedava avukat baro dava mahkeme">Ücretsiz avukat: adli yardım</h3>
         <div class="prose">
           <p>Avukat tutacak paran yoksa, yaşadığın ildeki baronun Adli Yardım Bürosu'na başvurabilirsin. Başvurun uygun bulunursa sana bir avukat görevlendirilir ve avukatın ücretini baro öder. Harç ve masraflar ayrıdır. Dava sonunda maddi kazanç elde edersen (nafaka hariç) avukata ödenen ücreti ve kazancın %5'ini baroya ödemen gerekir.</p>
           <ol class="n">
@@ -1810,7 +1976,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="hayat-2" data-k="para yok yoksulluk sosyal yardım aç fakir borç">Maddi olarak çok zordaysan</h3>
+        <h3 id="hayat-para" data-k="para yok yoksulluk sosyal yardım aç fakir borç">Maddi olarak çok zordaysan</h3>
         <div class="prose">
           <p><a class="tel" href="tel:144">ALO 144</a> Sosyal Yardım Hattı'nı arayıp hangi yardımlardan yararlanabileceğini sorabilirsin. Hafta içi 08.00–19.00 arası açık ve ücretsiz.</p>
           <p class="src">Kaynak: <a href="https://alo144.aile.gov.tr/">Aile ve Sosyal Hizmetler Bakanlığı, ALO 144</a></p>
@@ -1818,7 +1984,65 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="hayat-3" data-k="edevlet devlet dairesi belge">Resmi bir işte ne yapacağını bilmiyorsan</h3>
+        <h3 id="hayat-is" data-k="iş sigorta sigortasız sgk maaş asgari ücret patron işten çıkarma alo 170">İşe başlarken: sigorta ve şikâyet</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Sigortan ilk günden olmalı.</strong> İşveren seni kural olarak işe başlamadan önce SGK'ya bildirmek zorunda. Bildirip bildirmediğini e-Devlet'te <a href="https://www.turkiye.gov.tr/sgk-tescil-ve-hizmet-dokumu">SGK Tescil ve Hizmet Dökümü</a> sayfasından gör.</li>
+            <li><strong>"Sigorta istemiyorum" kâğıdı geçersizdir.</strong> Sigortalı olmak zorunludur; sözleşmeye yazılan ya da sana imzalatılan vazgeçme hükmü seni bağlamaz.</li>
+            <li><strong>Sigortasız çalıştırıldıysan</strong> şikâyet edebilir, o işteki yılın sonundan başlayarak 5 yıl içinde iş mahkemesinde hizmet tespiti davası açabilirsin. Mesajları, fotoğrafları ve tanıkların adlarını sakla.</li>
+            <li><strong>Şikâyet:</strong> <a href="tel:170">ALO 170</a> Çalışma ve Sosyal Güvenlik hattı. İnternetteki bildirim formunda kişisel bilgilerini paylaşmama seçeneği de var.</li>
+            <li><strong>İş yerinde taciz</strong> için <a href="#iliski-taciz-yasa">haklarına</a> bak.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">5510 sayılı Kanun, madde 8, 86 ve 92</a> · <a href="https://www.alo170.gov.tr/">ALO 170</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-cocuk-isci" data-k="çocuk işçi 18 yaş altı çalışmak staj çırak part time yaz işi">18 yaşından küçük çalışıyorsan</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>15 yaşını doldurmamış çocuk çalıştırılamaz.</strong> 14 yaşını doldurup zorunlu ilköğretim çağını bitirenler yalnızca hafif işlerde ve okulunu engellemeyecek şekilde çalışabilir.</li>
+            <li><strong>Okula gidiyorsan</strong> dönem içinde, ders saatleri dışında, günde en fazla 2 ve haftada en fazla 10 saat çalışabilirsin.</li>
+            <li><strong>Okula gitmiyorsan</strong> sınır günde 7, haftada 35 saattir; 15 yaşını doldurduysan günde 8, haftada 40 saat.</li>
+            <li><strong>Yasak işler:</strong> 18 yaşından küçükler sanayide gece, maden ve yer altı işlerinde çalıştırılamaz.</li>
+            <li><strong>Zorla çalıştırılıyorsan, paran verilmiyorsa ya da yaralandıysan</strong> <a href="tel:170">ALO 170</a> ve <a href="tel:183">ALO 183</a>; acil durumda <a href="tel:112">112</a>.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4857.pdf">4857 sayılı İş Kanunu, madde 71, 72 ve 73</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-dolandiricilik" data-k="dolandırıldım dolandırıcılık iban kart şifre sahte ilan hesap kiralama hacklendi hesabım çalındı">İnternette dolandırıldıysan</h3>
+        <div class="prose">
+          <ol class="n">
+            <li><span><strong>Hemen bankanı ara.</strong> Kartın arkasındaki ya da bankanın kendi uygulamasındaki numarayı kullan. İşlemi bildir, kartı ve hesabı kapattır. Şifrelerini değiştir.</span></li>
+            <li><span><strong>Kanıtı sakla.</strong> Dekont, IBAN, mesaj, ilan ve profil ekran görüntülerini al.</span></li>
+            <li><span><strong>Şikâyet et.</strong> Karakola ya da Cumhuriyet Başsavcılığına git. İnternet ve banka kullanılarak yapılan dolandırıcılık daha ağır cezalı bir suçtur (TCK 158).</span></li>
+            <li><span><strong>"Paranı geri alırım" diyene para verme.</strong> Bu çoğu zaman ikinci bir tuzaktır.</span></li>
+          </ol>
+          <ul class="d">
+            <li><strong>SMS kodunu ve şifreni kimseyle paylaşma.</strong> Banka, polis ya da savcı olduğunu söylese bile kapat ve kurumu kendin ara.</li>
+            <li><strong>Hesabını kimseye kullandırma.</strong> "Aylık para karşılığı IBAN'ını kiralayalım" teklifi seni suça ortak edebilir. Emniyet bu konuda özellikle uyarıyor.</li>
+          </ul>
+          <details class="srcs"><summary>Kaynaklar (4)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 158</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5271.pdf">Ceza Muhakemesi Kanunu, madde 158</a> · <a href="https://www.trthaber.com/haber/turkiye/emniyetten-vatandaslara-banka-hesabi-uyarisi-952418.html">TRT Haber, Emniyet'in hesap uyarısı (2026)</a> · <a href="https://www.egm.gov.tr/siber/">Emniyet Siber Suçlarla Mücadele</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-burs" data-k="burs kredi kyk öğrenci üniversite para okul masrafı">Üniversite için burs ve kredi</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Burs</strong> karşılıksızdır, <strong>öğrenim kredisi</strong> ise sonra geri ödenir. İkisine de Gençlik ve Spor Bakanlığı'na e-Devlet üzerinden başvurulur.</li>
+            <li><strong>Tarihi kaçırma.</strong> Başvuru yılda bir kez, kısa süre açık kalır. Üniversiteyi kazandığında Bakanlığın duyurularını takip et.</li>
+            <li><strong>Devlet korumasındaysan ya da şehit, gazi yakınıysan</strong> başvururken bunu mutlaka belirt; öncelik hakkın olup olmadığını sor.</li>
+            <li><strong>Yurt</strong> için <a href="#aile-ayrilmak">bu başlığa</a> bak.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.turkiye.gov.tr/genclik-ve-spor-bakanligi">e-Devlet, Gençlik ve Spor Bakanlığı hizmetleri</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-7" data-k="edevlet devlet dairesi belge">Resmi bir işte ne yapacağını bilmiyorsan</h3>
         <div class="prose">
           <p>Görevliye "İlk kez yapıyorum, nereden başlamalıyım?" diye sormak tamamen normaldir. Birçok işlemi e-Devlet'ten evden yapabilirsin. Gittiğin her yerde aldığın evrakın fotoğrafını çek ve görüştüğün kişinin adını not al.</p>
         </div>
@@ -1830,6 +2054,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <ul>
         <li><span class="help__name">Baro Adli Yardım Bürosu</span><small>Her baro merkezinde var. Büyük ilçelerde temsilcilikler de bulunur.</small></li>
         <li><span class="help__name">Sosyal Yardım Hattı</span><a class="tel" href="tel:144">ALO 144</a></li>
+        <li><span class="help__name">İş, sigorta, çocuk işçiliği</span><a class="tel" href="tel:170">ALO 170</a><small>Çalışma ve Sosyal Güvenlik hattı.</small></li>
         <li><span class="help__name">e-Devlet</span><a class="tel" href="https://www.turkiye.gov.tr">turkiye.gov.tr</a></li>
       </ul>
       <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
@@ -1840,7 +2065,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="rehber" class="chapter grid" data-c="rehber" aria-labelledby="rehber-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg><span class="chapter__num">08</span><span class="chapter__name">Rehber</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg><span class="chapter__num">09</span><span class="chapter__name">Rehber</span></p>
         <h2 id="rehber-baslik">Nereye başvurulur? Hepsi bir arada.</h2>
         
       </header>
@@ -1853,15 +2078,19 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <tr><th scope="row">Hayati tehlike, kendine zarar verme düşüncesi</th><td data-label="Nereye">Acil Çağrı Merkezi</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">7/24</td></tr>
           <tr><th scope="row">Şiddet (fiziksel, psikolojik, cinsel, ekonomik)</th><td data-label="Nereye">Şiddetle Mücadele Hattı</td><td data-label="Numara"><a class="tel" href="tel:183">ALO 183</a></td><td data-label="Not">7/24, ücretsiz. WhatsApp: <a href="https://wa.me/905011830183">0501 183 0 183</a></td></tr>
           <tr><th scope="row">Taciz, cinsel saldırı, tecavüz</th><td data-label="Nereye">Hastane acil servisi, karakol ya da savcılık; danışmak için ALO 183</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">Mümkünse yıkanmadan; ilk 72 saat. <a href="#iliski-taciz">Adım adım</a></td></tr>
+          <tr><th scope="row">Zorla ya da erken yaşta evlendirme</th><td data-label="Nereye">Şiddetle Mücadele Hattı</td><td data-label="Numara"><a class="tel" href="tel:183">ALO 183</a></td><td data-label="Not">Tehlike yakınsa 112. <a href="#siddet-evlilik">Adım adım</a></td></tr>
           <tr><th scope="row">İşitme ya da konuşma engeli</th><td data-label="Nereye">ALO 183 işaret dili hattı</td><td data-label="Numara"><a class="tel" href="tel:+905493810183">0549 381 0 183</a></td><td data-label="Not">Görüntülü görüşme; hafta içi 08.00–24.00, cumartesi 08.00–17.00</td></tr>
           <tr><th scope="row">Görüntüyle şantaj, ifşa, ısrarlı takip</th><td data-label="Nereye">Karakol ya da Cumhuriyet Başsavcılığı</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">Delilleri silme, para gönderme</td></tr>
           <tr><th scope="row">Aile içi sorunlar, anlaşamama</th><td data-label="Nereye">Sosyal Hizmet Merkezi (aile ve bireysel danışmanlık)</td><td data-label="Numara"><a href="https://www.turkiye.gov.tr">e-Devlet</a></td><td data-label="Not">Ücretsiz</td></tr>
           <tr><th scope="row">Uyuşturucu, madde bağımlılığı (kendin ya da yakının için)</th><td data-label="Nereye">Sağlık Bakanlığı Uyuşturucu Danışma Hattı</td><td data-label="Numara"><a class="tel" href="tel:191">ALO 191</a></td><td data-label="Not">7/24, sabit hatlardan ücretsiz. Yeşilay: <a href="tel:115">115</a></td></tr>
           <tr><th scope="row">Aşırı doz, bilinç kaybı</th><td data-label="Nereye">Acil Çağrı Merkezi</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">Ne aldığını sağlık ekibine söyle</td></tr>
+          <tr><th scope="row">Kumar, sanal bahis, oyun ve internet bağımlılığı</th><td data-label="Nereye">Yeşilay Danışma Hattı (YEDAM)</td><td data-label="Numara"><a class="tel" href="tel:115">115</a></td><td data-label="Not">Ücretsiz, 12 yaş ve üzeri</td></tr>
           <tr><th scope="row">Psikiyatri ya da psikolog</th><td data-label="Nereye">Devlet hastanesi (MHRS)</td><td data-label="Numara"><a class="tel" href="tel:182">ALO 182</a></td><td data-label="Not">Ücretsiz</td></tr>
           <tr><th scope="row">Riskli cinsel temas</th><td data-label="Nereye">Hastane acil servisi</td><td data-label="Numara">İlk 72 saat</td><td data-label="Not">İdeali ilk 24 saat</td></tr>
           <tr><th scope="row">Anonim HIV testi</th><td data-label="Nereye">Gönüllü Danışmanlık ve Test Merkezi</td><td data-label="Numara"><a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Bakanlık listesi</a></td><td data-label="Not">Kimlik gerekmez, ücretsiz</td></tr>
           <tr><th scope="row">Cinsel sağlık sorusu</th><td data-label="Nereye">TAP Vakfı Bilgi Hattı</td><td data-label="Numara"><a class="tel" href="tel:4446539">444 65 39</a></td><td data-label="Not">Hafta içi 09.00–18.00</td></tr>
+          <tr><th scope="row">Sigortasız çalıştırılma, çocuk işçiliği</th><td data-label="Nereye">Çalışma ve Sosyal Güvenlik hattı</td><td data-label="Numara"><a class="tel" href="tel:170">ALO 170</a></td><td data-label="Not">Şikâyet ve bilgi</td></tr>
+          <tr><th scope="row">İnternette dolandırılma</th><td data-label="Nereye">Bankan, sonra karakol ya da savcılık</td><td data-label="Numara">Bankanın numarası</td><td data-label="Not"><a href="#hayat-dolandiricilik">Adım adım</a></td></tr>
           <tr><th scope="row">Ücretsiz avukat</th><td data-label="Nereye">Baro Adli Yardım Bürosu</td><td data-label="Numara">İlindeki baro</td><td data-label="Not">Gelir belgesiyle</td></tr>
           <tr><th scope="row">Maddi zorluk</th><td data-label="Nereye">Sosyal Yardım Hattı</td><td data-label="Numara"><a class="tel" href="tel:144">ALO 144</a></td><td data-label="Not">Hafta içi 08.00–19.00, ücretsiz</td></tr>
         </tbody>
@@ -1870,7 +2099,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     </div>
   </section>
 
-  <section id="gizlilik" class="privacy grid" aria-labelledby="gizlilik-baslik">
+  <section id="gizlilik" class="privacy grid" data-c="rehber" data-k="gizli gizlilik geçmiş silmek gizli sekme takip izleniyorum çerez" aria-labelledby="gizlilik-baslik">
     <h2 id="gizlilik-baslik" class="fade-up">Bu sayfaya girdiğin bilinmesin istiyorsan</h2>
     <ul class="d fade-up">
       <li><strong>Hızlı çık</strong> düğmesi seni hemen hava durumu sayfasına götürür. Yanına biri geldiğinde işe yarar ama tarayıcı geçmişini silmez.</li>
@@ -2050,13 +2279,48 @@ tbody th { font-weight: 600; white-space: nowrap; }
     if (e.key === "/" && !/INPUT|TEXTAREA/.test(t) && !$("dialog[open]")) { e.preventDefault(); openSheet("search-dlg"); }
   });
 
+  /* telefonda başlıklar katlanır: dokununca açılır. Sayfada bul (Ctrl+F) kapalı metni de bulur ve açar */
+  var phone = matchMedia("(max-width: 720px)");
+  var folds = $$(".blocks > .block > h3[id]").map(function (h) {
+    var block = h.parentNode, body = document.createElement("div"), btn = document.createElement("button");
+    body.className = "fold__body"; body.id = h.id + "-icerik";
+    while (h.nextSibling) body.appendChild(h.nextSibling);
+    block.appendChild(body);
+    btn.type = "button"; btn.className = "fold__btn"; btn.setAttribute("aria-controls", body.id);
+    var f = { h: h, body: body, btn: btn, open: h.hasAttribute("data-acik"), text: h.textContent };
+    btn.addEventListener("click", function () { f.open = !f.open; paint(f); });
+    body.addEventListener("beforematch", function () { f.open = true; paint(f); });
+    return f;
+  });
+  function paint(f) {
+    var on = phone.matches;
+    if (on && f.btn.parentNode !== f.h) { f.h.textContent = ""; f.btn.textContent = f.text; f.h.appendChild(f.btn); }
+    if (!on && f.btn.parentNode === f.h) { f.h.textContent = f.text; }
+    f.btn.setAttribute("aria-expanded", f.open ? "true" : "false");
+    if (on && !f.open) f.body.setAttribute("hidden", "until-found"); else f.body.removeAttribute("hidden");
+  }
+  function unfold(el) {
+    folds.forEach(function (f) { if ((f.h === el || f.body.contains(el)) && !f.open) { f.open = true; paint(f); } });
+  }
+  folds.forEach(paint);
+  phone.addEventListener("change", function () { folds.forEach(paint); });
+  addEventListener("beforeprint", function () { folds.forEach(function (f) { f.body.removeAttribute("hidden"); }); });
+  addEventListener("afterprint", function () { folds.forEach(paint); });
+  if (location.hash.length > 1 && phone.matches) {
+    var first = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (first) { unfold(first); setTimeout(function () { first.scrollIntoView({ behavior: "instant" }); }, 0); }
+  }
+
   function go(id) {
     var el = document.getElementById(id);
     if (!el) return;
-    var det = el.closest("details") || (el.tagName === "LI" && el.querySelector("details"));
+    var det = el.closest("details") || (el.tagName === "LI" && el.querySelector("details.acc"));
     if (det) det.open = true;
     var f = el.closest(".fade-up"); if (f) f.classList.add("is-shown");
-    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    unfold(el);
+    /* uzak hedefe uzun uzun kaymak yerine doğrudan git */
+    var far = Math.abs(el.getBoundingClientRect().top) > innerHeight * 4;
+    el.scrollIntoView({ behavior: reduce || far ? "instant" : "smooth", block: "start" });
     if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
     el.focus({ preventScroll: true });
     history.replaceState(null, "", "#" + id);
@@ -2111,6 +2375,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
     }
     toc.appendChild(li);
   });
+  (function () {
+    var li = document.createElement("li"), a = document.createElement("a");
+    li.dataset.c = "rehber"; a.className = "toc__ch"; a.href = "#gizlilik";
+    a.innerHTML = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>';
+    a.appendChild(document.createTextNode("Gizli kalmak")); li.appendChild(a); toc.appendChild(li);
+  })();
 
   /* sayfa içi arama: alt başlıklar ve kartlar */
   /* büyük/küçük harf ve Türkçe harf farkını yok say: "SIDDET", "şiddet" ve "siddet" aynı (uzunluk değişmez) */
@@ -2129,6 +2399,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
       var title = rk ? tEl.textContent.slice(rk.textContent.length) : tEl.textContent;
       idx.push({ c: s.dataset.c, sec: sec, id: li.id, t: title, k: "", body: d.textContent.replace(/\s+/g, " "), card: true });
     });
+  });
+  var gz = $("#gizlilik");
+  idx.push({ c: "rehber", sec: "Gizlilik", id: "gizlilik", t: $("h2", gz).textContent, k: gz.dataset.k, body: gz.textContent.replace(/\s+/g, " ") });
+  $$("#rehber tbody tr").forEach(function (x, i) {
+    if (!x.id) x.id = "rehber-" + (i + 1);
+    idx.push({ c: "rehber", sec: "Rehber", id: x.id, t: $("th", x).textContent, k: "", body: $$("td", x).map(function (d) { return d.textContent; }).join(" · "), card: false, low: 1 });
   });
   var q = $("#site-q"), out = $("#site-results"), hint = $("#site-hint"), status = $("#site-status");
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -2152,7 +2428,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         score += s;
       }
       if (parts.length > 1 && (T + " | " + K + " | " + B).indexOf(term) > -1) score += 4;
-      return { r: r, score: score };
+      return { r: r, score: r.low ? score * 0.5 : score };
     }).filter(function (h) { return h.score; }).sort(function (a, b) { return b.score - a.score; });
   }
   function search() {
@@ -2201,7 +2477,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     var list = document.getElementById(btn.dataset.toggleAll), open = false;
     btn.addEventListener("click", function () {
       open = !open;
-      $$("details", list).forEach(function (d) { d.open = open; });
+      $$("details.acc", list).forEach(function (d) { d.open = open; });
       btn.textContent = open ? "Hepsini kapat" : "Hepsini aç";
     });
   });

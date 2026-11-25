@@ -1,0 +1,28 @@
+name: Link kontrolü
+
+# Her ayın 1'inde bağlantıları kontrol eder; bozuk varsa depoda bir kayıt (issue) açar.
+on:
+  schedule:
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  kontrol:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bağlantıları kontrol et
+        run: node src/check-links.js
+      - name: Bozuk varsa kayıt aç
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -f link-raporu.md ]; then
+            gh issue create --title "Bozuk bağlantı var ($(date +%Y-%m))" --body-file link-raporu.md
+          fi

@@ -28,14 +28,13 @@ const pad = "            ";
 // Her kavramın kendi kaynağı (İngilizce adına göre)
 const L = (href, text) => `<a href="${href}">${t_(text)}</a>`;
 const TSRC = {
-  "Love bombing": [L("https://health.clevelandclinic.org/love-bombing", "Cleveland Clinic, Love bombing")],
+  "Love bombing / Future faking": [L("https://health.clevelandclinic.org/love-bombing", "Cleveland Clinic, Love bombing")],
   "Gaslighting": [L("https://www.acibadem.com.tr/saglikli-yasam/manipulasyon-nedir-gaslighting-ve-psikolojik-manipulasyon/", "Acıbadem, Gaslighting")],
   "Emotional abuse": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf", "6284 sayılı Kanun")],
   "Silent treatment / Stonewalling": [L("https://health.clevelandclinic.org/stonewalling-in-a-relationship", "Cleveland Clinic, Stonewalling")],
   "DARVO": [L("https://www.womenslaw.org/about-abuse/forms-abuse/emotional-and-psychological-abuse/forms-emotional-and-psychological-abuse-3", "WomensLaw, DARVO")],
   "Trauma bonding": [L("https://health.clevelandclinic.org/trauma-bonding", "Cleveland Clinic, Trauma bonding"), L("https://www.psychologytoday.com/us/basics/trauma-bonding", "Psychology Today, Trauma bonding")],
-  "Ghosting": [L("https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope", "Colorado Üniversitesi, Ghosting ve orbiting")],
-  "Orbiting": [L("https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope", "Colorado Üniversitesi, Ghosting ve orbiting")],
+  "Ghosting / Orbiting / Zombieing": [L("https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope", "Colorado Üniversitesi, Ghosting ve orbiting")],
   "Sextortion": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 107")],
   "Revenge porn / Image-based abuse": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 73, 134 ve 139")],
   "Cyberstalking": [L("https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf", "Türk Ceza Kanunu, madde 123/A")],
@@ -51,7 +50,7 @@ const SSRC = {
 const src = (list) => (list ? `\n${pad}    <p class="src">${t_("Kaynak:")} ${list.join(" · ")}</p>` : "");
 
 const names = (x) => en ? `<span class="acc__t">${esc(x.en)}</span><span class="acc__en" lang="tr">${esc(x.tr)}</span>` : `<span class="acc__t">${esc(x.tr)}</span><span class="acc__en" lang="en">${esc(x.en)}</span>`;
-const terms = T.map((t) => `${pad}<li data-cat="${t.f}"><details class="acc">
+const terms = T.map((t) => `${pad}<li${t.id ? ` id="${t.id}"` : ""} data-cat="${t.f}"><details class="acc">
 ${pad}  <summary><span>${names(t)}</span><span class="acc__cat">${phase[t.f]}</span></summary>
 ${pad}  <div class="acc__body">
 ${pad}    <p>${esc(t_(t.d))}</p>
@@ -112,11 +111,11 @@ function chapters(src) {
   return src.replace(/<section id="(\w+)" class="chapter grid"[\s\S]*?<\/section>/g, (sec, cid) => {
     let n = 0;
     const subs = [];
-    sec = sec.replace(/(<div class="block fade-up">\s*)<h3 class="label"(?: id="([^"]+)")?(?: data-k="([^"]*)")?>([\s\S]*?)<\/h3>/g, (m, pre, id, k, t) => {
+    sec = sec.replace(/(<div class="block fade-up">\s*)<h3 class="label"(?: id="([^"]+)")?( data-acik)?(?: data-k="([^"]*)")?>([\s\S]*?)<\/h3>/g, (m, pre, id, acik, k, t) => {
       n++;
       const hid = id || `${cid}-${n}`;
       subs.push([hid, t.trim()]);
-      return `${pre}<h3 id="${hid}"${k ? ` data-k="${k}"` : ""}>${t}</h3>`;
+      return `${pre}<h3 id="${hid}"${acik || ""}${k ? ` data-k="${k}"` : ""}>${t}</h3>`;
     });
     const jump = subs.length
       ? `<nav class="jump fade-up" aria-label="${(sec.match(/class="chapter__name">([^<]+)</) || [, ""])[1]}: ${t_("bu bölümde")}"><span class="jump__t">${t_("Bu bölümde")}</span>${subs.map(([id, t], i) => `<a href="#${id}"><b>${String(i + 1).padStart(2, "0")}</b>${t}</a>`).join("")}</nav>`
@@ -185,9 +184,9 @@ function translate(html) {
     .replace('<html lang="tr"', '<html lang="en"')
     .replace(/(["(])(fonts|img)\//g, "$1../$2/")
     // İngilizce menü daha uzun: sıkışık düzene daha erken geç
-    .replaceAll("max-width: 1190px", "max-width: 1205px").replaceAll("min-width: 1190.02px", "min-width: 1205.02px").replaceAll("max-width: 1265px", "max-width: 1410px").replaceAll("max-width: 1490px", "max-width: 1660px");
+    .replaceAll("max-width: 1190px", "max-width: 1295px").replaceAll("min-width: 1190.02px", "min-width: 1295.02px").replaceAll("max-width: 1345px", "max-width: 1485px").replaceAll("max-width: 1630px", "max-width: 1810px");
 }
-const JS = ["Koyu tema", "Açık tema", "Sonuç sayısı: ", "Sonuç yok", " · kart", " kavram gösteriliyor", " enfeksiyon gösteriliyor", "Hepsini kapat", "Hepsini aç"];
+const JS = ["Koyu tema", "Açık tema", "Sonuç sayısı: ", "Sonuç yok", " · kart", " kavram gösteriliyor", " enfeksiyon gösteriliyor", "Hepsini kapat", "Hepsini aç", "Gizli kalmak", "Gizlilik", "Rehber"];
 
 let tpl = template;
 if (en) tpl = translate(tpl);
@@ -198,10 +197,16 @@ const html = chapters(tpl)
   .replace("{{EN_NOTE}}", en ? `  <p>This is a translation; the Turkish page is the original. The laws, services and phone numbers are those of Türkiye. Some helplines may answer only in Turkish, so ask whether someone speaks your language.</p>\n` : "")
   .replace("{{HERO}}", hero)
   .replace("{{TERMS}}", terms).replace("{{STIS}}", stis)
-  .replace("{{MADDE}}", madde).replace("{{T_COUNT}}", T.length).replace("{{S_COUNT}}", S.length);
+  .replace("{{MADDE}}", madde).replaceAll("{{T_COUNT}}", T.length).replace("{{S_COUNT}}", S.length);
+// iki ve daha çok kaynağı olan satırlar katlanır; tek kaynak açık kalır
+const folded = html.replace(/<p class="src">([\s\S]*?)<\/p>/g, (m, x) => {
+  const n = (x.match(/<a /g) || []).length, label = t_("Kaynak:");
+  if (n < 2 || !x.startsWith(label)) return m;
+  return `<details class="srcs"><summary>${t_("Kaynaklar")} (${n})</summary><p class="src">${x.slice(label.length).trim()}</p></details>`;
+});
 const out = path.join(ROOT, en ? "en/index.html" : "index.html");
 fs.mkdirSync(path.dirname(out), { recursive: true });
-fs.writeFileSync(out, html);
+fs.writeFileSync(out, folded);
 console.log("ok", lang, html.length);
 }
 

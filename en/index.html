@@ -71,7 +71,7 @@
   --rule: rgb(255 255 255 / 0.14); --rule-strong: rgb(255 255 255 / 0.4);
   --accent: #5fe08f; --focus: #ffffff;
   --c-aile: #f5b860; --c-ruh: #86bfff; --c-iliski: #ff9db0; --c-cinsel: #5fe08f;
-  --c-ifade: #bba4ff; --c-hayat: #ffa577; --c-rehber: #ffffff; --c-madde: #ff8578;
+  --c-ifade: #bba4ff; --c-hayat: #ffa577; --c-rehber: #ffffff; --c-madde: #ff8578; --c-siddet: #5fd6d2;
   --tint: 11%;
 }
 [data-theme="light"] {
@@ -81,14 +81,14 @@
   --rule: rgb(0 0 0 / 0.12); --rule-strong: rgb(0 0 0 / 0.45);
   --accent: #086b33; --focus: #1e251d;
   --c-aile: #985200; --c-ruh: #1d5aa8; --c-iliski: #b02146; --c-cinsel: #086b33;
-  --c-ifade: #5a3bc2; --c-hayat: #a33f12; --c-rehber: #1e251d; --c-madde: #b3261e;
+  --c-ifade: #5a3bc2; --c-hayat: #a33f12; --c-rehber: #1e251d; --c-madde: #b3261e; --c-siddet: #0a6468;
   --tint: 9%;
 }
 /* her bölüm kendi rengini --c olarak taşır */
 [data-c="aile"] { --c: var(--c-aile); } [data-c="ruh"] { --c: var(--c-ruh); }
 [data-c="iliski"] { --c: var(--c-iliski); } [data-c="cinsel"] { --c: var(--c-cinsel); }
 [data-c="ifade"] { --c: var(--c-ifade); } [data-c="hayat"] { --c: var(--c-hayat); }
-[data-c="rehber"] { --c: var(--c-rehber); } [data-c="madde"] { --c: var(--c-madde); }
+[data-c="rehber"] { --c: var(--c-rehber); } [data-c="madde"] { --c: var(--c-madde); } [data-c="siddet"] { --c: var(--c-siddet); }
 :root { --c: var(--accent); }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -181,6 +181,13 @@ h1 em { color: var(--accent); }
 @keyframes pulse { 0% { scale: 1; opacity: 0.6; } 70%, 100% { scale: 3.2; opacity: 0; } }
 
 /* ---------- içindekiler: renkli satırlar ---------- */
+.now { padding-block: 40px 72px; align-items: start; row-gap: 14px; }
+.now .label { grid-column: 1 / span 2; padding-top: 10px; font-size: clamp(1.5rem, 2vw, 1.875rem); line-height: 1.15; color: var(--text); }
+.now ul { list-style: none; grid-column: 3 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(16px, 3vw, 40px); border-top: 1px solid var(--rule); }
+.now a { display: flex; align-items: center; gap: 10px; height: 100%; min-height: 48px; padding-block: 8px; font-size: 0.9375rem; line-height: 1.3; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.now a::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.now a:hover { color: var(--c); }
+
 .index { padding-top: 96px; }
 .index .label { grid-column: 1 / span 1; font-family: var(--font); font-size: 0.8125rem; }
 .index ol { grid-column: 2 / -1; list-style: none; border-top: 1px solid var(--rule); }
@@ -381,6 +388,21 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .privacy ul { grid-column: 3 / span 4; max-width: 40em; }
 .privacy .src { grid-column: 3 / span 4; margin-top: 0; }
 .callout .tel { font-weight: 400; }
+.srcs { margin-top: 18px; font-size: 0.8125rem; }
+.srcs > summary { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; cursor: pointer; color: var(--muted); list-style: none; }
+.srcs > summary::-webkit-details-marker { display: none; }
+.srcs > summary::before { content: "+"; width: 1ch; color: var(--c); }
+.srcs[open] > summary::before { content: "–"; }
+.srcs > summary:hover { color: var(--text); text-decoration: underline; }
+.srcs > .src { margin-top: 4px; }
+@media print { .srcs::details-content { content-visibility: visible; block-size: auto; } }
+@media (max-width: 720px) { .blocks { row-gap: 44px; } html.js .jump { display: none; } }
+.fold__btn { all: unset; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; min-height: 48px; cursor: pointer; }
+.fold__btn::after { content: "+"; flex: none; font: 400 1.5rem/1 var(--font); color: var(--c); }
+.fold__btn[aria-expanded="true"]::after { content: "–"; }
+.fold__btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.fold__body[hidden="until-found"] { display: block; content-visibility: hidden; }
+@supports not (content-visibility: hidden) { .fold__body[hidden] { display: none; } }
 .checked { margin-top: 14px; font-size: 0.8125rem; color: var(--muted); }
 .footer { padding-block: 96px 48px; row-gap: 12px; font-size: 0.875rem; color: var(--muted); }
 .footer p { grid-column: span 3; max-width: 38em; }
@@ -444,9 +466,10 @@ tbody th { font-weight: 600; white-space: nowrap; }
 }
 
 /* ---------- tablet ---------- */
-@media (max-width: 1205px) {
+@media (max-width: 1295px) {
   :root { --margin: 32px; --section: 96px; --label: 56px; }
   .intro__text { grid-column: 1 / -1; }
+  .now .label, .now ul { grid-column: 1 / -1; }
   .intro__lead, .intro__urgent { grid-column: 2 / -1; }
   .chapter__head, .blocks, .help, .privacy h2, .privacy ul, .privacy .src { grid-column: 1 / -1; }
   .help { position: static; }
@@ -455,7 +478,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 }
 
 /* dar masaüstü: menü ikonları gizlenir, aralık daralır */
-@media (min-width: 1205.02px) and (max-width: 1660px) {
+@media (min-width: 1295.02px) and (max-width: 1810px) {
   /* simgeler hep kalır; yer açmak için aralıklar ve yazı küçülür */
   .bar { gap: 14px; }
   .menu ul { gap: 13px; }
@@ -465,7 +488,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   .bar-btn kbd { display: none; }
   .bar .theme-toggle { padding-left: 14px; }
 }
-@media (min-width: 1205.02px) and (max-width: 1410px) {
+@media (min-width: 1295.02px) and (max-width: 1485px) {
   .bar { gap: 12px; padding-inline: 24px; }
   .menu ul { gap: 11px; }
   .menu a, .bar-btn, .bar .theme-toggle, .lang, .bar .exit { font-size: 0.8125rem; }
@@ -476,7 +499,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 }
 
 /* dar ekran: üst menü yerine alt çubuk */
-@media (max-width: 1205px) {
+@media (max-width: 1295px) {
   :root { --nav-h: calc(64px + env(safe-area-inset-bottom)); }
   .menu, .bar-btn, html.js .bar .theme-toggle { display: none; }
   html:not(.js) .menu { display: flex; }
@@ -573,8 +596,9 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Family</a></li>
       <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Mental health</a></li>
       <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>Relationships</a></li>
+      <li data-c="siddet"><a href="#siddet"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.7 5.7 3.8 3.8M14.5 14.5l3.8 3.8M18.3 5.7l-3.8 3.8M9.5 14.5l-3.8 3.8"/></svg>Violence</a></li>
       <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Sexual health</a></li>
-      <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Drugs</a></li>
+      <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Addiction</a></li>
       <li data-c="ifade"><a href="#ifade"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg>Speaking up</a></li>
       <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Your rights</a></li>
       <li data-c="rehber"><a href="#rehber"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg>Directory</a></li>
@@ -597,6 +621,26 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <p class="intro__urgent intro__exit fade-up">If someone comes near, tap <b>Quick exit</b>; a weather page opens. <a href="#gizlilik">Staying private</a></p>
   </section>
 
+  <nav class="now grid fade-up" aria-labelledby="now-baslik">
+    <h2 class="label" id="now-baslik">What is happening right now?</h2>
+    <ul>
+      <li data-c="aile"><a href="#aile-siddet">I face violence at home</a></li>
+      <li data-c="siddet"><a href="#iliski-taciz">I was harassed or assaulted</a></li>
+      <li data-c="ruh"><a href="#ruh-kriz">I don't want to live</a></li>
+      <li data-c="ruh"><a href="#ruh-arkadas">I'm afraid for my friend</a></li>
+      <li data-c="siddet"><a href="#terim-santaj">I'm threatened with my photos</a></li>
+      <li data-c="siddet"><a href="#iliski-zorbalik">I'm being bullied</a></li>
+      <li data-c="siddet"><a href="#siddet-evlilik">They want to force me to marry</a></li>
+      <li data-c="cinsel"><a href="#cinsel-gebelik">I might be pregnant</a></li>
+      <li data-c="cinsel"><a href="#cinsel-1">I had unprotected sex</a></li>
+      <li data-c="madde"><a href="#madde-birak">I want to quit drugs</a></li>
+      <li data-c="madde"><a href="#bagimlilik-kumar">I can't stop gambling</a></li>
+      <li data-c="ruh"><a href="#ruh-panik">I'm having a panic attack</a></li>
+      <li data-c="aile"><a href="#aile-sinir">I don't get along with my family</a></li>
+      <li data-c="hayat"><a href="#hayat-avukat">I can't afford a lawyer</a></li>
+    </ul>
+  </nav>
+
   <figure class="hero fade-up" aria-labelledby="hero-cap">
     <svg class="dots dots--lg" viewBox="0 0 1152 312" role="img" aria-label="A grid full of faint dots. The dots around the single green dot in the middle are bright; the green dot is not alone.">
       <circle cx="12" cy="12" r="3"/><circle cx="36" cy="12" r="3"/><circle cx="60" cy="12" r="3"/><circle cx="84" cy="12" r="3"/><circle cx="108" cy="12" r="3"/><circle cx="132" cy="12" r="3"/><circle cx="156" cy="12" r="3"/><circle cx="180" cy="12" r="3"/><circle cx="204" cy="12" r="3"/><circle cx="228" cy="12" r="3"/><circle cx="252" cy="12" r="3"/><circle cx="276" cy="12" r="3"/><circle cx="300" cy="12" r="3"/><circle cx="324" cy="12" r="3"/><circle cx="348" cy="12" r="3"/><circle cx="372" cy="12" r="3"/><circle cx="396" cy="12" r="3"/><circle cx="420" cy="12" r="3"/><circle cx="444" cy="12" r="3"/><circle cx="468" cy="12" r="3"/><circle cx="492" cy="12" r="3"/><circle cx="516" cy="12" r="3"/><circle class="on" style="--d:10.0" cx="540" cy="12" r="3"/><circle cx="564" cy="12" r="3"/><circle cx="588" cy="12" r="3"/><circle cx="612" cy="12" r="3"/><circle class="on" style="--d:7.2" cx="636" cy="12" r="3"/><circle cx="660" cy="12" r="3"/><circle class="on" style="--d:6.3" cx="684" cy="12" r="3"/><circle cx="708" cy="12" r="3"/><circle cx="732" cy="12" r="3"/><circle class="on" style="--d:6.1" cx="756" cy="12" r="3"/><circle class="on" style="--d:6.3" cx="780" cy="12" r="3"/><circle cx="804" cy="12" r="3"/><circle cx="828" cy="12" r="3"/><circle class="on" style="--d:7.8" cx="852" cy="12" r="3"/><circle cx="876" cy="12" r="3"/><circle cx="900" cy="12" r="3"/><circle cx="924" cy="12" r="3"/><circle cx="948" cy="12" r="3"/><circle cx="972" cy="12" r="3"/><circle cx="996" cy="12" r="3"/><circle cx="1020" cy="12" r="3"/><circle cx="1044" cy="12" r="3"/><circle cx="1068" cy="12" r="3"/><circle cx="1092" cy="12" r="3"/><circle cx="1116" cy="12" r="3"/><circle cx="1140" cy="12" r="3"/><circle cx="12" cy="36" r="3"/><circle cx="36" cy="36" r="3"/><circle cx="60" cy="36" r="3"/><circle cx="84" cy="36" r="3"/><circle cx="108" cy="36" r="3"/><circle cx="132" cy="36" r="3"/><circle cx="156" cy="36" r="3"/><circle cx="180" cy="36" r="3"/><circle cx="204" cy="36" r="3"/><circle cx="228" cy="36" r="3"/><circle cx="252" cy="36" r="3"/><circle cx="276" cy="36" r="3"/><circle cx="300" cy="36" r="3"/><circle cx="324" cy="36" r="3"/><circle cx="348" cy="36" r="3"/><circle cx="372" cy="36" r="3"/><circle cx="396" cy="36" r="3"/><circle cx="420" cy="36" r="3"/><circle cx="444" cy="36" r="3"/><circle cx="468" cy="36" r="3"/><circle cx="492" cy="36" r="3"/><circle cx="516" cy="36" r="3"/><circle cx="540" cy="36" r="3"/><circle cx="564" cy="36" r="3"/><circle cx="588" cy="36" r="3"/><circle cx="612" cy="36" r="3"/><circle class="on" style="--d:6.4" cx="636" cy="36" r="3"/><circle cx="660" cy="36" r="3"/><circle class="on" style="--d:5.4" cx="684" cy="36" r="3"/><circle class="on" style="--d:5.1" cx="708" cy="36" r="3"/><circle cx="732" cy="36" r="3"/><circle cx="756" cy="36" r="3"/><circle class="on" style="--d:5.4" cx="780" cy="36" r="3"/><circle class="on" style="--d:5.8" cx="804" cy="36" r="3"/><circle class="on" style="--d:6.4" cx="828" cy="36" r="3"/><circle cx="852" cy="36" r="3"/><circle cx="876" cy="36" r="3"/><circle class="on" style="--d:8.6" cx="900" cy="36" r="3"/><circle cx="924" cy="36" r="3"/><circle cx="948" cy="36" r="3"/><circle cx="972" cy="36" r="3"/><circle cx="996" cy="36" r="3"/><circle cx="1020" cy="36" r="3"/><circle cx="1044" cy="36" r="3"/><circle cx="1068" cy="36" r="3"/><circle cx="1092" cy="36" r="3"/><circle cx="1116" cy="36" r="3"/><circle cx="1140" cy="36" r="3"/><circle cx="12" cy="60" r="3"/><circle cx="36" cy="60" r="3"/><circle cx="60" cy="60" r="3"/><circle cx="84" cy="60" r="3"/><circle cx="108" cy="60" r="3"/><circle cx="132" cy="60" r="3"/><circle cx="156" cy="60" r="3"/><circle cx="180" cy="60" r="3"/><circle cx="204" cy="60" r="3"/><circle cx="228" cy="60" r="3"/><circle cx="252" cy="60" r="3"/><circle cx="276" cy="60" r="3"/><circle cx="300" cy="60" r="3"/><circle cx="324" cy="60" r="3"/><circle cx="348" cy="60" r="3"/><circle cx="372" cy="60" r="3"/><circle cx="396" cy="60" r="3"/><circle cx="420" cy="60" r="3"/><circle cx="444" cy="60" r="3"/><circle cx="468" cy="60" r="3"/><circle cx="492" cy="60" r="3"/><circle cx="516" cy="60" r="3"/><circle cx="540" cy="60" r="3"/><circle class="on" style="--d:8.1" cx="564" cy="60" r="3"/><circle class="on" style="--d:7.2" cx="588" cy="60" r="3"/><circle cx="612" cy="60" r="3"/><circle cx="636" cy="60" r="3"/><circle cx="660" cy="60" r="3"/><circle cx="684" cy="60" r="3"/><circle class="on" style="--d:4.1" cx="708" cy="60" r="3"/><circle cx="732" cy="60" r="3"/><circle class="on" style="--d:4.1" cx="756" cy="60" r="3"/><circle cx="780" cy="60" r="3"/><circle class="on" style="--d:5.0" cx="804" cy="60" r="3"/><circle cx="828" cy="60" r="3"/><circle cx="852" cy="60" r="3"/><circle cx="876" cy="60" r="3"/><circle cx="900" cy="60" r="3"/><circle cx="924" cy="60" r="3"/><circle cx="948" cy="60" r="3"/><circle class="on" style="--d:10.8" cx="972" cy="60" r="3"/><circle cx="996" cy="60" r="3"/><circle cx="1020" cy="60" r="3"/><circle cx="1044" cy="60" r="3"/><circle cx="1068" cy="60" r="3"/><circle cx="1092" cy="60" r="3"/><circle cx="1116" cy="60" r="3"/><circle cx="1140" cy="60" r="3"/><circle cx="12" cy="84" r="3"/><circle cx="36" cy="84" r="3"/><circle cx="60" cy="84" r="3"/><circle cx="84" cy="84" r="3"/><circle cx="108" cy="84" r="3"/><circle cx="132" cy="84" r="3"/><circle cx="156" cy="84" r="3"/><circle cx="180" cy="84" r="3"/><circle cx="204" cy="84" r="3"/><circle cx="228" cy="84" r="3"/><circle cx="252" cy="84" r="3"/><circle cx="276" cy="84" r="3"/><circle cx="300" cy="84" r="3"/><circle cx="324" cy="84" r="3"/><circle cx="348" cy="84" r="3"/><circle cx="372" cy="84" r="3"/><circle cx="396" cy="84" r="3"/><circle cx="420" cy="84" r="3"/><circle cx="444" cy="84" r="3"/><circle cx="468" cy="84" r="3"/><circle cx="492" cy="84" r="3"/><circle cx="516" cy="84" r="3"/><circle cx="540" cy="84" r="3"/><circle cx="564" cy="84" r="3"/><circle cx="588" cy="84" r="3"/><circle class="on" style="--d:5.8" cx="612" cy="84" r="3"/><circle class="on" style="--d:5.0" cx="636" cy="84" r="3"/><circle cx="660" cy="84" r="3"/><circle class="on" style="--d:3.6" cx="684" cy="84" r="3"/><circle class="on" style="--d:3.2" cx="708" cy="84" r="3"/><circle cx="732" cy="84" r="3"/><circle class="on" style="--d:3.2" cx="756" cy="84" r="3"/><circle class="on" style="--d:3.6" cx="780" cy="84" r="3"/><circle class="on" style="--d:4.2" cx="804" cy="84" r="3"/><circle cx="828" cy="84" r="3"/><circle cx="852" cy="84" r="3"/><circle class="on" style="--d:6.7" cx="876" cy="84" r="3"/><circle cx="900" cy="84" r="3"/><circle cx="924" cy="84" r="3"/><circle class="on" style="--d:9.5" cx="948" cy="84" r="3"/><circle cx="972" cy="84" r="3"/><circle cx="996" cy="84" r="3"/><circle cx="1020" cy="84" r="3"/><circle cx="1044" cy="84" r="3"/><circle cx="1068" cy="84" r="3"/><circle cx="1092" cy="84" r="3"/><circle cx="1116" cy="84" r="3"/><circle cx="1140" cy="84" r="3"/><circle cx="12" cy="108" r="3"/><circle cx="36" cy="108" r="3"/><circle cx="60" cy="108" r="3"/><circle cx="84" cy="108" r="3"/><circle cx="108" cy="108" r="3"/><circle cx="132" cy="108" r="3"/><circle cx="156" cy="108" r="3"/><circle cx="180" cy="108" r="3"/><circle cx="204" cy="108" r="3"/><circle cx="228" cy="108" r="3"/><circle cx="252" cy="108" r="3"/><circle cx="276" cy="108" r="3"/><circle cx="300" cy="108" r="3"/><circle cx="324" cy="108" r="3"/><circle cx="348" cy="108" r="3"/><circle cx="372" cy="108" r="3"/><circle cx="396" cy="108" r="3"/><circle cx="420" cy="108" r="3"/><circle cx="444" cy="108" r="3"/><circle cx="468" cy="108" r="3"/><circle cx="492" cy="108" r="3"/><circle cx="516" cy="108" r="3"/><circle cx="540" cy="108" r="3"/><circle cx="564" cy="108" r="3"/><circle class="on" style="--d:6.3" cx="588" cy="108" r="3"/><circle class="on" style="--d:5.4" cx="612" cy="108" r="3"/><circle class="on" style="--d:4.5" cx="636" cy="108" r="3"/><circle cx="660" cy="108" r="3"/><circle class="on" style="--d:2.8" cx="684" cy="108" r="3"/><circle cx="708" cy="108" r="3"/><circle class="on" style="--d:2.0" cx="732" cy="108" r="3"/><circle class="on" style="--d:2.2" cx="756" cy="108" r="3"/><circle class="on" style="--d:2.8" cx="780" cy="108" r="3"/><circle cx="804" cy="108" r="3"/><circle class="on" style="--d:4.5" cx="828" cy="108" r="3"/><circle class="on" style="--d:5.4" cx="852" cy="108" r="3"/><circle cx="876" cy="108" r="3"/><circle cx="900" cy="108" r="3"/><circle cx="924" cy="108" r="3"/><circle cx="948" cy="108" r="3"/><circle cx="972" cy="108" r="3"/><circle cx="996" cy="108" r="3"/><circle cx="1020" cy="108" r="3"/><circle cx="1044" cy="108" r="3"/><circle cx="1068" cy="108" r="3"/><circle cx="1092" cy="108" r="3"/><circle cx="1116" cy="108" r="3"/><circle cx="1140" cy="108" r="3"/><circle cx="12" cy="132" r="3"/><circle cx="36" cy="132" r="3"/><circle cx="60" cy="132" r="3"/><circle cx="84" cy="132" r="3"/><circle cx="108" cy="132" r="3"/><circle cx="132" cy="132" r="3"/><circle cx="156" cy="132" r="3"/><circle cx="180" cy="132" r="3"/><circle cx="204" cy="132" r="3"/><circle cx="228" cy="132" r="3"/><circle cx="252" cy="132" r="3"/><circle cx="276" cy="132" r="3"/><circle cx="300" cy="132" r="3"/><circle cx="324" cy="132" r="3"/><circle cx="348" cy="132" r="3"/><circle cx="372" cy="132" r="3"/><circle cx="396" cy="132" r="3"/><circle cx="420" cy="132" r="3"/><circle cx="444" cy="132" r="3"/><circle cx="468" cy="132" r="3"/><circle cx="492" cy="132" r="3"/><circle cx="516" cy="132" r="3"/><circle cx="540" cy="132" r="3"/><circle class="on" style="--d:7.1" cx="564" cy="132" r="3"/><circle cx="588" cy="132" r="3"/><circle cx="612" cy="132" r="3"/><circle class="on" style="--d:4.1" cx="636" cy="132" r="3"/><circle class="on" style="--d:3.2" cx="660" cy="132" r="3"/><circle class="on" style="--d:2.2" cx="684" cy="132" r="3"/><circle class="on" style="--d:1.4" cx="708" cy="132" r="3"/><circle class="on" style="--d:1.0" cx="732" cy="132" r="3"/><circle class="on" style="--d:1.4" cx="756" cy="132" r="3"/><circle class="on" style="--d:2.2" cx="780" cy="132" r="3"/><circle cx="804" cy="132" r="3"/><circle class="on" style="--d:4.1" cx="828" cy="132" r="3"/><circle cx="852" cy="132" r="3"/><circle cx="876" cy="132" r="3"/><circle cx="900" cy="132" r="3"/><circle class="on" style="--d:8.1" cx="924" cy="132" r="3"/><circle cx="948" cy="132" r="3"/><circle cx="972" cy="132" r="3"/><circle cx="996" cy="132" r="3"/><circle cx="1020" cy="132" r="3"/><circle cx="1044" cy="132" r="3"/><circle cx="1068" cy="132" r="3"/><circle cx="1092" cy="132" r="3"/><circle cx="1116" cy="132" r="3"/><circle cx="1140" cy="132" r="3"/><circle cx="12" cy="156" r="3"/><circle cx="36" cy="156" r="3"/><circle cx="60" cy="156" r="3"/><circle cx="84" cy="156" r="3"/><circle cx="108" cy="156" r="3"/><circle cx="132" cy="156" r="3"/><circle cx="156" cy="156" r="3"/><circle cx="180" cy="156" r="3"/><circle cx="204" cy="156" r="3"/><circle cx="228" cy="156" r="3"/><circle cx="252" cy="156" r="3"/><circle cx="276" cy="156" r="3"/><circle cx="300" cy="156" r="3"/><circle cx="324" cy="156" r="3"/><circle cx="348" cy="156" r="3"/><circle cx="372" cy="156" r="3"/><circle cx="396" cy="156" r="3"/><circle cx="420" cy="156" r="3"/><circle cx="444" cy="156" r="3"/><circle cx="468" cy="156" r="3"/><circle cx="492" cy="156" r="3"/><circle cx="516" cy="156" r="3"/><circle cx="540" cy="156" r="3"/><circle cx="564" cy="156" r="3"/><circle cx="588" cy="156" r="3"/><circle class="on" style="--d:5.0" cx="612" cy="156" r="3"/><circle cx="636" cy="156" r="3"/><circle cx="660" cy="156" r="3"/><circle class="on" style="--d:2.0" cx="684" cy="156" r="3"/><circle class="on" style="--d:1.0" cx="708" cy="156" r="3"/><circle class="ring" cx="732" cy="156" r="9"/><circle class="you" cx="732" cy="156" r="6"/><circle class="on" style="--d:1.0" cx="756" cy="156" r="3"/><circle cx="780" cy="156" r="3"/><circle class="on" style="--d:3.0" cx="804" cy="156" r="3"/><circle class="on" style="--d:4.0" cx="828" cy="156" r="3"/><circle class="on" style="--d:5.0" cx="852" cy="156" r="3"/><circle class="on" style="--d:6.0" cx="876" cy="156" r="3"/><circle class="on" style="--d:7.0" cx="900" cy="156" r="3"/><circle cx="924" cy="156" r="3"/><circle cx="948" cy="156" r="3"/><circle cx="972" cy="156" r="3"/><circle cx="996" cy="156" r="3"/><circle cx="1020" cy="156" r="3"/><circle cx="1044" cy="156" r="3"/><circle cx="1068" cy="156" r="3"/><circle cx="1092" cy="156" r="3"/><circle cx="1116" cy="156" r="3"/><circle cx="1140" cy="156" r="3"/><circle cx="12" cy="180" r="3"/><circle cx="36" cy="180" r="3"/><circle cx="60" cy="180" r="3"/><circle cx="84" cy="180" r="3"/><circle cx="108" cy="180" r="3"/><circle cx="132" cy="180" r="3"/><circle cx="156" cy="180" r="3"/><circle cx="180" cy="180" r="3"/><circle cx="204" cy="180" r="3"/><circle cx="228" cy="180" r="3"/><circle cx="252" cy="180" r="3"/><circle cx="276" cy="180" r="3"/><circle cx="300" cy="180" r="3"/><circle cx="324" cy="180" r="3"/><circle cx="348" cy="180" r="3"/><circle cx="372" cy="180" r="3"/><circle cx="396" cy="180" r="3"/><circle cx="420" cy="180" r="3"/><circle cx="444" cy="180" r="3"/><circle cx="468" cy="180" r="3"/><circle class="on" style="--d:10.0" cx="492" cy="180" r="3"/><circle cx="516" cy="180" r="3"/><circle cx="540" cy="180" r="3"/><circle cx="564" cy="180" r="3"/><circle cx="588" cy="180" r="3"/><circle class="on" style="--d:5.1" cx="612" cy="180" r="3"/><circle class="on" style="--d:4.1" cx="636" cy="180" r="3"/><circle class="on" style="--d:3.2" cx="660" cy="180" r="3"/><circle class="on" style="--d:2.2" cx="684" cy="180" r="3"/><circle cx="708" cy="180" r="3"/><circle cx="732" cy="180" r="3"/><circle class="on" style="--d:1.4" cx="756" cy="180" r="3"/><circle class="on" style="--d:2.2" cx="780" cy="180" r="3"/><circle class="on" style="--d:3.2" cx="804" cy="180" r="3"/><circle cx="828" cy="180" r="3"/><circle cx="852" cy="180" r="3"/><circle class="on" style="--d:6.1" cx="876" cy="180" r="3"/><circle cx="900" cy="180" r="3"/><circle cx="924" cy="180" r="3"/><circle cx="948" cy="180" r="3"/><circle cx="972" cy="180" r="3"/><circle cx="996" cy="180" r="3"/><circle cx="1020" cy="180" r="3"/><circle cx="1044" cy="180" r="3"/><circle cx="1068" cy="180" r="3"/><circle cx="1092" cy="180" r="3"/><circle cx="1116" cy="180" r="3"/><circle cx="1140" cy="180" r="3"/><circle cx="12" cy="204" r="3"/><circle cx="36" cy="204" r="3"/><circle cx="60" cy="204" r="3"/><circle cx="84" cy="204" r="3"/><circle cx="108" cy="204" r="3"/><circle cx="132" cy="204" r="3"/><circle cx="156" cy="204" r="3"/><circle cx="180" cy="204" r="3"/><circle cx="204" cy="204" r="3"/><circle cx="228" cy="204" r="3"/><circle cx="252" cy="204" r="3"/><circle cx="276" cy="204" r="3"/><circle cx="300" cy="204" r="3"/><circle cx="324" cy="204" r="3"/><circle cx="348" cy="204" r="3"/><circle cx="372" cy="204" r="3"/><circle cx="396" cy="204" r="3"/><circle cx="420" cy="204" r="3"/><circle cx="444" cy="204" r="3"/><circle cx="468" cy="204" r="3"/><circle cx="492" cy="204" r="3"/><circle cx="516" cy="204" r="3"/><circle class="on" style="--d:8.2" cx="540" cy="204" r="3"/><circle class="on" style="--d:7.3" cx="564" cy="204" r="3"/><circle class="on" style="--d:6.3" cx="588" cy="204" r="3"/><circle cx="612" cy="204" r="3"/><circle class="on" style="--d:4.5" cx="636" cy="204" r="3"/><circle cx="660" cy="204" r="3"/><circle class="on" style="--d:2.8" cx="684" cy="204" r="3"/><circle class="on" style="--d:2.2" cx="708" cy="204" r="3"/><circle class="on" style="--d:2.0" cx="732" cy="204" r="3"/><circle class="on" style="--d:2.2" cx="756" cy="204" r="3"/><circle class="on" style="--d:2.8" cx="780" cy="204" r="3"/><circle class="on" style="--d:3.6" cx="804" cy="204" r="3"/><circle class="on" style="--d:4.5" cx="828" cy="204" r="3"/><circle class="on" style="--d:5.4" cx="852" cy="204" r="3"/><circle class="on" style="--d:6.3" cx="876" cy="204" r="3"/><circle cx="900" cy="204" r="3"/><circle cx="924" cy="204" r="3"/><circle class="on" style="--d:9.2" cx="948" cy="204" r="3"/><circle cx="972" cy="204" r="3"/><circle cx="996" cy="204" r="3"/><circle cx="1020" cy="204" r="3"/><circle cx="1044" cy="204" r="3"/><circle cx="1068" cy="204" r="3"/><circle cx="1092" cy="204" r="3"/><circle cx="1116" cy="204" r="3"/><circle cx="1140" cy="204" r="3"/><circle cx="12" cy="228" r="3"/><circle cx="36" cy="228" r="3"/><circle cx="60" cy="228" r="3"/><circle cx="84" cy="228" r="3"/><circle cx="108" cy="228" r="3"/><circle cx="132" cy="228" r="3"/><circle cx="156" cy="228" r="3"/><circle cx="180" cy="228" r="3"/><circle cx="204" cy="228" r="3"/><circle cx="228" cy="228" r="3"/><circle cx="252" cy="228" r="3"/><circle cx="276" cy="228" r="3"/><circle cx="300" cy="228" r="3"/><circle cx="324" cy="228" r="3"/><circle cx="348" cy="228" r="3"/><circle cx="372" cy="228" r="3"/><circle cx="396" cy="228" r="3"/><circle cx="420" cy="228" r="3"/><circle cx="444" cy="228" r="3"/><circle cx="468" cy="228" r="3"/><circle cx="492" cy="228" r="3"/><circle cx="516" cy="228" r="3"/><circle cx="540" cy="228" r="3"/><circle cx="564" cy="228" r="3"/><circle cx="588" cy="228" r="3"/><circle class="on" style="--d:5.8" cx="612" cy="228" r="3"/><circle class="on" style="--d:5.0" cx="636" cy="228" r="3"/><circle class="on" style="--d:4.2" cx="660" cy="228" r="3"/><circle class="on" style="--d:3.6" cx="684" cy="228" r="3"/><circle cx="708" cy="228" r="3"/><circle cx="732" cy="228" r="3"/><circle cx="756" cy="228" r="3"/><circle class="on" style="--d:3.6" cx="780" cy="228" r="3"/><circle cx="804" cy="228" r="3"/><circle cx="828" cy="228" r="3"/><circle class="on" style="--d:5.8" cx="852" cy="228" r="3"/><circle class="on" style="--d:6.7" cx="876" cy="228" r="3"/><circle cx="900" cy="228" r="3"/><circle class="on" style="--d:8.5" cx="924" cy="228" r="3"/><circle cx="948" cy="228" r="3"/><circle cx="972" cy="228" r="3"/><circle cx="996" cy="228" r="3"/><circle cx="1020" cy="228" r="3"/><circle cx="1044" cy="228" r="3"/><circle cx="1068" cy="228" r="3"/><circle cx="1092" cy="228" r="3"/><circle cx="1116" cy="228" r="3"/><circle cx="1140" cy="228" r="3"/><circle cx="12" cy="252" r="3"/><circle cx="36" cy="252" r="3"/><circle cx="60" cy="252" r="3"/><circle cx="84" cy="252" r="3"/><circle cx="108" cy="252" r="3"/><circle cx="132" cy="252" r="3"/><circle cx="156" cy="252" r="3"/><circle cx="180" cy="252" r="3"/><circle cx="204" cy="252" r="3"/><circle cx="228" cy="252" r="3"/><circle cx="252" cy="252" r="3"/><circle cx="276" cy="252" r="3"/><circle cx="300" cy="252" r="3"/><circle cx="324" cy="252" r="3"/><circle cx="348" cy="252" r="3"/><circle cx="372" cy="252" r="3"/><circle cx="396" cy="252" r="3"/><circle cx="420" cy="252" r="3"/><circle cx="444" cy="252" r="3"/><circle cx="468" cy="252" r="3"/><circle cx="492" cy="252" r="3"/><circle cx="516" cy="252" r="3"/><circle cx="540" cy="252" r="3"/><circle cx="564" cy="252" r="3"/><circle class="on" style="--d:7.2" cx="588" cy="252" r="3"/><circle class="on" style="--d:6.4" cx="612" cy="252" r="3"/><circle cx="636" cy="252" r="3"/><circle class="on" style="--d:5.0" cx="660" cy="252" r="3"/><circle class="on" style="--d:4.5" cx="684" cy="252" r="3"/><circle class="on" style="--d:4.1" cx="708" cy="252" r="3"/><circle cx="732" cy="252" r="3"/><circle cx="756" cy="252" r="3"/><circle class="on" style="--d:4.5" cx="780" cy="252" r="3"/><circle class="on" style="--d:5.0" cx="804" cy="252" r="3"/><circle cx="828" cy="252" r="3"/><circle cx="852" cy="252" r="3"/><circle cx="876" cy="252" r="3"/><circle cx="900" cy="252" r="3"/><circle cx="924" cy="252" r="3"/><circle class="on" style="--d:9.8" cx="948" cy="252" r="3"/><circle cx="972" cy="252" r="3"/><circle cx="996" cy="252" r="3"/><circle cx="1020" cy="252" r="3"/><circle cx="1044" cy="252" r="3"/><circle cx="1068" cy="252" r="3"/><circle cx="1092" cy="252" r="3"/><circle cx="1116" cy="252" r="3"/><circle cx="1140" cy="252" r="3"/><circle cx="12" cy="276" r="3"/><circle cx="36" cy="276" r="3"/><circle cx="60" cy="276" r="3"/><circle cx="84" cy="276" r="3"/><circle cx="108" cy="276" r="3"/><circle cx="132" cy="276" r="3"/><circle cx="156" cy="276" r="3"/><circle cx="180" cy="276" r="3"/><circle cx="204" cy="276" r="3"/><circle cx="228" cy="276" r="3"/><circle cx="252" cy="276" r="3"/><circle cx="276" cy="276" r="3"/><circle cx="300" cy="276" r="3"/><circle cx="324" cy="276" r="3"/><circle cx="348" cy="276" r="3"/><circle cx="372" cy="276" r="3"/><circle cx="396" cy="276" r="3"/><circle cx="420" cy="276" r="3"/><circle cx="444" cy="276" r="3"/><circle cx="468" cy="276" r="3"/><circle cx="492" cy="276" r="3"/><circle cx="516" cy="276" r="3"/><circle cx="540" cy="276" r="3"/><circle class="on" style="--d:8.6" cx="564" cy="276" r="3"/><circle cx="588" cy="276" r="3"/><circle cx="612" cy="276" r="3"/><circle cx="636" cy="276" r="3"/><circle cx="660" cy="276" r="3"/><circle cx="684" cy="276" r="3"/><circle cx="708" cy="276" r="3"/><circle class="on" style="--d:5.0" cx="732" cy="276" r="3"/><circle class="on" style="--d:5.1" cx="756" cy="276" r="3"/><circle cx="780" cy="276" r="3"/><circle cx="804" cy="276" r="3"/><circle class="on" style="--d:6.4" cx="828" cy="276" r="3"/><circle cx="852" cy="276" r="3"/><circle class="on" style="--d:7.8" cx="876" cy="276" r="3"/><circle cx="900" cy="276" r="3"/><circle class="on" style="--d:9.4" cx="924" cy="276" r="3"/><circle cx="948" cy="276" r="3"/><circle cx="972" cy="276" r="3"/><circle cx="996" cy="276" r="3"/><circle cx="1020" cy="276" r="3"/><circle cx="1044" cy="276" r="3"/><circle cx="1068" cy="276" r="3"/><circle cx="1092" cy="276" r="3"/><circle cx="1116" cy="276" r="3"/><circle cx="1140" cy="276" r="3"/><circle cx="12" cy="300" r="3"/><circle cx="36" cy="300" r="3"/><circle cx="60" cy="300" r="3"/><circle cx="84" cy="300" r="3"/><circle cx="108" cy="300" r="3"/><circle cx="132" cy="300" r="3"/><circle cx="156" cy="300" r="3"/><circle cx="180" cy="300" r="3"/><circle cx="204" cy="300" r="3"/><circle cx="228" cy="300" r="3"/><circle cx="252" cy="300" r="3"/><circle cx="276" cy="300" r="3"/><circle cx="300" cy="300" r="3"/><circle cx="324" cy="300" r="3"/><circle cx="348" cy="300" r="3"/><circle cx="372" cy="300" r="3"/><circle cx="396" cy="300" r="3"/><circle cx="420" cy="300" r="3"/><circle cx="444" cy="300" r="3"/><circle cx="468" cy="300" r="3"/><circle cx="492" cy="300" r="3"/><circle cx="516" cy="300" r="3"/><circle cx="540" cy="300" r="3"/><circle cx="564" cy="300" r="3"/><circle class="on" style="--d:8.5" cx="588" cy="300" r="3"/><circle cx="612" cy="300" r="3"/><circle cx="636" cy="300" r="3"/><circle class="on" style="--d:6.7" cx="660" cy="300" r="3"/><circle cx="684" cy="300" r="3"/><circle cx="708" cy="300" r="3"/><circle cx="732" cy="300" r="3"/><circle class="on" style="--d:6.1" cx="756" cy="300" r="3"/><circle cx="780" cy="300" r="3"/><circle class="on" style="--d:6.7" cx="804" cy="300" r="3"/><circle cx="828" cy="300" r="3"/><circle cx="852" cy="300" r="3"/><circle cx="876" cy="300" r="3"/><circle cx="900" cy="300" r="3"/><circle cx="924" cy="300" r="3"/><circle cx="948" cy="300" r="3"/><circle cx="972" cy="300" r="3"/><circle cx="996" cy="300" r="3"/><circle cx="1020" cy="300" r="3"/><circle cx="1044" cy="300" r="3"/><circle cx="1068" cy="300" r="3"/><circle cx="1092" cy="300" r="3"/><circle cx="1116" cy="300" r="3"/><circle cx="1140" cy="300" r="3"/>
@@ -611,12 +655,13 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <h2 class="label" id="index-baslik">On this page</h2>
     <ol>
       <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Family <span>A missing or difficult family, boundaries, violence</span></a></li>
-      <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Mental health <span>Depression, the first appointment</span></a></li>
-      <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>Relationships <span>Glossary, harassment, bullying, legal rights</span></a></li>
+      <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Mental health <span>Crisis, depression, panic, grief, first appointment</span></a></li>
+      <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>Relationships <span>Glossary, getting out of a toxic relationship</span></a></li>
+      <li data-c="siddet"><a href="#siddet"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.7 5.7 3.8 3.8M14.5 14.5l3.8 3.8M18.3 5.7l-3.8 3.8M9.5 14.5l-3.8 3.8"/></svg>Harassment and violence <span>Harassment, bullying, forced marriage, your rights</span></a></li>
       <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Sexual health <span>Infections, protection, free tests</span></a></li>
-      <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Drug addiction <span>Myths, substances, the way out</span></a></li>
+      <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Addiction <span>Drugs, gambling, gaming; the way out</span></a></li>
       <li data-c="ifade"><a href="#ifade"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg>Speaking up <span>Social anxiety, ready-made sentences</span></a></li>
-      <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Your rights <span>Free lawyer, social aid</span></a></li>
+      <li data-c="hayat"><a href="#hayat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg>Your rights <span>Free lawyer, work, scholarships, scams</span></a></li>
       <li data-c="rehber"><a href="#rehber"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg>Where to get help? <span>All the numbers together</span></a></li>
     </ol>
   </nav>
@@ -634,7 +679,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">81 provinces</span><span class="glance__txt">free family and individual counselling at Social Service Centres</span></li>
         <li><span class="glance__big">7/24</span><span class="glance__txt">ALO 183: free line for abuse, neglect and domestic violence</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Family: in this section"><span class="jump__t">In this section</span><a href="#aile-1"><b>01</b>What changes when a parent is missing?</a><a href="#aile-2"><b>02</b>You can choose your own role model</a><a href="#aile-3"><b>03</b>If you don't get along with your family: setting boundaries</a><a href="#aile-4"><b>04</b>What nobody taught you at home: who can you ask?</a><a href="#aile-5"><b>05</b>If you are thinking of leaving your family</a><a href="#aile-6"><b>06</b>If there is violence or neglect at home</a></nav>
+      <nav class="jump fade-up" aria-label="Family: in this section"><span class="jump__t">In this section</span><a href="#aile-1"><b>01</b>What changes when a parent is missing?</a><a href="#aile-2"><b>02</b>You can choose your own role model</a><a href="#aile-sinir"><b>03</b>If you don't get along with your family: setting boundaries</a><a href="#aile-4"><b>04</b>What nobody taught you at home: who can you ask?</a><a href="#aile-ayrilmak"><b>05</b>If you are thinking of leaving your family</a><a href="#aile-siddet"><b>06</b>If there is violence or neglect at home</a></nav>
     </div>
 
     <div class="blocks">
@@ -647,7 +692,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <p class="callout__t">Why does this matter to you?</p>
             <p>You can't bring back what is missing, but you can build other bonds in its place. And those bonds really do work. Everything in this section rests on that idea.</p>
           </div>
-          <p class="src">Source: <a href="https://dergipark.org.tr/en/download/article-file/3994007">Demirel and Boduroğlu (2025), University students from single-parent families</a> · <a href="https://dergipark.org.tr/tr/pub/jmtpr/article/1292156">Effects of living with a single parent on children and adolescents (Turkish)</a> · <a href="https://developingchild.harvard.edu/wp-content/uploads/2024/10/The-Science-of-Resilience2.pdf">Harvard Center on the Developing Child, The Science of Resilience</a></p>
+          <details class="srcs"><summary>Sources (3)</summary><p class="src"><a href="https://dergipark.org.tr/en/download/article-file/3994007">Demirel and Boduroğlu (2025), University students from single-parent families</a> · <a href="https://dergipark.org.tr/tr/pub/jmtpr/article/1292156">Effects of living with a single parent on children and adolescents (Turkish)</a> · <a href="https://developingchild.harvard.edu/wp-content/uploads/2024/10/The-Science-of-Resilience2.pdf">Harvard Center on the Developing Child, The Science of Resilience</a></p></details>
         </div>
       </div>
 
@@ -660,12 +705,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Ask something small.</strong> "Could you give me some advice on this?" is enough. Most people feel honoured to be asked.</span></li>
             <li><span><strong>Let the bond grow over time.</strong> Say thank you, share your progress and ask the next question. Mentoring doesn't happen at once, it grows slowly.</span></li>
           </ol>
-          <p class="src">Source: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6174947/">Van Dam et al. (2018), Natural mentoring meta-analysis</a> · <a href="https://www.ojp.gov/library/publications/youth-initiated-mentoring-meta-analytic-study-hybrid-approach-youth-mentoring">US Department of Justice, Youth-initiated mentoring meta-analysis</a></p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6174947/">Van Dam et al. (2018), Natural mentoring meta-analysis</a> · <a href="https://www.ojp.gov/library/publications/youth-initiated-mentoring-meta-analytic-study-hybrid-approach-youth-mentoring">US Department of Justice, Youth-initiated mentoring meta-analysis</a></p></details>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-3" data-k="fight pressure parents mom dad mum not allowed strict">If you don't get along with your family: setting boundaries</h3>
+        <h3 id="aile-sinir" data-k="fight pressure parents mom dad mum not allowed strict">If you don't get along with your family: setting boundaries</h3>
         <div class="prose">
           <p>Setting boundaries doesn't mean rejecting your family. It means knowing what you want, what you allow and what you don't, and saying it calmly and clearly. Psychologists suggest:</p>
           <ul class="d">
@@ -676,7 +721,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Be consistent.</strong> You may need to repeat your boundary calmly again and again. Don't argue, just repeat.</li>
           </ul>
           <p>For problems within the family, the Ministry of Family and Social Services offers <strong>free family counselling and individual counselling</strong>. It is given at Social Service Centres in all 81 provinces, and you can apply through e-Devlet (the government portal). If your family doesn't want to come, you can go alone.</p>
-          <p class="src">Source: <a href="https://www.psychologytoday.com/us/basics/boundaries">Psychology Today, Boundaries</a> · <a href="https://screening.mhanational.org/content/how-can-i-set-boundaries-my-family/">Mental Health America, Setting boundaries with family</a> · <a href="https://www.aile.gov.tr/media/315999/aile-danismanligi-hizmeti.pdf">Ministry of Family and Social Services, Family counselling (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (3)</summary><p class="src"><a href="https://www.psychologytoday.com/us/basics/boundaries">Psychology Today, Boundaries</a> · <a href="https://screening.mhanational.org/content/how-can-i-set-boundaries-my-family/">Mental Health America, Setting boundaries with family</a> · <a href="https://www.aile.gov.tr/media/315999/aile-danismanligi-hizmeti.pdf">Ministry of Family and Social Services, Family counselling (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -697,7 +742,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-5" data-k="run away leave home moved out dorm housing">If you are thinking of leaving your family</h3>
+        <h3 id="aile-ayrilmak" data-k="run away leave home moved out dorm housing">If you are thinking of leaving your family</h3>
         <div class="prose">
           <p>Once you turn 18, you can decide where to live. But a sudden move can leave you in a hard spot. If there is no violence, make a plan first:</p>
           <ol class="n">
@@ -707,12 +752,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Support.</strong> Social Service Centres give advice and direct you to suitable services. For financial support you can call <a href="tel:144">ALO 144</a>.</span></li>
           </ol>
           <p>If you grew up in state care, the <a href="https://aile.gov.tr/media/58208/genclere-yonelik-hayata-hazirlama-rehberi.pdf">Preparing for Life Guide<span class="visually-hidden"> (PDF, Turkish)</span></a> that the Ministry of Family and Social Services wrote for young people explains your rights on housing, education and work. Young people under state protection can stay in KYK dormitories for free.</p>
-          <p class="src">Source: <a href="https://kygm.gsb.gov.tr/Sayfalar/2678/2388/sikca-sorulan-sorular-yurt.aspx">Ministry of Youth and Sports, KYK dormitories (Turkish)</a> · <a href="https://alo144.aile.gov.tr/">ALO 144</a></p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://kygm.gsb.gov.tr/Sayfalar/2678/2388/sikca-sorulan-sorular-yurt.aspx">Ministry of Youth and Sports, KYK dormitories (Turkish)</a> · <a href="https://alo144.aile.gov.tr/">ALO 144</a></p></details>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-6" data-k="beating beaten hit slap abuse incest harassment rape scared domestic violence">If there is violence or neglect at home</h3>
+        <h3 id="aile-siddet" data-k="beating beaten hit slap abuse incest harassment rape scared domestic violence">If there is violence or neglect at home</h3>
         <div class="prose">
           <p>Nobody has the right to hit you, starve you or frighten you. This is not a "family matter". <strong>If you are under 18</strong>, under Child Protection Law No. 5395 the state can arrange counselling, education, care, health and housing measures for you. The priority is to protect you in your own family environment where possible.</p>
           <ul class="d">
@@ -721,8 +766,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Sexual abuse:</strong> At Child Monitoring Centres (ÇİM) in hospitals, the statement, examination and other steps are done in one place with specialists. This way you don't have to tell what happened over and over.</li>
             <li><strong>Life in danger:</strong> <a href="tel:112">112</a>.</li>
           </ul>
-          <p><strong>If you are over 18</strong>, the rights under Law No. 6284 in the <a href="#iliski-hukuk">Relationships section</a> apply to you too. This law protects both children and adult family members against domestic violence. ŞÖNİM and ALO 183 help with this as well.</p>
-          <p class="src">Source: <a href="https://hsgm.saglik.gov.tr/depo/Mevzuat/Kanunlar/Cocuk_Koruma_Kanunu_5395.pdf">Child Protection Law No. 5395 (Turkish)</a> · <a href="https://aile.gov.tr/sss/cocuk-hizmetleri-genel-mudurlugu/koruyucu-ve-onleyici-hizmetler/">Ministry, Child Monitoring Centres (Turkish)</a></p>
+          <p><strong>If you are over 18</strong>, the rights under Law No. 6284 in the <a href="#iliski-hukuk">Harassment and violence section</a> apply to you too. This law protects both children and adult family members against domestic violence. ŞÖNİM and ALO 183 help with this as well.</p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://hsgm.saglik.gov.tr/depo/Mevzuat/Kanunlar/Cocuk_Koruma_Kanunu_5395.pdf">Child Protection Law No. 5395 (Turkish)</a> · <a href="https://aile.gov.tr/sss/cocuk-hizmetleri-genel-mudurlugu/koruyucu-ve-onleyici-hizmetler/">Ministry, Child Monitoring Centres (Turkish)</a></p></details>
         </div>
       </div>
     </div>
@@ -753,12 +798,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">2 weeks</span><span class="glance__txt">of feeling low nearly every day can be a sign of depression</span></li>
         <li><span class="glance__big">0 TL</span><span class="glance__txt">for a mental health appointment at a state hospital: ALO 182 or MHRS</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Mental health: in this section"><span class="jump__t">In this section</span><a href="#ruh-kriz"><b>01</b>If you are thinking of harming yourself or ending your life</a><a href="#ruh-arkadas"><b>02</b>If you are worried about a friend</a><a href="#ruh-3"><b>03</b>This is not your fault</a><a href="#ruh-4"><b>04</b>The difference between sadness and depression</a><a href="#ruh-5"><b>05</b>Psychologist or psychiatrist?</a><a href="#ruh-6"><b>06</b>What happens at the first appointment?</a></nav>
+      <nav class="jump fade-up" aria-label="Mental health: in this section"><span class="jump__t">In this section</span><a href="#ruh-kriz"><b>01</b>If you are thinking of harming yourself or ending your life</a><a href="#ruh-arkadas"><b>02</b>If you are worried about a friend</a><a href="#ruh-3"><b>03</b>This is not your fault</a><a href="#ruh-4"><b>04</b>The difference between sadness and depression</a><a href="#ruh-panik"><b>05</b>If you are having a panic attack</a><a href="#ruh-sinav"><b>06</b>Exam anxiety</a><a href="#ruh-yeme"><b>07</b>If you are at war with food and your body</a><a href="#ruh-yas"><b>08</b>If you have lost someone</a><a href="#ruh-9"><b>09</b>Psychologist or psychiatrist?</a><a href="#ruh-10"><b>10</b>What happens at the first appointment?</a></nav>
     </div>
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="ruh-kriz" data-k="suicide suicidal want to die kill myself self-harm cutting crisis">If you are thinking of harming yourself or ending your life</h3>
+        <h3 id="ruh-kriz" data-acik data-k="suicide suicidal want to die kill myself self-harm cutting crisis">If you are thinking of harming yourself or ending your life</h3>
         <div class="prose">
           <p>Having this thought is not weakness and nothing to feel guilty about. The World Health Organization describes it as a sign of severe emotional distress. Many people have been through it, got help and recovered.</p>
           <div class="callout" role="note">
@@ -786,7 +831,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Don't leave them alone, don't keep it secret.</strong> Go together to an adult or a health worker. This isn't betraying your friend.</span></li>
             <li><span><strong>If there is danger</strong>, stay with them and call <a href="tel:112">112</a>.</span></li>
           </ol>
-          <p class="src">Source: <a href="https://www.who.int/news-room/questions-and-answers/item/suicide">World Health Organization, Suicide: questions and answers (2026)</a> · <a href="https://diyarbakiriasb.saglik.gov.tr/TR,149667/intihar-ve-intihari-onleme.html">Ministry of Health, Diyarbakır Provincial Ambulance Service (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.who.int/news-room/questions-and-answers/item/suicide">World Health Organization, Suicide: questions and answers (2026)</a> · <a href="https://diyarbakiriasb.saglik.gov.tr/TR,149667/intihar-ve-intihari-onleme.html">Ministry of Health, Diyarbakır Provincial Ambulance Service (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -808,7 +853,64 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-5" data-k="therapy therapist counsellor">Psychologist or psychiatrist?</h3>
+        <h3 id="ruh-panik" data-k="panic attack can't breathe heart racing fear">If you are having a panic attack</h3>
+        <div class="prose">
+          <p>A panic attack is sudden, very intense fear with physical symptoms: racing heart, shortness of breath, shaking, sweating, dizziness, chest pain, a feeling that something terrible will happen. Most last between 5 and 20 minutes. It is very frightening, but the panic attack itself does not harm your body.</p>
+          <ol class="n">
+            <li><span><strong>Name it.</strong> Tell yourself <q>This is a panic attack, it will pass</q>.</span></li>
+            <li><span><strong>Slow your breathing.</strong> Breathe in calmly through your nose and out for longer through your mouth. Don't force it, and keep going for a few minutes.</span></li>
+            <li><span><strong>Afterwards, tell a doctor.</strong> If it keeps happening, see your family doctor or book the mental health department through ALO 182. It can be treated with talking therapy and, if needed, medicine.</span></li>
+          </ol>
+          <p>The same symptoms can come from another health problem. If you have chest pain or shortness of breath for the first time, or it doesn't pass, call <a href="tel:112">112</a>.</p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.nhs.uk/mental-health/conditions/panic-disorder/">NHS, Panic disorder</a> · <a href="https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/">NHS, Breathing exercises</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-sinav" data-k="exam anxiety exam stress school test failing grades">Exam anxiety</h3>
+        <div class="prose">
+          <p>Constant worry, headaches and stomach aches, sleeplessness, irritability, not enjoying things you love and feeling hopeless about the future can be signs of exam stress. An exam does not measure your worth.</p>
+          <ul class="d">
+            <li><strong>Break it into small parts.</strong> Make a realistic study plan and mix your subjects.</li>
+            <li><strong>Take short, regular breaks.</strong> Studying for hours without a break ruins your focus and raises your anxiety.</li>
+            <li><strong>Sleep.</strong> Most teenagers need 8–10 hours of sleep a night.</li>
+            <li><strong>Ask what you don't understand.</strong> Instead of memorising, ask your teacher or a friend for help.</li>
+            <li><strong>Talk.</strong> If there is pressure at home or you can't cope, tell your school counsellor. If hopelessness takes over, see <a href="#ruh-kriz">this topic</a>.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.nhs.uk/mental-health/children-and-young-adults/help-for-teenagers-young-adults-and-students/tips-on-preparing-for-exams/">NHS, Preparing for exams</a> · <a href="https://www.nhs.uk/mental-health/children-and-young-adults/advice-for-parents/help-your-child-beat-exam-stress/">NHS, Exam stress</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-yeme" data-k="eating disorder anorexia bulimia vomiting weight diet fat body image binge">If you are at war with food and your body</h3>
+        <div class="prose">
+          <p>An eating disorder is not a phase or a matter of willpower; it is a mental health condition. It is about controlling food to cope with feelings. It can happen to anyone in any body and is most common in young people. With treatment most people recover.</p>
+          <ul class="d">
+            <li><strong>Signs:</strong> constantly thinking about your weight and body, avoiding places with food, eating very little, eating a lot without control, making yourself sick after eating, exercising too much, periods stopping, feeling cold, dizziness.</li>
+            <li><strong>What can you do?</strong> Tell someone you trust and go together to your family doctor, or book the mental health department through ALO 182. Go as early as you can.</li>
+            <li><strong>If you faint, your heart races or you are very weak</strong>, don't wait; go to the emergency department or call <a href="tel:112">112</a>.</li>
+            <li><strong>If you are worried about a friend</strong>, say <q>I'm worried about you, I'm here for you</q> and offer to go to the doctor together. They may deny it or be defensive; this is common.</li>
+          </ul>
+          <p class="src">Source: <a href="https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/behaviours/eating-disorders/overview/">NHS, Eating disorders</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-yas" data-k="grief loss death funeral lost my mother lost my father lost a friend bereavement">If you have lost someone</h3>
+        <div class="prose">
+          <p>There is no right or wrong way to grieve. Shock, feeling nothing, crying, tiredness, anger and guilt are normal. These feelings sometimes come when you least expect them. Over time they become less intense.</p>
+          <ul class="d">
+            <li><strong>Talk.</strong> You can talk about them with a friend, a relative or a teacher.</li>
+            <li><strong>Set small goals.</strong> Don't try to do everything at once. Food, sleep and a little movement are enough.</li>
+            <li><strong>Don't numb the pain with alcohol, cigarettes, drugs or gambling.</strong> They make mental health worse.</li>
+            <li><strong>Get help.</strong> If you can't carry on with daily life, contact your family doctor, ALO 182 or your school counsellor. If you feel you don't want to live, <a href="#ruh-kriz">look here right away</a>.</li>
+          </ul>
+          <p class="src">Source: <a href="https://www.nhs.uk/mental-health/feelings-symptoms-behaviours/feelings-and-symptoms/grief-bereavement-loss/">NHS, Grief and loss</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-9" data-k="therapy therapist counsellor">Psychologist or psychiatrist?</h3>
         <div class="prose">
           <div class="table-wrap">
             <table class="stack">
@@ -827,7 +929,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-6" data-k="appointment mhrs hospital therapy">What happens at the first appointment?</h3>
+        <h3 id="ruh-10" data-k="appointment mhrs hospital therapy">What happens at the first appointment?</h3>
         <div class="prose">
           <ol class="n">
             <li><span>You book an appointment at a state hospital's "Ruh Sağlığı ve Hastalıkları" (mental health) department through MHRS or by calling <a href="tel:182">ALO 182</a>. It is free.</span></li>
@@ -866,11 +968,11 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <p class="chapter__lead">Someone who grew up in a loveless or harsh home may take being controlled for "caring" and jealousy for "love". Knowing that what you live through has a name is the first step to seeing it.</p>
       </header>
       <ul class="glance fade-up" aria-label="At a glance">
-        <li><span class="glance__big">23</span><span class="glance__txt">terms with their English and Turkish names: gaslighting, ghosting, DARVO…</span></li>
-        <li><span class="glance__big">6284</span><span class="glance__txt">is the law that also covers psychological violence; it protects women, children and family members</span></li>
-        <li><span class="glance__big">WhatsApp</span><span class="glance__txt">if you can't speak aloud, you can write to ALO 183: 0501 183 0 183</span></li>
+        <li><span class="glance__big">19</span><span class="glance__txt">terms with their English and Turkish names: gaslighting, ghosting, DARVO…</span></li>
+        <li><span class="glance__big">Repetition</span><span class="glance__txt">is the real sign: not once, but a behaviour that keeps repeating</span></li>
+        <li><span class="glance__big">ALO 183</span><span class="glance__txt">you can call 24/7 for psychological violence too</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Relationships: in this section"><span class="jump__t">In this section</span><a href="#iliski-1"><b>01</b>Glossary of terms</a><a href="#iliski-2"><b>02</b>How do you get out of these and heal?</a><a href="#iliski-taciz"><b>03</b>If you were harassed or sexually assaulted</a><a href="#iliski-taciz-yasa"><b>04</b>Your rights after harassment and sexual assault</a><a href="#iliski-taciz-arkadas"><b>05</b>If someone tells you about harassment or assault</a><a href="#iliski-zorbalik"><b>06</b>Bullying at school and online</a><a href="#iliski-hukuk"><b>07</b>Know your legal rights</a></nav>
+      <nav class="jump fade-up" aria-label="Relationships: in this section"><span class="jump__t">In this section</span><a href="#iliski-1"><b>01</b>Glossary of terms</a><a href="#iliski-2"><b>02</b>How do you get out of these and heal?</a></nav>
     </div>
 
     <div class="blocks">
@@ -892,23 +994,15 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <input type="search" placeholder="Search terms: ghosting, blackmail…" autocomplete="off">
             </label>
           </div>
-          <p class="meta-row"><span id="terms-count" role="status">23 shown</span><button class="link-btn" type="button" data-toggle-all="terms" aria-controls="terms">Open all</button></p>
+          <p class="meta-row"><span id="terms-count" role="status">19 shown</span><button class="link-btn" type="button" data-toggle-all="terms" aria-controls="terms">Open all</button></p>
           <ul class="acc-list" id="terms">
             <li data-cat="bas"><details class="acc">
-              <summary><span><span class="acc__t">Love bombing</span><span class="acc__en" lang="tr">Sevgi bombardımanı</span></span><span class="acc__cat">Meeting and early days</span></summary>
+              <summary><span><span class="acc__t">Love bombing / Future faking</span><span class="acc__en" lang="tr">Sevgi bombardımanı ve sahte gelecek vaadi</span></span><span class="acc__cat">Meeting and early days</span></summary>
               <div class="acc__body">
-                <p>Winning someone over at the start of a relationship with too much attention, compliments, gifts and constant messages. The aim is not love. It is to gain control and make you feel you owe them. Put-downs usually follow.</p>
-                <p class="q"><span class="k">Example</span>In the second week: “You're my soulmate, I want to marry you,” plus a hundred messages a day.</p>
-                <p><span class="k">What you can do</span>Say “Let's slow down a bit” and watch the reaction. Real interest can wait. A love bomber gets angry or blames you.</p>
+                <p>Winning someone over at the start of a relationship with too much attention, compliments, gifts, constant messages and plans that will never happen (a home, marriage, a holiday). The aim is not love. It is to gain control and make you feel you owe them. Put-downs usually follow.</p>
+                <p class="q"><span class="k">Example</span>In the second week: “You're my soulmate, you'll meet my family this summer, we'll move in together,” plus a hundred messages a day.</p>
+                <p><span class="k">What you can do</span>Say “Let's slow down a bit” and watch the reaction. Real interest can wait; a love bomber gets angry or blames you. Look at actions, not words, and make a note if promises never turn into a concrete step.</p>
                 <p class="src">Source: <a href="https://health.clevelandclinic.org/love-bombing">Cleveland Clinic, Love bombing</a></p>
-              </div>
-            </details></li>
-            <li data-cat="bas"><details class="acc">
-              <summary><span><span class="acc__t">Future faking</span><span class="acc__en" lang="tr">Sahte gelecek vaadi</span></span><span class="acc__cat">Meeting and early days</span></summary>
-              <div class="acc__body">
-                <p>Tying you to the relationship with shared plans that will never happen (a home, marriage, a holiday). Often seen together with love bombing.</p>
-                <p class="q"><span class="k">Example</span>“In summer I'll introduce you to my family, then we'll move in together.” Summer comes and there is always an excuse.</p>
-                <p><span class="k">What you can do</span>Look at actions, not words. If promises never turn into a concrete step, make a note of it.</p>
               </div>
             </details></li>
             <li data-cat="bas"><details class="acc">
@@ -1001,23 +1095,15 @@ tbody th { font-weight: 600; white-space: nowrap; }
                 <p>Feeling strongly attached to someone who hurts you, in a cycle where good and bad days alternate. It is often the answer to “Why can't I leave?” Its roots can lie in the bond with caregivers in childhood.</p>
                 <p class="q"><span class="k">Example</span>A fight, then an apology and a lovely week, then another fight. Every “good day” ties you a little more.</p>
                 <p><span class="k">What you can do</span>This is not weakness. It is how the brain reacts to a cycle of reward and punishment. Cut contact, read your notes and get support from a therapist.</p>
-                <p class="src">Source: <a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a> · <a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a></p>
+                <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a> · <a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a></p></details>
               </div>
             </details></li>
             <li data-cat="ic"><details class="acc">
-              <summary><span><span class="acc__t">Breadcrumbing</span><span class="acc__en" lang="tr">Ekmek kırıntısı</span></span><span class="acc__cat">During the relationship</span></summary>
+              <summary><span><span class="acc__t">Breadcrumbing / Benching</span><span class="acc__en" lang="tr">Oyalama: ekmek kırıntısı ve yedek kulübesi</span></span><span class="acc__cat">During the relationship</span></summary>
               <div class="acc__body">
-                <p>Giving just enough attention to keep you, never enough to be clear: an occasional message, a like, a “miss you”.</p>
-                <p class="q"><span class="k">Example</span>Weeks of silence, then just as you are giving up, a “what's up” at midnight.</p>
-                <p><span class="k">What you can do</span>Ask yourself: “What do I want from this relationship, and what am I getting?” If the answers don't match, ask for clarity or let go.</p>
-              </div>
-            </details></li>
-            <li data-cat="ic"><details class="acc">
-              <summary><span><span class="acc__t">Benching</span><span class="acc__en" lang="tr">Yedek kulübesi</span></span><span class="acc__cat">During the relationship</span></summary>
-              <div class="acc__body">
-                <p>Keeping you on the side as a plan B. Never letting go, never committing either.</p>
-                <p class="q"><span class="k">Example</span>Plans are always cancelled at the last minute, but now and then you get a “you're so different” message.</p>
-                <p><span class="k">What you can do</span>Don't spend your time waiting in a relationship where you are not a priority.</p>
+                <p>Giving just enough attention to keep you, never enough to be clear (breadcrumbing), or keeping you on the side as a plan B (benching).</p>
+                <p class="q"><span class="k">Example</span>Weeks of silence, then just as you are giving up, a “what's up” at midnight. Plans are always cancelled at the last minute.</p>
+                <p><span class="k">What you can do</span>Ask yourself: “What do I want from this relationship, and what am I getting?” If the answers don't match, ask for clarity or let go. Don't spend your time waiting where you are not a priority.</p>
               </div>
             </details></li>
             <li data-cat="ic"><details class="acc">
@@ -1029,29 +1115,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
               </div>
             </details></li>
             <li data-cat="son"><details class="acc">
-              <summary><span><span class="acc__t">Ghosting</span><span class="acc__en" lang="tr">Hayalet gibi kaybolma</span></span><span class="acc__cat">Break-up and after</span></summary>
+              <summary><span><span class="acc__t">Ghosting / Orbiting / Zombieing</span><span class="acc__en" lang="tr">Hayalet gibi kaybolma ve geri dönme</span></span><span class="acc__cat">Break-up and after</span></summary>
               <div class="acc__body">
-                <p>Cutting off contact suddenly with no explanation. It leaves unanswered questions and usually the thought “what did I do?”</p>
-                <p class="q"><span class="k">Example</span>You had a nice chat last night. Today your messages are seen but not answered, then you are blocked.</p>
-                <p><span class="k">What you can do</span>Disappearing shows how they communicate, not what you are worth. Create your own closure: write yourself a farewell letter and don't send it.</p>
+                <p>Cutting off contact with no explanation (ghosting). Sometimes the person doesn't write but keeps watching your stories (orbiting), or comes back months later as if nothing happened (zombieing). Research shows that being watched from a distance is more confusing than being rejected outright.</p>
+                <p class="q"><span class="k">Example</span>You had a nice chat last night. Today your messages are seen but not answered. Six months later: “Hey stranger, you crossed my mind.”</p>
+                <p><span class="k">What you can do</span>Disappearing shows how they communicate, not what you are worth. Hide your stories from them or block them. You don't have to accept a return without an explanation and an apology; not replying is also a reply.</p>
                 <p class="src">Source: <a href="https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope">University of Colorado, Ghosting and orbiting</a></p>
-              </div>
-            </details></li>
-            <li data-cat="son"><details class="acc">
-              <summary><span><span class="acc__t">Orbiting</span><span class="acc__en" lang="tr">Yörüngede dolaşma</span></span><span class="acc__cat">Break-up and after</span></summary>
-              <div class="acc__body">
-                <p>Cutting contact but still following you on social media: watching your stories, leaving a like now and then. Research shows this is more confusing than being rejected outright.</p>
-                <p class="q"><span class="k">Example</span>They haven't written for three months, yet they are among the first to watch every story.</p>
-                <p><span class="k">What you can do</span>Hide your stories from them or block them. What you don't see doesn't reopen the wound.</p>
-                <p class="src">Source: <a href="https://news.cuanschutz.edu/news-stories/a-psychotherapist-breaks-down-some-perils-of-digital-dating-and-how-to-cope">University of Colorado, Ghosting and orbiting</a></p>
-              </div>
-            </details></li>
-            <li data-cat="son"><details class="acc">
-              <summary><span><span class="acc__t">Zombieing / Submarining</span><span class="acc__en" lang="tr">Hortlama / Denizaltı</span></span><span class="acc__cat">Break-up and after</span></summary>
-              <div class="acc__body">
-                <p>Someone who ghosted you coming back months later as if nothing happened.</p>
-                <p class="q"><span class="k">Example</span>Six months later: “Hey stranger, you crossed my mind.”</p>
-                <p><span class="k">What you can do</span>You don't have to accept a return without an explanation and an apology. Not replying is also a reply.</p>
               </div>
             </details></li>
             <li data-cat="son"><details class="acc">
@@ -1063,7 +1132,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
                 <p class="src">Source: <a href="https://health.clevelandclinic.org/hoovering">Cleveland Clinic, Hoovering</a></p>
               </div>
             </details></li>
-            <li data-cat="dij"><details class="acc">
+            <li id="terim-santaj" data-cat="dij"><details class="acc">
               <summary><span><span class="acc__t">Sextortion</span><span class="acc__en" lang="tr">Cinsel içerikli şantaj</span></span><span class="acc__cat">Digital</span></summary>
               <div class="acc__body">
                 <p>Being threatened with a private photo or video to get money, new images or something else. Under the Turkish Penal Code this is blackmail (article 107) and it is prosecuted even without a complaint.</p>
@@ -1106,12 +1175,43 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Rebuild your circle.</strong> Writing to the friends you drifted from is enough: "I disappeared for a while, I'm sorry, I miss you." Most people understand.</span></li>
             <li><span><strong>Get support.</strong> If you keep ending up in similar relationships, the root is often the bond with caregivers in childhood. You can work through this pattern with a therapist. Free options are in the <a href="#ruh">Mental health section</a>.</span></li>
           </ol>
-          <p class="src">Source: <a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a> · <a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a></p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.psychologytoday.com/us/basics/trauma-bonding">Psychology Today, Trauma bonding</a> · <a href="https://health.clevelandclinic.org/trauma-bonding">Cleveland Clinic, Trauma bonding</a></p></details>
         </div>
       </div>
 
+    </div>
+
+    <div class="help fade-up">
+      <h3 class="label">Where can you get help?</h3>
+      <ul>
+        <li><span class="help__name">Violence Helpline</span><a class="tel" href="tel:183">ALO 183</a><small>24/7, free. Includes psychological violence.</small></li>
+        <li><span class="help__name">If there is harassment, violence, stalking or blackmail</span><small><a href="#siddet">Harassment and violence section</a></small></li>
+        <li><span class="help__name">A professional to talk to</span><small>Free options in the <a href="#ruh">Mental health section</a></small></li>
+        <li><span class="help__name">Emergency</span><a class="tel" href="tel:112">112</a></li>
+      </ul>
+      <p class="checked">Links and numbers last checked: <time datetime="2026-11-25">25 November 2026</time></p>
+    </div>
+  </section>
+
+  <!-- TACİZ VE ŞİDDET -->
+  <section id="siddet" class="chapter grid" data-c="siddet" aria-labelledby="siddet-baslik">
+    <div class="band">
+      <header class="chapter__head fade-up">
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6"/><path d="m5.7 5.7 3.8 3.8M14.5 14.5l3.8 3.8M18.3 5.7l-3.8 3.8M9.5 14.5l-3.8 3.8"/></svg><span class="chapter__num">04</span><span class="chapter__name">Harassment and violence</span></p>
+        <h2 id="siddet-baslik">What was done to you is not your fault.</h2>
+        <p class="chapter__lead">Harassment, assault, bullying, stalking or forced marriage. Whoever did it and whenever it happened, you can ask for help. Here you'll find what to do first, your rights and places that will listen.</p>
+      </header>
+      <ul class="glance fade-up" aria-label="At a glance">
+        <li><span class="glance__big">72 hours</span><span class="glance__txt">the most important window for going to a hospital after a sexual assault</span></li>
+        <li><span class="glance__big">6284</span><span class="glance__txt">is the law that also covers psychological violence; it protects women, children and family members</span></li>
+        <li><span class="glance__big">WhatsApp</span><span class="glance__txt">if you can't speak aloud, you can write to ALO 183: 0501 183 0 183</span></li>
+      </ul>
+      <nav class="jump fade-up" aria-label="Harassment and violence: in this section"><span class="jump__t">In this section</span><a href="#iliski-taciz"><b>01</b>If you were harassed or sexually assaulted</a><a href="#iliski-taciz-yasa"><b>02</b>Your rights after harassment and sexual assault</a><a href="#iliski-taciz-arkadas"><b>03</b>If someone tells you about harassment or assault</a><a href="#siddet-evlilik"><b>04</b>If they want to marry you off by force or too young</a><a href="#iliski-zorbalik"><b>05</b>Bullying at school and online</a><a href="#siddet-kimlik"><b>06</b>If you face violence because of your sexual orientation or gender identity</a><a href="#iliski-hukuk"><b>07</b>Know your legal rights</a></nav>
+    </div>
+
+    <div class="blocks">
       <div class="block fade-up">
-        <h3 id="iliski-taciz" data-k="harassment rape sexual assault abuse groping touched forced sexual violence molested incest">If you were harassed or sexually assaulted</h3>
+        <h3 id="iliski-taciz" data-acik data-k="harassment rape sexual assault abuse groping touched forced sexual violence molested incest">If you were harassed or sexually assaulted</h3>
         <div class="prose">
           <p>You are not to blame. What you wore, why you were there, having drunk alcohol, freezing or not being able to shout doesn't change that. Having said yes before or being in a relationship isn't consent either. Most people who do this are not strangers; they are someone known, such as a partner, relative, friend or colleague. It can happen to anyone of any age, girls and boys.</p>
           <div class="callout" role="note">
@@ -1126,7 +1226,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Report it.</strong> You can go to the police, the gendarmerie or the prosecutor; if you go to a hospital, the police become involved from there. If you don't know what to do, <a href="tel:183">ALO 183</a> will guide you.</span></li>
             <li><span><strong>Give yourself time.</strong> Fear, sleeplessness, shame or feeling nothing at all are common. For free support see the <a href="#ruh">Mental health section</a>.</span></li>
           </ol>
-          <p class="src">Source: <a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Help after rape and sexual assault</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı lawyer Funda Ekin, bianet (2025, Turkish)</a></p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Help after rape and sexual assault</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı lawyer Funda Ekin, bianet (2025, Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1145,7 +1245,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Time limit.</strong> For crimes that depend on a complaint, file it within 6 months of learning of the act and who did it (Penal Code 73). Even if the time has passed, ask a lawyer; not every case is the same.</li>
           </ul>
           <p>The penalties given are for adults; the rules differ if the person who did it is under 18 (Penal Code 31).</p>
-          <p class="src">Source: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 31, 73, 102, 103 and 105 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5271.pdf">Code of Criminal Procedure, articles 158, 234, 236 and 239 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">Law No. 6284, articles 1, 5 and 8 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4857.pdf">Labour Law No. 4857, article 24 (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (4)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 31, 73, 102, 103 and 105 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5271.pdf">Code of Criminal Procedure, articles 158, 234, 236 and 239 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">Law No. 6284, articles 1, 5 and 8 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4857.pdf">Labour Law No. 4857, article 24 (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1163,6 +1263,26 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
+        <h3 id="siddet-evlilik" data-k="forced marriage arranged engaged child bride religious wedding early marriage">If they want to marry you off by force or too young</h3>
+        <div class="prose">
+          <p>You decide whether, whom and when you marry. Tradition, debt or a "family promise" doesn't change this.</p>
+          <ul class="d">
+            <li><strong>There is an age limit.</strong> No one under 17 can marry. For someone who has turned 16, only a judge can give permission, in exceptional circumstances and for a very important reason. Under 18 your guardian's permission is also needed, but their wish does not replace yours.</li>
+            <li><strong>With someone who has not turned 15</strong>, any sexual act is abuse (Penal Code 103). Holding a wedding or a religious ceremony doesn't change this.</li>
+            <li><strong>If you were married through fear</strong>, you can sue to annul the marriage. You must have been frightened with a close and serious danger to your life, health or honour. The limit is 6 months after the fear ends, and 5 years after the marriage in any case.</li>
+            <li><strong>Threatening someone and holding them somewhere by force are crimes</strong> (Penal Code 106 and 109).</li>
+          </ul>
+          <ol class="n">
+            <li><span><strong>Tell someone.</strong> It can be your school counsellor, a teacher or a relative you trust.</span></li>
+            <li><span><strong>Call.</strong> <a href="tel:183">ALO 183</a> is open 24/7 and free. If the danger is close or they are taking you somewhere, <a href="tel:112">112</a>.</span></li>
+            <li><span><strong>Ask for protection.</strong> You can ask for protection and shelter through the police, the prosecutor or ŞÖNİM. If you are under 18, measures under Child Protection Law No. 5395 can also apply.</span></li>
+            <li><span><strong>Keep your ID with you.</strong> If it is safe, keep your ID, your phone and a trusted person's number at hand.</span></li>
+          </ol>
+          <details class="srcs"><summary>Sources (4)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4721.pdf">Turkish Civil Code, articles 124, 126, 151 and 152 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 103, 106 and 109 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">Law No. 6284 (Turkish)</a> · <a href="https://hsgm.saglik.gov.tr/depo/Mevzuat/Kanunlar/Cocuk_Koruma_Kanunu_5395.pdf">Child Protection Law No. 5395 (Turkish)</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
         <h3 id="iliski-zorbalik" data-k="bullying bullied teasing mocking excluded cyberbullying insults nickname">Bullying at school and online</h3>
         <div class="prose">
           <p>Saying "it was a joke" doesn't make it a joke. If it goes on after you asked them to stop and it hurts you, it is bullying. When it's online it can feel like there is no escape even at home. This is not your fault and it can pass.</p>
@@ -1174,7 +1294,22 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>If there are threats, insults, stalking or shared images</strong>, these can be crimes. You can go to the police or the prosecutor; in an emergency call 112.</span></li>
           </ol>
           <p>You can report child abuse, obscene content or content encouraging suicide online at <a href="https://www.ihbarweb.org.tr/">ihbarweb.org.tr</a>. If a friend is being bullied, listen to them and go together to ask for help.</p>
-          <p class="src">Source: <a href="https://www.unicef.org/turkiye/siber-zorbal%C4%B1k-nedir-ve-nas%C4%B1l-%C3%B6nlenir">UNICEF Türkiye, Cyberbullying (Turkish)</a> · <a href="https://orgm.meb.gov.tr/meb_iys_dosyalar/2022_08/23142552_Siber_ZorbalYk-_Lise_OYretmen_Sunumu.pdf">Ministry of National Education, Cyberbullying (high school, Turkish)</a> · <a href="https://www.guvenliweb.org.tr/">Safe Web (Güvenli Web, Turkish)</a></p>
+          <details class="srcs"><summary>Sources (3)</summary><p class="src"><a href="https://www.unicef.org/turkiye/siber-zorbal%C4%B1k-nedir-ve-nas%C4%B1l-%C3%B6nlenir">UNICEF Türkiye, Cyberbullying (Turkish)</a> · <a href="https://orgm.meb.gov.tr/meb_iys_dosyalar/2022_08/23142552_Siber_ZorbalYk-_Lise_OYretmen_Sunumu.pdf">Ministry of National Education, Cyberbullying (high school, Turkish)</a> · <a href="https://www.guvenliweb.org.tr/">Safe Web (Güvenli Web, Turkish)</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="siddet-kimlik" data-k="gay lesbian bisexual trans lgbt sexual orientation gender identity queer">If you face violence because of your sexual orientation or gender identity</h3>
+        <div class="prose">
+          <p>Who you are does not justify violence against you, humiliating you or throwing you out. The rights below apply to everyone.</p>
+          <ul class="d">
+            <li><strong>It is not an illness.</strong> The World Health Organization removed homosexuality from the list of mental disorders in 1990. Under ICD-11, trans and gender diverse identities are not counted as mental illness either. Practices that promise a "cure" have no medical basis and can harm health.</li>
+            <li><strong>You don't have to tell anyone.</strong> You decide when and whom to tell. Before you do, think about whether you will be safe at home.</li>
+            <li><strong>Making you do something with "I'll tell your family"</strong> can be the crime of blackmail (Penal Code 107). Don't delete the messages; take screenshots.</li>
+            <li><strong>Insults, threats and violence are crimes.</strong> At school, the steps under <a href="#iliski-zorbalik">bullying</a>, and at home those under <a href="#aile-siddet">violence at home</a>, apply to you too. In an emergency <a href="tel:112">112</a>.</li>
+            <li><strong>Someone to talk to:</strong> SPoD Helpline <a href="tel:08508885269">0850 888 52 69</a>; Friday, Saturday and Sunday 12:00–18:00 (except public holidays). It gives information on peer bullying, violence, and legal and psychological support.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (4)</summary><p class="src"><a href="https://www.paho.org/en/news/17-5-2012-therapies-change-sexual-orientation-lack-medical-justification-and-threaten-health">Pan American Health Organization (PAHO/WHO)</a> · <a href="https://www.who.int/standards/classifications/frequently-asked-questions/gender-incongruence-and-transgender-health-in-the-icd">WHO, ICD-11 FAQ</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 106, 107 and 125 (Turkish)</a> · <a href="https://spod-tr.org/">SPoD (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1189,7 +1324,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Don't miss the deadline.</strong> For crimes that depend on a complaint (such as 123/A and 134), you must file it within 6 months of learning of the act and who did it (Penal Code 73).</li>
             <li><strong>If the offender is under 18</strong> the penalties differ (Penal Code 31). The penalties above are for adults.</li>
           </ul>
-          <p class="src">Source: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">Law No. 6284, articles 1, 2 and 8 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code No. 5237, articles 31, 73, 107, 123/A, 134, 139 and 226 (Turkish)</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/7542c190-ef19-4dbb-8954-7daf136d9e88">Court of Cassation, General Assembly of Civil Chambers, E. 2023/858, K. 2023/1399</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/0adbf607-f536-450b-a2c0-60872e2dbb84">Court of Cassation, 12th Criminal Chamber, E. 2025/1439, K. 2026/1678</a> · <a href="https://karararama.yargitay.gov.tr/">Court of Cassation decision search</a>: 12th Criminal Chamber, E. 2014/7978, K. 2014/26158 and General Assembly of Criminal Chambers, E. 2014/603, K. 2015/66</p>
+          <details class="srcs"><summary>Sources (5)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">Law No. 6284, articles 1, 2 and 8 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code No. 5237, articles 31, 73, 107, 123/A, 134, 139 and 226 (Turkish)</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/7542c190-ef19-4dbb-8954-7daf136d9e88">Court of Cassation, General Assembly of Civil Chambers, E. 2023/858, K. 2023/1399</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/0adbf607-f536-450b-a2c0-60872e2dbb84">Court of Cassation, 12th Criminal Chamber, E. 2025/1439, K. 2026/1678</a> · <a href="https://karararama.yargitay.gov.tr/">Court of Cassation decision search</a>: 12th Criminal Chamber, E. 2014/7978, K. 2014/26158 and General Assembly of Criminal Chambers, E. 2014/603, K. 2015/66</p></details>
         </div>
       </div>
     </div>
@@ -1213,7 +1348,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="cinsel" class="chapter grid" data-c="cinsel" aria-labelledby="cinsel-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg><span class="chapter__num">04</span><span class="chapter__name">Sexual health</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg><span class="chapter__num">05</span><span class="chapter__name">Sexual health</span></p>
         <h2 id="cinsel-baslik">Sexual health is health too. There is no shame in asking.</h2>
         <p class="chapter__lead">Some infections spread not only through sex but also by skin contact, shared razors and towels, or blood. Most are fully cured with medicine, and those that aren't can be controlled. The real danger is being too embarrassed to see a doctor.</p>
       </header>
@@ -1407,7 +1542,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             </details></li>
           </ul>
           <p class="empty" id="stis-empty" hidden>No result matches this search. Try another word.</p>
-          <p class="src">Source: <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Foundation, Sexually transmitted infections brochure (2026, Turkish)</a> · <a href="https://www.klimik.org.tr/">KLİMİK Society (Turkish)</a>. Some cards have their own source inside.</p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Foundation, Sexually transmitted infections brochure (2026, Turkish)</a> · <a href="https://www.klimik.org.tr/">KLİMİK Society (Turkish)</a>. Some cards have their own source inside.</p></details>
         </div>
       </div>
 
@@ -1420,7 +1555,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Careful:</strong> Hepatitis A can spread through dirty water and food and close contact. Hepatitis B can also spread through saliva if there is an open wound. Both have a vaccine.</li>
             <li><strong>Herpes</strong> can spread by kissing.</li>
           </ul>
-          <p class="src">Source: <a href="https://www.who.int/news-room/fact-sheets/detail/hiv-aids">WHO, HIV</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-a">Hepatitis A</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-b">Hepatitis B</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-c">Hepatitis C</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/herpes-simplex-virus">Herpes</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Foundation brochure (2026, Turkish)</a></p>
+          <details class="srcs"><summary>Sources (6)</summary><p class="src"><a href="https://www.who.int/news-room/fact-sheets/detail/hiv-aids">WHO, HIV</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-a">Hepatitis A</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-b">Hepatitis B</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-c">Hepatitis C</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/herpes-simplex-virus">Herpes</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Foundation brochure (2026, Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1436,7 +1571,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Don't stop treatment halfway.</strong> Finish the medicine even if symptoms go. Your partner must be treated at the same time, or the infection goes back and forth between you.</li>
             <li><strong>Regular testing.</strong> When you have a new partner or after a risky situation, get tested without waiting for symptoms.</li>
           </ul>
-          <p class="src">Source: <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Foundation brochure (2026, Turkish)</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/condoms">WHO, Condoms</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/sexually-transmitted-infections-%28stis%29">WHO, STI fact sheet</a></p>
+          <details class="srcs"><summary>Sources (3)</summary><p class="src"><a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Foundation brochure (2026, Turkish)</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/condoms">WHO, Condoms</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/sexually-transmitted-infections-%28stis%29">WHO, STI fact sheet</a></p></details>
         </div>
       </div>
 
@@ -1451,7 +1586,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>If your period is late</strong>, take a pregnancy test and see your family doctor or a gynaecology department. Knowing early gives you more options.</li>
             <li><strong>The law on unwanted pregnancy:</strong> In Türkiye a pregnancy can be ended at the woman's request until the end of the 10th week if there is no medical risk. Under 18, her own consent and a guardian's permission are needed; for married women, the spouse's consent. In a life-threatening emergency permission isn't required. If the pregnancy resulted from a crime, the limit is 20 weeks and it must be done by a specialist in a hospital.</li>
           </ul>
-          <p class="src">Source: <a href="https://www.who.int/news-room/fact-sheets/detail/condoms">WHO, Condoms</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/family-planning-contraception">WHO, Contraception methods</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/emergency-contraception">WHO, Emergency contraception</a> · <a href="https://titck.gov.tr/storage/kubKtAttachments/0T2ruJTzbm8oiv.pdf">TİTCK, product information (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">Law No. 2827, articles 5 and 6 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, article 99 (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (6)</summary><p class="src"><a href="https://www.who.int/news-room/fact-sheets/detail/condoms">WHO, Condoms</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/family-planning-contraception">WHO, Contraception methods</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/emergency-contraception">WHO, Emergency contraception</a> · <a href="https://titck.gov.tr/storage/kubKtAttachments/0T2ruJTzbm8oiv.pdf">TİTCK, product information (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">Law No. 2827, articles 5 and 6 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, article 99 (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1464,7 +1599,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Reporting:</strong> Health workers must report to the authorities if they see signs that a crime was committed. Any sexual act towards someone who has not turned 15 counts as abuse in law, even with their consent.</li>
             <li><strong>If you were harmed, you are not to blame.</strong> 112, ALO 183 or a hospital emergency department will help you. After a risky contact, don't let the 72 hours pass.</li>
           </ul>
-          <p class="src">Source: <a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Patient Rights Regulation, articles 21 and 24 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 103 and 280 (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Patient Rights Regulation, articles 21 and 24 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, articles 103 and 280 (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1482,7 +1617,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Information line.</strong> TAP Foundation Sexual Health Line <a href="tel:4446539">444 65 39</a>, weekdays 09:00–18:00.</li>
           </ul>
           <p>Doctors hear these questions every day. Nothing you say will surprise them.</p>
-          <p class="src">Source: <a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Ministry of Health HSGM, HIV/AIDS statistics and GDTM list (2026, Turkish)</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Foundation brochure (2026, Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">Population Planning Law No. 2827, article 3 (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (3)</summary><p class="src"><a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Ministry of Health HSGM, HIV/AIDS statistics and GDTM list (2026, Turkish)</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Foundation brochure (2026, Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">Population Planning Law No. 2827, article 3 (Turkish)</a></p></details>
         </div>
       </div>
     </div>
@@ -1504,7 +1639,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="madde" class="chapter grid" data-c="madde" aria-labelledby="madde-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg><span class="chapter__num">05</span><span class="chapter__name">Drug addiction</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg><span class="chapter__num">06</span><span class="chapter__name">Addiction</span></p>
         <h2 id="madde-baslik">There is no drug that "won't do anything".</h2>
         <p class="chapter__lead">The most dangerous sentences about drugs are "once won't hurt", "it's natural, it's harmless" and "I can control it". This section uses official sources to explain why they are wrong. If you have started, the road hasn't ended: treatment is free, and if you apply on your own before an investigation starts, you are not punished for using.</p>
       </header>
@@ -1513,7 +1648,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">%8,1</span><span class="glance__txt">of people with drug use disorders worldwide, only this share can reach treatment</span></li>
         <li><span class="glance__big">ALO 191</span><span class="glance__txt">Ministry of Health drug helpline: 24 hours, 7 days, free from landlines</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Drug addiction: in this section"><span class="jump__t">In this section</span><a href="#madde-1"><b>01</b>How does addiction start?</a><a href="#madde-2"><b>02</b>The lies you hear and the truth</a><a href="#madde-3"><b>03</b>From the one thought "lightest" to the heaviest</a><a href="#madde-4"><b>04</b>If a friend gets worse: overdose</a><a href="#madde-5"><b>05</b>If you want to quit: step by step</a><a href="#madde-6"><b>06</b>Asking for treatment doesn't make you a criminal</a><a href="#madde-7"><b>07</b>What do you say if it's offered to you?</a></nav>
+      <nav class="jump fade-up" aria-label="Addiction: in this section"><span class="jump__t">In this section</span><a href="#madde-1"><b>01</b>How does addiction start?</a><a href="#madde-2"><b>02</b>The lies you hear and the truth</a><a href="#madde-3"><b>03</b>From the one thought "lightest" to the heaviest</a><a href="#madde-4"><b>04</b>If a friend gets worse: overdose</a><a href="#madde-birak"><b>05</b>If you want to quit: step by step</a><a href="#madde-6"><b>06</b>Asking for treatment doesn't make you a criminal</a><a href="#madde-7"><b>07</b>What do you say if it's offered to you?</a><a href="#bagimlilik-kumar"><b>08</b>Gambling and online betting</a><a href="#bagimlilik-ekran"><b>09</b>Games, phone and social media</a></nav>
     </div>
 
     <div class="blocks">
@@ -1526,7 +1661,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <p class="callout__t">Why is it more dangerous for young people?</p>
             <p>The brain is still developing in adolescence. According to the World Health Organization, even nicotine <strong>harms brain development</strong> in children and adolescents, and cannabis impairs learning.</p>
           </div>
-          <p class="src">Source: <a href="https://www.yedam.org.tr/bagimlilik-turleri/madde-bagimliligi">YEDAM, Drug addiction (Turkish)</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay, Drug addiction (Turkish)</a> · <a href="https://alo191.saglik.gov.tr/TR-50292/ne-kadar-madde-kullanilinca-bagimli-olunur.html">Ministry of Health ALO 191 (Turkish)</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucu2025.pdf">Hacettepe Public Health (2025, Turkish)</a> · <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">WHO, E-cigarettes</a> · <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">WHO, Cannabis</a>. Figures at the start of the section: <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Turkish National Police, 2026 Türkiye Drug Report (Turkish)</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Public Health, UNODC 2025 summary (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (8)</summary><p class="src"><a href="https://www.yedam.org.tr/bagimlilik-turleri/madde-bagimliligi">YEDAM, Drug addiction (Turkish)</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay, Drug addiction (Turkish)</a> · <a href="https://alo191.saglik.gov.tr/TR-50292/ne-kadar-madde-kullanilinca-bagimli-olunur.html">Ministry of Health ALO 191 (Turkish)</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucu2025.pdf">Hacettepe Public Health (2025, Turkish)</a> · <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">WHO, E-cigarettes</a> · <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">WHO, Cannabis</a>. Figures at the start of the section: <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Turkish National Police, 2026 Türkiye Drug Report (Turkish)</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Public Health, UNODC 2025 summary (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1541,7 +1676,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <div><dt>"Everyone uses."</dt><dd>They don't. According to United Nations data, 6% of people aged 15–64 worldwide used drugs in 2023 (not counting alcohol and tobacco). So 94% didn't.</dd></div>
             <div><dt>"Alcohol and e-cigarettes are innocent."</dt><dd>According to the World Health Organization there is no safe amount of alcohol that does not affect health. Nicotine is highly addictive, and among young non-smokers e-cigarettes make starting regular cigarettes about 3 times more likely.</dd></div>
           </dl>
-          <p class="src">Source: <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">WHO, Cannabis</a> · <a href="https://nida.nih.gov/research-topics/inhalants">NIDA, Inhalants</a> · <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Cocaine</a> · <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">WHO, Opioid overdose</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay (Turkish)</a> · <a href="https://www.unodc.org/unodc/en/press/releases/2025/June/unodc-world-drug-report-2025_-global-instability-compounding-social--economic-and-security-costs-of-the-world-drug-problem.html">UNODC, World Drug Report 2025</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">2026 Türkiye Drug Report (Turkish)</a> · <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">WHO, E-cigarettes</a> · <a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">WHO Europe, Alcohol</a></p>
+          <details class="srcs"><summary>Sources (10)</summary><p class="src"><a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">WHO, Cannabis</a> · <a href="https://nida.nih.gov/research-topics/inhalants">NIDA, Inhalants</a> · <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Cocaine</a> · <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">WHO, Opioid overdose</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay (Turkish)</a> · <a href="https://www.unodc.org/unodc/en/press/releases/2025/June/unodc-world-drug-report-2025_-global-instability-compounding-social--economic-and-security-costs-of-the-world-drug-problem.html">UNODC, World Drug Report 2025</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">2026 Türkiye Drug Report (Turkish)</a> · <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">WHO, E-cigarettes</a> · <a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">WHO Europe, Alcohol</a></p></details>
         </div>
       </div>
 
@@ -1564,7 +1699,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">The myth</span><s>A little drink never hurt anyone.</s></p>
                 <div><span class="k">The facts</span><ul class="d"><li>According to the World Health Organization there is no safe amount of alcohol that does not affect health; the risk starts with the first drop.</li><li>Alcohol causes at least seven types of cancer.</li><li>Young people are harmed disproportionately: the highest share of alcohol-related loss of life is among ages 20–39.</li></ul></div>
-                <p class="src">Source: <a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">WHO Europe, No safe level of alcohol</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/alcohol">WHO, Alcohol fact sheet</a></p>
+                <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">WHO Europe, No safe level of alcohol</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/alcohol">WHO, Alcohol fact sheet</a></p></details>
               </div>
             </details></li>
             <li id="madde-k3"><details class="acc">
@@ -1572,7 +1707,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">The myth</span><s>It's a natural plant, it isn't addictive.</s></p>
                 <div><span class="k">The facts</span><ul class="d"><li>Cannabis is the most used drug in the world, and people usually start it younger than other drugs.</li><li>According to the World Health Organization cannabis impairs learning, and regular users can develop cannabis dependence, where control is lost.</li><li>It can make the illness worse in people with schizophrenia.</li></ul></div>
-                <p class="src">Source: <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">WHO, Cannabis</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Public Health, UNODC 2025 summary (Turkish)</a></p>
+                <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">WHO, Cannabis</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Public Health, UNODC 2025 summary (Turkish)</a></p></details>
               </div>
             </details></li>
             <li id="madde-k4"><details class="acc">
@@ -1596,7 +1731,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">The myth</span><s>It's the same as cannabis, only cheaper.</s></p>
                 <div><span class="k">The facts</span><ul class="d"><li>These lab-made chemicals are sold sprayed on dried herbs or as e-cigarette liquid. They resemble what is in cannabis, but the effects are often very different.</li><li>They cause serious health problems and can be life-threatening.</li><li>In Türkiye in 2025, bonzai was found in 351 (63%) of the 557 people who lost their lives to drugs.</li></ul></div>
-                <p class="src">Source: <a href="https://nida.nih.gov/research-topics/synthetic-cannabinoids">NIDA, Synthetic cannabinoids</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Turkish National Police, 2026 Türkiye Drug Report (Turkish)</a></p>
+                <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://nida.nih.gov/research-topics/synthetic-cannabinoids">NIDA, Synthetic cannabinoids</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Turkish National Police, 2026 Türkiye Drug Report (Turkish)</a></p></details>
               </div>
             </details></li>
             <li id="madde-k7"><details class="acc">
@@ -1612,7 +1747,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">The myth</span><s>It helps you study or stay awake.</s></p>
                 <div><span class="k">The facts</span><ul class="d"><li>It is a lab-made stimulant with a high potential for addiction.</li><li>Short term: paranoia, heart rhythm problems, stroke and loss of life. Long term: heart failure, seeing or hearing things that aren't there (psychosis) and tooth loss.</li><li>In Türkiye in 2025, methamphetamine was found in 156 (28%) of the 557 people who lost their lives to drugs.</li></ul></div>
-                <p class="src">Source: <a href="https://nida.nih.gov/research-topics/methamphetamine">NIDA, Methamphetamine</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Turkish National Police, 2026 Türkiye Drug Report (Turkish)</a></p>
+                <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://nida.nih.gov/research-topics/methamphetamine">NIDA, Methamphetamine</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Turkish National Police, 2026 Türkiye Drug Report (Turkish)</a></p></details>
               </div>
             </details></li>
             <li id="madde-k9"><details class="acc">
@@ -1620,7 +1755,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               <div class="acc__body">
                 <p class="myth"><span class="k">The myth</span><s>You don't get addicted from trying once.</s></p>
                 <div><span class="k">The facts</span><ul class="d"><li>Opioids account for about two thirds of drug-related loss of life worldwide, more than any other group.</li><li>They affect the part of the brain that regulates breathing. Signs of overdose: pinpoint pupils, unconsciousness and difficulty breathing.</li><li>Fentanyl can be mixed into other drugs; many people who test positive for it don't know they took it.</li></ul></div>
-                <p class="src">Source: <a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">WHO, Opioid overdose</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Public Health, UNODC 2025 summary (Turkish)</a></p>
+                <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">WHO, Opioid overdose</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Public Health, UNODC 2025 summary (Turkish)</a></p></details>
               </div>
             </details></li>
           </ol>
@@ -1642,12 +1777,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Don't leave them alone.</strong> If they are breathing but unconscious, lay them on their side so they don't choke if they vomit.</span></li>
             <li><span><strong>If you know what they took, don't hide it.</strong> Telling the medical team can save a life.</span></li>
           </ol>
-          <p class="src">Source: <a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">WHO, Opioid overdose</a> · <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a> · <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Cocaine</a> · <a href="https://alo191.saglik.gov.tr/TR-50331/acil-durumlarda-nereye-muracaat-etmeliyim.html">Ministry of Health ALO 191, Emergencies (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (4)</summary><p class="src"><a href="https://www.who.int/news-room/fact-sheets/detail/opioid-overdose">WHO, Opioid overdose</a> · <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a> · <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Cocaine</a> · <a href="https://alo191.saglik.gov.tr/TR-50331/acil-durumlarda-nereye-muracaat-etmeliyim.html">Ministry of Health ALO 191, Emergencies (Turkish)</a></p></details>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="madde-5" data-k="quit treatment amatem rehab">If you want to quit: step by step</h3>
+        <h3 id="madde-birak" data-k="quit treatment amatem rehab">If you want to quit: step by step</h3>
         <div class="prose">
           <ol class="n">
             <li><span><strong>Tell one person or call.</strong> <a href="tel:191">ALO 191</a> is open 24/7 and free from landlines. They inform you and direct you to the most suitable treatment centre; you can call even if you are undecided. Yeşilay's <a href="tel:115">115</a> line is also free.</span></li>
@@ -1656,7 +1791,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Change your surroundings.</strong> Delete the numbers of people you used with and don't go to those places. In the first weeks after quitting, stay away from places that trigger you.</span></li>
             <li><span><strong>If you slip, don't give up.</strong> According to Yeşilay, addiction can be treated, but the treatment isn't easy. One slip doesn't mean everything is over; tell your specialist and carry on.</span></li>
           </ol>
-          <p class="src">Source: <a href="https://alo191.saglik.gov.tr/TR-100479/alo-191-uyusturucu-ile-mucadele-danisma-ve-destek-hatti-nedir.html">Ministry of Health, What is ALO 191? (Turkish)</a> · <a href="https://alo191.saglik.gov.tr/TR-50330/tedavi-merkezlerine-nasil-muracaat-etmeliyim.html">ALO 191, Applying to treatment centres (Turkish)</a> · <a href="https://alo191.saglik.gov.tr/TR-50334/sss.html">ALO 191, Frequently asked questions (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">Law No. 5510, article 67 (Turkish)</a> · <a href="https://www.yedam.org.tr/bagimlilik-turleri/madde-bagimliligi">YEDAM, Drug addiction (Turkish)</a> · <a href="https://www.karar.com/saglik-haberleri/memisoglu-2024te-373-bin-bagimli-amatemlere-basvurdu-1939284">Statement by the Minister of Health, 2024 AMATEM applications (Turkish)</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (7)</summary><p class="src"><a href="https://alo191.saglik.gov.tr/TR-100479/alo-191-uyusturucu-ile-mucadele-danisma-ve-destek-hatti-nedir.html">Ministry of Health, What is ALO 191? (Turkish)</a> · <a href="https://alo191.saglik.gov.tr/TR-50330/tedavi-merkezlerine-nasil-muracaat-etmeliyim.html">ALO 191, Applying to treatment centres (Turkish)</a> · <a href="https://alo191.saglik.gov.tr/TR-50334/sss.html">ALO 191, Frequently asked questions (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">Law No. 5510, article 67 (Turkish)</a> · <a href="https://www.yedam.org.tr/bagimlilik-turleri/madde-bagimliligi">YEDAM, Drug addiction (Turkish)</a> · <a href="https://www.karar.com/saglik-haberleri/memisoglu-2024te-373-bin-bagimli-amatemlere-basvurdu-1939284">Statement by the Minister of Health, 2024 AMATEM applications (Turkish)</a> · <a href="https://www.yesilay.org.tr/bagimlilik/madde-bagimliligi/">Yeşilay (Turkish)</a></p></details>
         </div>
       </div>
 
@@ -1669,7 +1804,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Giving it to a friend can also be trafficking.</strong> Giving or selling to someone else is drug trafficking under Penal Code 188/3, with at least 10 years in prison; at least 15 years if the person is a child. According to the Court of Cassation, taking no money doesn't change this.</li>
           </ul>
           <p>The penalties given are for adults; separate rules apply to those under 18 (Penal Code 31). If you have a legal problem, you can apply for the bar association's free legal aid in the <a href="#hayat">Your rights section</a>.</p>
-          <p class="src">Source: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code No. 5237, articles 31, 188, 191 and 192 (Turkish)</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/e0056e4c-f10d-46ae-bdd1-163a72eabc8a">Court of Cassation, 8th Criminal Chamber, E. 2024/25851, K. 2026/770</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/b4947bbd-ac5a-4f48-9ba3-eed3d14071b2">Court of Cassation, 20th Criminal Chamber, E. 2015/6642, K. 2017/3576</a> · <a href="https://normkararlarbilgibankasi.anayasa.gov.tr/ND/2026/46">Constitutional Court, E. 2026/42, K. 2026/46</a></p>
+          <details class="srcs"><summary>Sources (4)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code No. 5237, articles 31, 188, 191 and 192 (Turkish)</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/e0056e4c-f10d-46ae-bdd1-163a72eabc8a">Court of Cassation, 8th Criminal Chamber, E. 2024/25851, K. 2026/770</a> · <a href="https://karararama.yargitay.gov.tr/kararlar/b4947bbd-ac5a-4f48-9ba3-eed3d14071b2">Court of Cassation, 20th Criminal Chamber, E. 2015/6642, K. 2017/3576</a> · <a href="https://normkararlarbilgibankasi.anayasa.gov.tr/ND/2026/46">Constitutional Court, E. 2026/42, K. 2026/46</a></p></details>
         </div>
       </div>
 
@@ -1680,7 +1815,38 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <figure><blockquote><p>"I have a match tomorrow" / "I have an exam tomorrow."</p></blockquote><figcaption>The easiest way to get away from someone who insists is to close the subject.</figcaption></figure>
           <figure><blockquote><p>"A real friend doesn't push."</p></blockquote><figcaption>Someone who pushes you is not thinking of your good.</figcaption></figure>
           <p style="margin-top:32px">If the place makes you uncomfortable, leaving is also an answer. If your family wants information, the police run a programme called "En İyi Narkotik Polisi: Anne" (The Best Narcotics Officer: Mother). <a href="tel:191">ALO 191</a> supports relatives too.</p>
-          <p class="src">Source: <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Public Health (2026, Turkish)</a> · <a href="https://alo191.saglik.gov.tr/TR-50313/alo-191-uyusturucu-ile-mucadele-danisma-ve-destek-hatti-kimlere-hizmet-sunar-.html">Ministry of Health, Who does ALO 191 serve? (Turkish)</a></p>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Public Health (2026, Turkish)</a> · <a href="https://alo191.saglik.gov.tr/TR-50313/alo-191-uyusturucu-ile-mucadele-danisma-ve-destek-hatti-kimlere-hizmet-sunar-.html">Ministry of Health, Who does ALO 191 serve? (Turkish)</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="bagimlilik-kumar" data-k="gambling betting casino slot roulette debt bet">Gambling and online betting</h3>
+        <div class="prose">
+          <p>Like drugs and alcohol, gambling addiction affects the brain's reward system. The World Health Organization defines gambling disorder as a health condition. Thinking "one last time, let me win back what I lost" is one of its signs.</p>
+          <ul class="d">
+            <li><strong>Signs:</strong> betting more and more money, chasing losses, trying to stop and failing, lying to hide it, borrowing money, neglecting school or work.</li>
+            <li><strong>Illegal betting has penalties too.</strong> Players get an administrative fine. Advertising it carries 1–3 years in prison, and helping move betting money 3–5 years. "Renting out" your account can make you part of this crime.</li>
+          </ul>
+          <ol class="n">
+            <li><span><strong>Make it harder to reach.</strong> Delete the apps, block the sites, unfollow betting accounts and groups.</span></li>
+            <li><span><strong>Move money out of reach.</strong> Carry only what you need for the day. Leave your cards with someone you trust for a while.</span></li>
+            <li><span><strong>Tell someone.</strong> However big the debt is, hiding it makes it grow.</span></li>
+            <li><span><strong>Get free support.</strong> YEDAM gives free psychological support for gambling too, from age 12: <a href="tel:115">115</a>. If you feel you don't want to live because of debt, <a href="tel:112">112</a>.</span></li>
+          </ol>
+          <details class="srcs"><summary>Sources (4)</summary><p class="src"><a href="https://www.yesilay.org.tr/bagimlilik/kumar-bagimliligi/">Yeşilay, Gambling addiction (Turkish)</a> · <a href="https://www.yedam.org.tr/bagimlilik-turleri/kumar-bagimliligi">YEDAM, Gambling addiction (Turkish)</a> · <a href="https://www.yedam.org.tr/nasil-yararlanabilirim">YEDAM, How to get help (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.3.7258.pdf">Law No. 7258, article 5 (Turkish)</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="bagimlilik-ekran" data-k="gaming addiction phone addiction social media internet screen digital">Games, phone and social media</h3>
+        <div class="prose">
+          <p>Not everyone who plays a lot is addicted. In the World Health Organization's definition the measure is not time but <strong>losing control</strong>: gaming becoming more important than anything else, being unable to stop despite harm, and school, work and relationships breaking down. This is usually expected to last at least 12 months.</p>
+          <ul class="d">
+            <li><strong>Ask yourself:</strong> Do I try to stop and fail? Am I giving up sleep, schoolwork or friends? Do I open it to escape a problem?</li>
+            <li><strong>Start small.</strong> Turn off notifications, leave your phone in another room at night, and plan something for the free time.</li>
+            <li><strong>Get free support.</strong> YEDAM also supports people with internet addiction: <a href="tel:115">115</a>. You can tell your school counsellor too.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.yesilay.org.tr/bagimlilik/dijital-bagimliliklar/">Yeşilay, Digital addictions (Turkish)</a> · <a href="https://www.yedam.org.tr/nasil-yararlanabilirim">YEDAM, How to get help (Turkish)</a></p></details>
         </div>
       </div>
     </div>
@@ -1702,7 +1868,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="ifade" class="chapter grid" data-c="ifade" aria-labelledby="ifade-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg><span class="chapter__num">06</span><span class="chapter__name">Speaking up</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg><span class="chapter__num">07</span><span class="chapter__name">Speaking up</span></p>
         <h2 id="ifade-baslik">If speaking is hard for you, there is a mechanism behind it.</h2>
         <p class="chapter__lead">"Be a bit braver" or "go and say hello" is easy to say. But for someone with social anxiety these steps can feel like mountains. It helps to first understand why you feel this way.</p>
       </header>
@@ -1782,7 +1948,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="hayat" class="chapter grid" data-c="hayat" aria-labelledby="hayat-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg><span class="chapter__num">07</span><span class="chapter__name">Your rights</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg><span class="chapter__num">08</span><span class="chapter__name">Your rights</span></p>
         <h2 id="hayat-baslik">You don't need to be rich to claim your rights.</h2>
         <p class="chapter__lead">If nobody taught you this at home, that's fine. Not knowing isn't shameful; everyone learns somewhere.</p>
       </header>
@@ -1791,12 +1957,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">10 days</span><span class="glance__txt">to object to the bar president if your application is refused</span></li>
         <li><span class="glance__big">ALO 144</span><span class="glance__txt">ask which social aid you can get</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Your rights: in this section"><span class="jump__t">In this section</span><a href="#hayat-1"><b>01</b>Free lawyer: legal aid</a><a href="#hayat-2"><b>02</b>If you are in serious financial hardship</a><a href="#hayat-3"><b>03</b>If you don't know what to do at a government office</a></nav>
+      <nav class="jump fade-up" aria-label="Your rights: in this section"><span class="jump__t">In this section</span><a href="#hayat-avukat"><b>01</b>Free lawyer: legal aid</a><a href="#hayat-para"><b>02</b>If you are in serious financial hardship</a><a href="#hayat-is"><b>03</b>Starting a job: insurance and complaints</a><a href="#hayat-cocuk-isci"><b>04</b>If you work and are under 18</a><a href="#hayat-dolandiricilik"><b>05</b>If you were scammed online</a><a href="#hayat-burs"><b>06</b>Scholarships and loans for university</a><a href="#hayat-7"><b>07</b>If you don't know what to do at a government office</a></nav>
     </div>
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="hayat-1" data-k="free lawyer attorney bar lawsuit court">Free lawyer: legal aid</h3>
+        <h3 id="hayat-avukat" data-k="free lawyer attorney bar lawsuit court">Free lawyer: legal aid</h3>
         <div class="prose">
           <p>If you can't afford a lawyer, you can apply to the Legal Aid Office of the bar association in your province. If your application is accepted, a lawyer is appointed and the bar pays the lawyer's fee. Court fees and expenses are separate. If you gain money at the end of the case (other than alimony), you must pay the bar the fee paid to the lawyer and 5% of the gain.</p>
           <ol class="n">
@@ -1809,7 +1975,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="hayat-2" data-k="no money poverty social aid hungry poor debt">If you are in serious financial hardship</h3>
+        <h3 id="hayat-para" data-k="no money poverty social aid hungry poor debt">If you are in serious financial hardship</h3>
         <div class="prose">
           <p>You can call the <a class="tel" href="tel:144">ALO 144</a> Social Aid Line and ask which aid you can get. It is open on weekdays 08:00–19:00 and free.</p>
           <p class="src">Source: <a href="https://alo144.aile.gov.tr/">Ministry of Family and Social Services, ALO 144 (Turkish)</a></p>
@@ -1817,7 +1983,65 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="hayat-3" data-k="e-devlet government office document">If you don't know what to do at a government office</h3>
+        <h3 id="hayat-is" data-k="job work insurance uninsured sgk pay wage minimum wage boss fired alo 170">Starting a job: insurance and complaints</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>You must be insured from day one.</strong> As a rule the employer must report you to SGK (social security) before you start. Check on the <a href="https://www.turkiye.gov.tr/sgk-tescil-ve-hizmet-dokumu">SGK registration and service record</a> page on e-Devlet.</li>
+            <li><strong>A paper saying "I don't want insurance" is invalid.</strong> Being insured is compulsory; a waiver written into a contract or signed by you does not bind you.</li>
+            <li><strong>If you were employed uninsured</strong>, you can complain, and within 5 years from the end of the year you worked you can sue in the labour court to have your service recognised. Keep messages, photos and the names of witnesses.</li>
+            <li><strong>Complaints:</strong> <a href="tel:170">ALO 170</a>, the Labour and Social Security line. The online form also has an option not to share your personal details.</li>
+            <li><strong>For harassment at work</strong>, see <a href="#iliski-taciz-yasa">your rights</a>.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (2)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5510.pdf">Law No. 5510, articles 8, 86 and 92 (Turkish)</a> · <a href="https://www.alo170.gov.tr/">ALO 170</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-cocuk-isci" data-k="child labour under 18 working internship apprentice part time summer job">If you work and are under 18</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>A child under 15 can't be employed.</strong> Those who have turned 14 and finished compulsory primary education may do only light work that doesn't hinder school.</li>
+            <li><strong>If you go to school</strong>, during term you can work at most 2 hours a day and 10 hours a week, outside school hours.</li>
+            <li><strong>If you don't go to school</strong>, the limit is 7 hours a day and 35 a week; once you turn 15, 8 hours a day and 40 a week.</li>
+            <li><strong>Forbidden work:</strong> people under 18 can't work at night in industry, or in mines and underground.</li>
+            <li><strong>If you are forced to work, not paid or injured</strong>, call <a href="tel:170">ALO 170</a> and <a href="tel:183">ALO 183</a>; in an emergency <a href="tel:112">112</a>.</li>
+          </ul>
+          <p class="src">Source: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4857.pdf">Labour Law No. 4857, articles 71, 72 and 73 (Turkish)</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-dolandiricilik" data-k="scammed scam fraud iban card password fake ad account rental hacked account stolen">If you were scammed online</h3>
+        <div class="prose">
+          <ol class="n">
+            <li><span><strong>Call your bank at once.</strong> Use the number on the back of your card or in the bank's own app. Report the transaction, have the card and account blocked, and change your passwords.</span></li>
+            <li><span><strong>Keep the evidence.</strong> Take screenshots of receipts, the IBAN, messages, the ad and the profile.</span></li>
+            <li><span><strong>File a complaint.</strong> Go to the police or the Chief Public Prosecutor's Office. Fraud using the internet or banks is a crime with a heavier penalty (Penal Code 158).</span></li>
+            <li><span><strong>Don't pay anyone who says "I'll get your money back".</strong> This is often a second trap.</span></li>
+          </ol>
+          <ul class="d">
+            <li><strong>Never share an SMS code or password.</strong> Even if they say they are the bank, the police or a prosecutor, hang up and call the institution yourself.</li>
+            <li><strong>Don't let anyone use your account.</strong> An offer like "we'll rent your IBAN for monthly money" can make you part of a crime. The police warn about this in particular.</li>
+          </ul>
+          <details class="srcs"><summary>Sources (4)</summary><p class="src"><a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Turkish Penal Code, article 158 (Turkish)</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5271.pdf">Code of Criminal Procedure, article 158 (Turkish)</a> · <a href="https://www.trthaber.com/haber/turkiye/emniyetten-vatandaslara-banka-hesabi-uyarisi-952418.html">TRT Haber, Police warning on bank accounts (2026, Turkish)</a> · <a href="https://www.egm.gov.tr/siber/">Police Cybercrime Department (Turkish)</a></p></details>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-burs" data-k="scholarship loan kyk student university money">Scholarships and loans for university</h3>
+        <div class="prose">
+          <ul class="d">
+            <li>A <strong>scholarship</strong> (burs) is not paid back; a <strong>student loan</strong> (kredi) is repaid later. You apply for both to the Ministry of Youth and Sports through e-Devlet.</li>
+            <li><strong>Don't miss the date.</strong> Applications open once a year for a short time. When you get into university, follow the Ministry's announcements.</li>
+            <li><strong>If you are under state protection, or a relative of a martyr or veteran</strong>, say so when applying and ask whether you have priority.</li>
+            <li>For a <strong>dormitory</strong>, see <a href="#aile-ayrilmak">this topic</a>.</li>
+          </ul>
+          <p class="src">Source: <a href="https://www.turkiye.gov.tr/genclik-ve-spor-bakanligi">e-Devlet, Ministry of Youth and Sports services (Turkish)</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="hayat-7" data-k="e-devlet government office document">If you don't know what to do at a government office</h3>
         <div class="prose">
           <p>It is perfectly normal to ask an officer, "This is my first time, where should I start?" You can do many things from home on e-Devlet. Wherever you go, photograph the papers you receive and write down the name of the person you spoke to.</p>
         </div>
@@ -1829,6 +2053,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <ul>
         <li><span class="help__name">Bar Association Legal Aid Office</span><small>In every bar centre. Large districts also have branches.</small></li>
         <li><span class="help__name">Social Aid Line</span><a class="tel" href="tel:144">ALO 144</a></li>
+        <li><span class="help__name">Work, insurance, child labour</span><a class="tel" href="tel:170">ALO 170</a><small>Labour and Social Security line.</small></li>
         <li><span class="help__name">e-Devlet</span><a class="tel" href="https://www.turkiye.gov.tr">turkiye.gov.tr</a></li>
       </ul>
       <p class="checked">Links and numbers last checked: <time datetime="2026-11-25">25 November 2026</time></p>
@@ -1839,7 +2064,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <section id="rehber" class="chapter grid" data-c="rehber" aria-labelledby="rehber-baslik">
     <div class="band">
       <header class="chapter__head fade-up">
-        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg><span class="chapter__num">08</span><span class="chapter__name">Directory</span></p>
+        <p class="chapter__mark"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5.1 3h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg><span class="chapter__num">09</span><span class="chapter__name">Directory</span></p>
         <h2 id="rehber-baslik">Where to get help? All in one place.</h2>
         
       </header>
@@ -1852,15 +2077,19 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <tr><th scope="row">Life in danger, thoughts of harming yourself</th><td data-label="Where">Emergency Call Centre</td><td data-label="Number"><a class="tel" href="tel:112">112</a></td><td data-label="Note">7/24</td></tr>
           <tr><th scope="row">Violence (physical, psychological, sexual, economic)</th><td data-label="Where">Violence Helpline</td><td data-label="Number"><a class="tel" href="tel:183">ALO 183</a></td><td data-label="Note">24/7, free. WhatsApp: <a href="https://wa.me/905011830183">0501 183 0 183</a></td></tr>
           <tr><th scope="row">Harassment, sexual assault, rape</th><td data-label="Where">Hospital emergency department, police or prosecutor; ALO 183 for advice</td><td data-label="Number"><a class="tel" href="tel:112">112</a></td><td data-label="Note">If possible without washing; first 72 hours. <a href="#iliski-taciz">Step by step</a></td></tr>
+          <tr><th scope="row">Forced or early marriage</th><td data-label="Where">Violence Helpline</td><td data-label="Number"><a class="tel" href="tel:183">ALO 183</a></td><td data-label="Note">If the danger is close, 112. <a href="#siddet-evlilik">Step by step</a></td></tr>
           <tr><th scope="row">Hearing or speech disability</th><td data-label="Where">ALO 183 sign language line</td><td data-label="Number"><a class="tel" href="tel:+905493810183">0549 381 0 183</a></td><td data-label="Note">Video call (Turkish Sign Language); weekdays 08:00–24:00, Saturday 08:00–17:00</td></tr>
           <tr><th scope="row">Blackmail with images, leaks, stalking</th><td data-label="Where">Police or Chief Public Prosecutor's Office</td><td data-label="Number"><a class="tel" href="tel:112">112</a></td><td data-label="Note">Don't delete evidence, don't send money</td></tr>
           <tr><th scope="row">Family problems, not getting along</th><td data-label="Where">Social Service Centre (family and individual counselling)</td><td data-label="Number"><a href="https://www.turkiye.gov.tr">e-Devlet</a></td><td data-label="Note">Free</td></tr>
           <tr><th scope="row">Drugs, addiction (for yourself or someone close)</th><td data-label="Where">Ministry of Health Drug Helpline</td><td data-label="Number"><a class="tel" href="tel:191">ALO 191</a></td><td data-label="Note">24/7, free from landlines. Yeşilay: <a href="tel:115">115</a></td></tr>
           <tr><th scope="row">Overdose, unconsciousness</th><td data-label="Where">Emergency Call Centre</td><td data-label="Number"><a class="tel" href="tel:112">112</a></td><td data-label="Note">Tell the medical team what was taken</td></tr>
+          <tr><th scope="row">Gambling, online betting, gaming and internet addiction</th><td data-label="Where">Yeşilay Helpline (YEDAM)</td><td data-label="Number"><a class="tel" href="tel:115">115</a></td><td data-label="Note">Free, ages 12 and over</td></tr>
           <tr><th scope="row">Psychiatrist or psychologist</th><td data-label="Where">State hospital (MHRS)</td><td data-label="Number"><a class="tel" href="tel:182">ALO 182</a></td><td data-label="Note">Free</td></tr>
           <tr><th scope="row">Risky sexual contact</th><td data-label="Where">Hospital emergency department</td><td data-label="Number">First 72 hours</td><td data-label="Note">Ideally the first 24 hours</td></tr>
           <tr><th scope="row">Anonymous HIV test</th><td data-label="Where">Voluntary Counselling and Testing Centre</td><td data-label="Number"><a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Ministry's list</a></td><td data-label="Note">No ID needed, free</td></tr>
           <tr><th scope="row">A question about sexual health</th><td data-label="Where">TAP Foundation Information Line</td><td data-label="Number"><a class="tel" href="tel:4446539">444 65 39</a></td><td data-label="Note">Weekdays 09:00–18:00</td></tr>
+          <tr><th scope="row">Uninsured work, child labour</th><td data-label="Where">Labour and Social Security line</td><td data-label="Number"><a class="tel" href="tel:170">ALO 170</a></td><td data-label="Note">Complaints and information</td></tr>
+          <tr><th scope="row">Scammed online</th><td data-label="Where">Your bank, then the police or prosecutor</td><td data-label="Number">Your bank's number</td><td data-label="Note"><a href="#hayat-dolandiricilik">Step by step</a></td></tr>
           <tr><th scope="row">Free lawyer</th><td data-label="Where">Bar Association Legal Aid Office</td><td data-label="Number">The bar in your province</td><td data-label="Note">With proof of income</td></tr>
           <tr><th scope="row">Financial hardship</th><td data-label="Where">Social Aid Line</td><td data-label="Number"><a class="tel" href="tel:144">ALO 144</a></td><td data-label="Note">Weekdays 08:00–19:00, free</td></tr>
         </tbody>
@@ -1869,7 +2098,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     </div>
   </section>
 
-  <section id="gizlilik" class="privacy grid" aria-labelledby="gizlilik-baslik">
+  <section id="gizlilik" class="privacy grid" data-c="rehber" data-k="private privacy history delete incognito private tab tracked monitored cookies" aria-labelledby="gizlilik-baslik">
     <h2 id="gizlilik-baslik" class="fade-up">If you don't want anyone to know you visited this page</h2>
     <ul class="d fade-up">
       <li>The <strong>Quick exit</strong> button takes you straight to a weather page. It helps when someone comes near, but it does not erase your browser history.</li>
@@ -2050,13 +2279,48 @@ tbody th { font-weight: 600; white-space: nowrap; }
     if (e.key === "/" && !/INPUT|TEXTAREA/.test(t) && !$("dialog[open]")) { e.preventDefault(); openSheet("search-dlg"); }
   });
 
+  /* telefonda başlıklar katlanır: dokununca açılır. Sayfada bul (Ctrl+F) kapalı metni de bulur ve açar */
+  var phone = matchMedia("(max-width: 720px)");
+  var folds = $$(".blocks > .block > h3[id]").map(function (h) {
+    var block = h.parentNode, body = document.createElement("div"), btn = document.createElement("button");
+    body.className = "fold__body"; body.id = h.id + "-icerik";
+    while (h.nextSibling) body.appendChild(h.nextSibling);
+    block.appendChild(body);
+    btn.type = "button"; btn.className = "fold__btn"; btn.setAttribute("aria-controls", body.id);
+    var f = { h: h, body: body, btn: btn, open: h.hasAttribute("data-acik"), text: h.textContent };
+    btn.addEventListener("click", function () { f.open = !f.open; paint(f); });
+    body.addEventListener("beforematch", function () { f.open = true; paint(f); });
+    return f;
+  });
+  function paint(f) {
+    var on = phone.matches;
+    if (on && f.btn.parentNode !== f.h) { f.h.textContent = ""; f.btn.textContent = f.text; f.h.appendChild(f.btn); }
+    if (!on && f.btn.parentNode === f.h) { f.h.textContent = f.text; }
+    f.btn.setAttribute("aria-expanded", f.open ? "true" : "false");
+    if (on && !f.open) f.body.setAttribute("hidden", "until-found"); else f.body.removeAttribute("hidden");
+  }
+  function unfold(el) {
+    folds.forEach(function (f) { if ((f.h === el || f.body.contains(el)) && !f.open) { f.open = true; paint(f); } });
+  }
+  folds.forEach(paint);
+  phone.addEventListener("change", function () { folds.forEach(paint); });
+  addEventListener("beforeprint", function () { folds.forEach(function (f) { f.body.removeAttribute("hidden"); }); });
+  addEventListener("afterprint", function () { folds.forEach(paint); });
+  if (location.hash.length > 1 && phone.matches) {
+    var first = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (first) { unfold(first); setTimeout(function () { first.scrollIntoView({ behavior: "instant" }); }, 0); }
+  }
+
   function go(id) {
     var el = document.getElementById(id);
     if (!el) return;
-    var det = el.closest("details") || (el.tagName === "LI" && el.querySelector("details"));
+    var det = el.closest("details") || (el.tagName === "LI" && el.querySelector("details.acc"));
     if (det) det.open = true;
     var f = el.closest(".fade-up"); if (f) f.classList.add("is-shown");
-    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    unfold(el);
+    /* uzak hedefe uzun uzun kaymak yerine doğrudan git */
+    var far = Math.abs(el.getBoundingClientRect().top) > innerHeight * 4;
+    el.scrollIntoView({ behavior: reduce || far ? "instant" : "smooth", block: "start" });
     if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
     el.focus({ preventScroll: true });
     history.replaceState(null, "", "#" + id);
@@ -2111,6 +2375,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
     }
     toc.appendChild(li);
   });
+  (function () {
+    var li = document.createElement("li"), a = document.createElement("a");
+    li.dataset.c = "rehber"; a.className = "toc__ch"; a.href = "#gizlilik";
+    a.innerHTML = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>';
+    a.appendChild(document.createTextNode("Staying private")); li.appendChild(a); toc.appendChild(li);
+  })();
 
   /* sayfa içi arama: alt başlıklar ve kartlar */
   /* büyük/küçük harf ve Türkçe harf farkını yok say: "SIDDET", "şiddet" ve "siddet" aynı (uzunluk değişmez) */
@@ -2129,6 +2399,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
       var title = rk ? tEl.textContent.slice(rk.textContent.length) : tEl.textContent;
       idx.push({ c: s.dataset.c, sec: sec, id: li.id, t: title, k: "", body: d.textContent.replace(/\s+/g, " "), card: true });
     });
+  });
+  var gz = $("#gizlilik");
+  idx.push({ c: "rehber", sec: "Privacy", id: "gizlilik", t: $("h2", gz).textContent, k: gz.dataset.k, body: gz.textContent.replace(/\s+/g, " ") });
+  $$("#rehber tbody tr").forEach(function (x, i) {
+    if (!x.id) x.id = "rehber-" + (i + 1);
+    idx.push({ c: "rehber", sec: "Directory", id: x.id, t: $("th", x).textContent, k: "", body: $$("td", x).map(function (d) { return d.textContent; }).join(" · "), card: false, low: 1 });
   });
   var q = $("#site-q"), out = $("#site-results"), hint = $("#site-hint"), status = $("#site-status");
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -2152,7 +2428,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         score += s;
       }
       if (parts.length > 1 && (T + " | " + K + " | " + B).indexOf(term) > -1) score += 4;
-      return { r: r, score: score };
+      return { r: r, score: r.low ? score * 0.5 : score };
     }).filter(function (h) { return h.score; }).sort(function (a, b) { return b.score - a.score; });
   }
   function search() {
@@ -2201,7 +2477,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     var list = document.getElementById(btn.dataset.toggleAll), open = false;
     btn.addEventListener("click", function () {
       open = !open;
-      $$("details", list).forEach(function (d) { d.open = open; });
+      $$("details.acc", list).forEach(function (d) { d.open = open; });
       btn.textContent = open ? "Close all" : "Open all";
     });
   });
