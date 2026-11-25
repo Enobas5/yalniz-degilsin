@@ -4,10 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yalnız Değilsin</title>
-<meta name="description" content="Ailenle konuşamıyorsan ya da soracak kimsen yoksa: aile, ruh sağlığı, ilişkiler, cinsel sağlık, kendini ifade etmek ve hak arama üzerine sade bilgiler ve ücretsiz başvuru yerleri.">
+<meta name="description" content="Ailenle konuşamıyorsan ya da soracak kimsen yoksa: aile, ruh sağlığı, ilişkiler, cinsel sağlık, madde bağımlılığı, kendini ifade etmek ve hak arama üzerine sade bilgiler ve ücretsiz başvuru yerleri.">
+<meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#2a2f33">
 <meta property="og:title" content="Yalnız Değilsin">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:url" content="https://enobas5.github.io/yalniz-degilsin/">
+<meta property="og:image" content="https://enobas5.github.io/yalniz-degilsin/img/paylasim.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Yalnız Değilsin: soluk noktalar arasında bir yeşil nokta ve çevresinde parlayan noktalar">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://enobas5.github.io/yalniz-degilsin/">
+<link rel="icon" href="img/simge.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/simge-180.png">
 <meta property="og:description" content="Bazı şeyleri sana kimse anlatmadı. Burada anlatıyoruz.">
 <link rel="preload" href="fonts/switzer-variable.woff2" as="font" type="font/woff2" crossorigin>
 <script>
@@ -127,6 +139,9 @@ ul.d + ol.n { margin-top: 1.4em; }
 .bar-btn svg { width: 16px; height: 16px; }
 .bar-btn kbd { font: 500 0.75rem var(--font); padding: 1px 6px; border: 1px solid var(--rule-strong); border-radius: 4px; }
 .theme-toggle { padding-left: 24px; border-left: 1px solid var(--rule); }
+.exit { flex: none; display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; font-size: 0.9375rem; white-space: nowrap; text-decoration-thickness: 2px; text-decoration-color: var(--accent); }
+.intro__exit { font-size: 0.9375rem; margin-top: 12px; }
+.intro__urgent.intro__exit a { color: inherit; font-size: inherit; font-weight: 450; text-decoration: underline; }
 .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; }
 .progress i { display: block; height: 100%; width: 100%; background: var(--c); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); transition: background-color 300ms ease; }
 
@@ -332,23 +347,17 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .res .via { font-size: 0.8125rem; color: var(--muted); margin-top: 2px; }
 .res .src { margin-top: 8px; }
 
-/* madde bölümü: efsane / gerçek, sıra ölçeği, risk çubuğu */
+/* madde bölümü: efsane / gerçek, sıra numarası */
 .myths > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 6px 24px; padding: 18px 0; border-top: 1px solid var(--rule); }
 .myths > div:last-child { border-bottom: 1px solid var(--rule); }
 .myths dt { font-family: var(--serif); font-size: 1.5rem; line-height: 1.15; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--c); text-decoration-thickness: 2px; }
 .myths dd { font-size: 1rem; }
-.scale { margin-top: 28px; height: 6px; background: linear-gradient(90deg, color-mix(in srgb, var(--c) 20%, var(--bg)), var(--c)); position: relative; display: flex; justify-content: space-between; }
-.scale span { position: relative; top: 14px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
-.scale span:last-child { color: var(--c); }
 .madde-list { margin-top: 28px; }
 .rank { display: inline-block; min-width: 1.6em; color: var(--c); }
-.riskbar { display: block; width: 96px; height: 4px; background: var(--rule); position: relative; margin-top: 10px; }
-.riskbar::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--r); background: var(--c); }
 .myth s { font-family: var(--serif); font-size: 1.375rem; color: var(--muted); text-decoration-color: var(--c); text-decoration-thickness: 2px; }
 .acc__body > div { margin-top: 14px; }
 @media (max-width: 640px) {
   .myths > div { grid-template-columns: 1fr; }
-  .riskbar { margin-top: 6px; }
 }
 
 /* başvuru sütunu */
@@ -362,16 +371,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .help small { display: block; margin-top: 3px; font-size: 0.875rem; color: var(--muted); line-height: 1.4; }
 
 /* alt kısım */
-.quick { margin-top: var(--section); padding-top: 32px; border-top: 1px solid var(--rule); row-gap: 40px; }
-.quick .block { grid-column: span 2; display: block; }
-.quick .block > h3 { font-family: var(--font); font-size: 0.8125rem; color: var(--muted); margin-bottom: 10px; }
-.quick .block > h3::before { content: none; }
-.quick ul { list-style: none; }
-.quick li + li { margin-top: 8px; }
-.quick a { text-decoration: none; display: flex; align-items: baseline; gap: 10px; }
-.quick .tel { font-family: var(--serif); font-weight: 400; font-size: 1.75rem; line-height: 1.1; }
-.quick a span:last-child { color: var(--muted); }
-.quick a:hover span:last-child { color: var(--text); text-decoration: underline; }
+.privacy { margin-top: var(--section); padding-top: 48px; border-top: 1px solid var(--rule); row-gap: 24px; align-items: start; }
+.privacy h2 { grid-column: 1 / span 2; font-size: clamp(1.75rem, 2.6vw, 2.25rem); line-height: 1.1; }
+.privacy ul { grid-column: 3 / span 4; max-width: 40em; }
+.privacy .src { grid-column: 3 / span 4; margin-top: 0; }
+.callout .tel { font-weight: 400; }
+.checked { margin-top: 14px; font-size: 0.8125rem; color: var(--muted); }
 .footer { padding-block: 96px 48px; row-gap: 12px; font-size: 0.875rem; color: var(--muted); }
 .footer p { grid-column: span 3; max-width: 38em; }
 
@@ -385,7 +390,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 .sheet[open] { display: flex; }
 .sheet::backdrop { background: rgb(10 12 14 / 0.6); backdrop-filter: blur(2px); }
 .sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--rule); }
-.sheet__head h2 { font-size: 1.875rem; max-width: none; }
+.sheet__head h2 { font-size: 1.875rem; max-width: none; margin-right: auto; }
 .sheet__close { width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 1.75rem; line-height: 1; }
 .sheet__close:hover { color: var(--text); }
 .sheet__body { overflow-y: auto; padding: 8px 20px 24px; overscroll-behavior: contain; }
@@ -438,21 +443,21 @@ tbody th { font-weight: 600; white-space: nowrap; }
   :root { --margin: 32px; --section: 96px; --label: 56px; }
   .intro__text { grid-column: 1 / -1; }
   .intro__lead, .intro__urgent { grid-column: 2 / -1; }
-  .chapter__head, .blocks, .help { grid-column: 1 / -1; }
+  .chapter__head, .blocks, .help, .privacy h2, .privacy ul, .privacy .src { grid-column: 1 / -1; }
   .help { position: static; }
   .index .label { grid-column: 1 / -1; margin-bottom: 14px; }
   .index ol { grid-column: 1 / -1; }
 }
 
 /* dar masaüstü: menü ikonları gizlenir, aralık daralır */
-@media (max-width: 1360px) {
+@media (max-width: 1420px) {
   .bar { gap: 20px; }
   .menu ul { gap: 16px; }
   .menu .ico { display: none; }
 }
 
 /* dar ekran: üst menü yerine alt çubuk */
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
   :root { --nav-h: calc(64px + env(safe-area-inset-bottom)); }
   .menu, .bar-btn, html.js .bar .theme-toggle { display: none; }
   html:not(.js) .menu { display: flex; }
@@ -522,8 +527,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   .res li { grid-template-columns: 1fr; }
   .say blockquote p { font-size: 1.625rem; }
   .callout p:not(.callout__t) { font-size: 1.3125rem; }
-  .quick .block, .footer p { grid-column: 1 / -1; }
-  .stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .stack tr { display: block; padding: 14px 0; border-top: 1px solid var(--rule); }
   .stack th, .stack td { display: block; border: 0; padding: 2px 0; width: auto !important; white-space: normal; }
   .stack td[data-label]::before { content: attr(data-label) ": "; color: var(--muted); font-size: 0.8125rem; }
@@ -559,6 +563,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   </nav>
   <button class="bar-btn" type="button" data-open="search-dlg" aria-haspopup="dialog"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5" stroke-linecap="round"/></svg><span>Ara</span><kbd>/</kbd></button>
   <button class="theme-toggle" type="button" id="theme">Açık tema</button>
+  <a class="exit" id="quick-exit" data-exit href="https://www.mgm.gov.tr/" rel="noreferrer">Hızlı çık</a>
   <div class="progress" aria-hidden="true"><i></i></div>
 </header>
 
@@ -570,6 +575,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     </div>
     <p class="intro__lead fade-up">Ailenle konuşamıyorsan, evde soracak kimse yoksa ya da utandığın için kimseye açılamıyorsan bu sayfa senin için. Her konuda ne olduğu, gerçek bir örnek, adım adım ne yapabileceğin ve kime başvurabileceğin var.</p>
     <p class="intro__urgent fade-up">Hayati tehlike varsa ya da kendine zarar vermeyi düşünüyorsan hemen ara: <a href="tel:112">112</a></p>
+    <p class="intro__urgent intro__exit fade-up">Yanına biri gelirse <b>Hızlı çık</b>'a dokun; hava durumu sayfası açılır. <a href="#gizlilik">Gizli kalmak</a></p>
   </section>
 
   <figure class="hero fade-up" aria-labelledby="hero-cap">
@@ -681,7 +687,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span><strong>Gelir.</strong> Ayrılmadan önce düzenli bir gelirin ya da en azından bir aylık kiranı karşılayacak birikimin olsun.</span></li>
             <li><span><strong>Destek.</strong> Sosyal Hizmet Merkezleri danışmanlık verir ve seni ihtiyacına uygun hizmetlere yönlendirir. Maddi destek için <a href="tel:144">ALO 144</a>'ü arayabilirsin.</span></li>
           </ol>
-          <p>Devlet korumasında büyüdüysen, Aile ve Sosyal Hizmetler Bakanlığı'nın gençler için hazırladığı <a href="https://aile.gov.tr/media/58208/genclere-yonelik-hayata-hazirlama-rehberi.pdf">Hayata Hazırlama Rehberi<span class="visually-hidden"> (PDF)</span></a> barınma, eğitim ve iş konusundaki haklarını anlatıyor. Üniversiteye giden bu gençler KYK yurtlarında ücretsiz kalabiliyor.</p>
+          <p>Devlet korumasında büyüdüysen, Aile ve Sosyal Hizmetler Bakanlığı'nın gençler için hazırladığı <a href="https://aile.gov.tr/media/58208/genclere-yonelik-hayata-hazirlama-rehberi.pdf">Hayata Hazırlama Rehberi<span class="visually-hidden"> (PDF)</span></a> barınma, eğitim ve iş konusundaki haklarını anlatıyor. Devlet koruması altındaki gençler KYK yurtlarında ücretsiz kalabiliyor.</p>
+          <p class="src">Kaynak: <a href="https://kygm.gsb.gov.tr/Sayfalar/2678/2388/sikca-sorulan-sorular-yurt.aspx">Gençlik ve Spor Bakanlığı, KYK yurtları</a> · <a href="https://alo144.aile.gov.tr/">ALO 144</a></p>
         </div>
       </div>
 
@@ -710,6 +717,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="help__name">Okul rehber servisi</span><small>Lisedeysen rehber öğretmenin, üniversitedeysen psikolojik danışmanlık birimi.</small></li>
         <li><span class="help__name">Hayati tehlike</span><a class="tel" href="tel:112">112</a></li>
       </ul>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
     </div>
   </section>
 
@@ -726,12 +734,45 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">2 hafta</span><span class="glance__txt">neredeyse her gün süren çöküntü depresyon işareti olabilir</span></li>
         <li><span class="glance__big">0 TL</span><span class="glance__txt">devlet hastanesinde ruh sağlığı randevusu: ALO 182 ya da MHRS</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Ruh sağlığı: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#ruh-1"><b>01</b>Bu senin suçun değil</a><a href="#ruh-2"><b>02</b>Üzüntü ile depresyon arasındaki fark</a><a href="#ruh-3"><b>03</b>Psikolog mu, psikiyatrist mi?</a><a href="#ruh-4"><b>04</b>İlk randevuda ne olur?</a></nav>
+      <nav class="jump fade-up" aria-label="Ruh sağlığı: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#ruh-kriz"><b>01</b>Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</a><a href="#ruh-arkadas"><b>02</b>Bir arkadaşın için endişeleniyorsan</a><a href="#ruh-3"><b>03</b>Bu senin suçun değil</a><a href="#ruh-4"><b>04</b>Üzüntü ile depresyon arasındaki fark</a><a href="#ruh-5"><b>05</b>Psikolog mu, psikiyatrist mi?</a><a href="#ruh-6"><b>06</b>İlk randevuda ne olur?</a></nav>
     </div>
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="ruh-1">Bu senin suçun değil</h3>
+        <h3 id="ruh-kriz">Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</h3>
+        <div class="prose">
+          <p>Bunu düşünmek bir zayıflık değil ve suçlu hissetmeni gerektirmez. Dünya Sağlık Örgütü bunu ağır bir duygusal sıkıntının işareti olarak tanımlıyor. Bunu yaşayıp yardım alan ve iyileşen çok insan var.</p>
+          <div class="callout" role="note">
+            <p class="callout__t">Şu an tehlikedeysen</p>
+            <p>Hemen <a class="tel" href="tel:112">112</a>'yi ara ya da en yakın acil servise git. Gidemiyorsan güvendiğin birinden yanında kalmasını iste.</p>
+          </div>
+          <ol class="n" style="margin-top:24px">
+            <li><span><strong>Yalnız kalma.</strong> Güvendiğin birine git ya da onu yanına çağır.</span></li>
+            <li><span><strong>Birine söyle.</strong> Tek cümle yeter: <q>Yaşamak istemediğimi düşünüyorum, yardıma ihtiyacım var.</q> Yazmak daha kolaysa mesaj at.</span></li>
+            <li><span><strong>Sana zarar verebilecek şeylerden uzaklaş.</strong> Bulunduğun yerden çık ya da birinden onları uzaklaştırmasını iste.</span></li>
+            <li><span><strong>Kararı ertele.</strong> Bu düşünceler çok güçlü gelebilir ama değişebilir. Şimdilik sadece bugünü geçirmeye bak.</span></li>
+            <li><span><strong>Doktora anlat.</strong> Acil değilse aile hekimine, ALO 182'den ruh sağlığı bölümüne ya da okul rehber öğretmenine git.</span></li>
+          </ol>
+          <p class="src">Kaynak: <a href="https://www.who.int/news-room/questions-and-answers/item/suicide">Dünya Sağlık Örgütü, İntihar: sorular ve cevaplar (2026)</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-arkadas">Bir arkadaşın için endişeleniyorsan</h3>
+        <div class="prose">
+          <p>Şu işaretleri ciddiye al: ani ve ağır ruh hâli değişimi, içine kapanma, "yokluğumu kimse fark etmez" gibi sözler, vedalaşma, değer verdiği eşyaları dağıtma.</p>
+          <ol class="n">
+            <li><span><strong>Açıkça sor.</strong> <q>Yaşamak istemediğini düşünüyor musun?</q> Sormak aklına bu fikri sokmaz; çoğu zaman kaygısını azaltır ve anlaşıldığını hissettirir.</span></li>
+            <li><span><strong>Dinle, yargılama.</strong> "Abartıyorsun" ya da "dikkat çekmeye çalışıyorsun" deme. Çözüm bulmak zorunda değilsin.</span></li>
+            <li><span><strong>Yalnız bırakma, sır tutma.</strong> Bir yetişkine ya da sağlık çalışanına birlikte gidin. Bu, arkadaşına ihanet değildir.</span></li>
+            <li><span><strong>Tehlike varsa</strong> yanından ayrılma ve <a href="tel:112">112</a>'yi ara.</span></li>
+          </ol>
+          <p class="src">Kaynak: <a href="https://www.who.int/news-room/questions-and-answers/item/suicide">Dünya Sağlık Örgütü, İntihar: sorular ve cevaplar (2026)</a> · <a href="https://diyarbakiriasb.saglik.gov.tr/TR,149667/intihar-ve-intihari-onleme.html">Sağlık Bakanlığı, Diyarbakır İl Ambulans Servisi</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="ruh-3">Bu senin suçun değil</h3>
         <div class="prose">
           <p>Dünya Sağlık Örgütü'ne göre dünyada yaklaşık 322 milyon kişi depresyonla yaşıyor. İstismar, ihmal, büyük kayıplar ya da uzun süre stres yaşayanlarda risk daha yüksek. Yani zor bir aile ortamında büyüdüysen ve bugün zorlanıyorsan, bunun bir sebebi var ve bu senin suçun değil.</p>
           <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/depression">Dünya Sağlık Örgütü, Depresyon bilgi notu</a></p>
@@ -739,33 +780,35 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-2">Üzüntü ile depresyon arasındaki fark</h3>
+        <h3 id="ruh-4">Üzüntü ile depresyon arasındaki fark</h3>
         <dl class="compare">
           <div><dt>Normal üzüntü</dt><dd>Bir olaya bağlıdır. Arada iyi anlar da olur, birkaç gün ya da hafta içinde hafifler.</dd></div>
           <div><dt>Depresyon olabilir</dt><dd>Neredeyse her gün, en az iki haftadır sürer. Eskiden sevdiğin şeylerden zevk alamazsın. Uyku, iştah ve enerji değişir. "Hiçbir şey düzelmeyecek" hissi baskındır.</dd></div>
         </dl>
+        <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/depression">Dünya Sağlık Örgütü, Depresyon bilgi notu</a></p>
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-3">Psikolog mu, psikiyatrist mi?</h3>
+        <h3 id="ruh-5">Psikolog mu, psikiyatrist mi?</h3>
         <div class="prose">
           <div class="table-wrap">
             <table class="stack">
               <caption class="visually-hidden">Psikiyatrist ile psikoloğun karşılaştırması</caption>
-              <thead><tr><td></td><th scope="col">Psikiyatrist</th><th scope="col">Psikolog</th></tr></thead>
+              <thead><tr><td></td><th scope="col">Psikiyatrist</th><th scope="col">Klinik psikolog</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Kimdir?</th><td data-label="Psikiyatrist">Tıp doktoru, ruh sağlığı uzmanı</td><td data-label="Psikolog">Psikoloji mezunu, terapi eğitimi almış uzman</td></tr>
-                <tr><th scope="row">Ne yapar?</th><td data-label="Psikiyatrist">Tanı koyar, gerekirse ilaç yazar</td><td data-label="Psikolog">Konuşma terapisi yapar, ilaç yazamaz</td></tr>
-                <tr><th scope="row">Devlette</th><td data-label="Psikiyatrist">MHRS'de "Ruh Sağlığı ve Hastalıkları"</td><td data-label="Psikolog">Hastanelerde, TRSM'lerde ve belediyelerde</td></tr>
+                <tr><th scope="row">Kimdir?</th><td data-label="Psikiyatrist">Tıp doktoru, ruh sağlığı uzmanı</td><td data-label="Klinik psikolog">Klinik psikoloji yüksek lisansı ya da doktorası yapmış uzman</td></tr>
+                <tr><th scope="row">Ne yapar?</th><td data-label="Psikiyatrist">Tanı koyar, gerekirse ilaç yazar</td><td data-label="Klinik psikolog">Psikolojik değerlendirme ve terapi yapar, ilaç yazamaz</td></tr>
+                <tr><th scope="row">Devlette</th><td data-label="Psikiyatrist">MHRS'de "Ruh Sağlığı ve Hastalıkları"</td><td data-label="Klinik psikolog">Hastanelerde, TRSM'lerde ve belediyelerde</td></tr>
               </tbody>
             </table>
           </div>
-          <p>Nereden başlayacağını bilmiyorsan psikiyatriste git. Gerekirse seni psikoloğa o yönlendirir. İkisi çoğu zaman birlikte çalışır.</p>
+          <p>Nereden başlayacağını bilmiyorsan psikiyatriste git. Gerekirse seni klinik psikoloğa o yönlendirir. Hastalık durumunda klinik psikolog terapiyi, hekimin teşhisi ve yönlendirmesiyle yapar. Psikoloji mezunu herkes terapi yapamaz; gittiğin kişinin klinik psikolog olup olmadığını sorabilirsin.</p>
+          <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.3.1219.pdf">1219 sayılı Kanun, ek madde 13</a></p>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-4">İlk randevuda ne olur?</h3>
+        <h3 id="ruh-6">İlk randevuda ne olur?</h3>
         <div class="prose">
           <ol class="n">
             <li><span>MHRS'den ya da <a href="tel:182">ALO 182</a>'yi arayarak devlet hastanesinde "Ruh Sağlığı ve Hastalıkları" bölümünden randevu alırsın. Ücretsizdir.</span></li>
@@ -777,6 +820,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <p class="callout__t">Ağzını açamayacağından korkuyorsan</p>
             <p>Telefonuna önceden üç cümle yaz, örneğin: <q>İki aydır uyuyamıyorum. Hiçbir şeyden keyif almıyorum. Evde konuşabileceğim kimse yok.</q> Doktora "Anlatmakta zorlanıyorum, yazdım" deyip okuyabilirsin. Bu çok sık yapılan bir şeydir.</p>
           </div>
+          <p class="src">Randevu: <a href="https://www.mhrs.gov.tr/">MHRS</a>, ALO 182</p>
         </div>
       </div>
     </div>
@@ -790,6 +834,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="help__name">Belediyeler ve üniversite hastaneleri</span><small>Birçoğunda ücretsiz psikolojik danışmanlık var.</small></li>
         <li><span class="help__name">Kendine zarar verme düşüncesi</span><a class="tel" href="tel:112">112</a><small>Beklemeden ara ya da en yakın acil servise git.</small></li>
       </ul>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
     </div>
   </section>
 
@@ -806,7 +851,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">6284</span><span class="glance__txt">sayılı Kanun psikolojik şiddeti de kapsar; kadınları, çocukları ve aile bireylerini korur</span></li>
         <li><span class="glance__big">WhatsApp</span><span class="glance__txt">sesli konuşamıyorsan ALO 183'e yazabilirsin: 0501 183 0 183</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="İlişkiler: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#iliski-1"><b>01</b>Kavramlar sözlüğü</a><a href="#iliski-2"><b>02</b>Bunlardan nasıl kurtulur, nasıl aşarsın?</a><a href="#iliski-hukuk"><b>03</b>Hukuki haklarını bil</a></nav>
+      <nav class="jump fade-up" aria-label="İlişkiler: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#iliski-1"><b>01</b>Kavramlar sözlüğü</a><a href="#iliski-2"><b>02</b>Bunlardan nasıl kurtulur, nasıl aşarsın?</a><a href="#iliski-zorbalik"><b>03</b>Okulda ve internette zorbalık</a><a href="#iliski-hukuk"><b>04</b>Hukuki haklarını bil</a></nav>
     </div>
 
     <div class="blocks">
@@ -881,7 +926,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
               </div>
             </details></li>
             <li data-cat="ic"><details class="acc">
-              <summary><span><span class="acc__t">Duygusal terör / Psikolojik şiddet</span><span class="acc__en" lang="en">Emotional abuse</span></span><span class="acc__cat">İlişkinin içinde</span></summary>
+              <summary><span><span class="acc__t">Psikolojik şiddet</span><span class="acc__en" lang="en">Emotional abuse</span></span><span class="acc__cat">İlişkinin içinde</span></summary>
               <div class="acc__body">
                 <p>Aşağılama, tehdit, bağırma, korkutma ve sürekli eleştiriyle birini kontrol etmek. Vücutta iz bırakmaz ama 6284 sayılı Kanun'a göre şiddettir.</p>
                 <p class="q"><span class="k">Örnek</span>Her akşam eve gelmeden önce “bugün neye kızacak” diye midenin kasılması.</p>
@@ -1047,6 +1092,22 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
+        <h3 id="iliski-zorbalik">Okulda ve internette zorbalık</h3>
+        <div class="prose">
+          <p>"Şakaydı" denmesi onu şaka yapmaz. Durmasını söylediğin hâlde sürüyorsa ve seni incitiyorsa zorbalıktır. İnternette olunca evde bile kaçış yokmuş gibi gelebilir. Bu senin suçun değil ve geçebilir.</p>
+          <ol class="n">
+            <li><span><strong>Cevap verme.</strong> Karşılık vermek çoğu zaman işleri kötüleştirir. Önce sakinleş.</span></li>
+            <li><span><strong>Kanıtı sakla.</strong> Mesajların ve paylaşımların ekran görüntüsünü al.</span></li>
+            <li><span><strong>Engelle ve bildir.</strong> Kişiyi engelle, hesabı platforma şikâyet et.</span></li>
+            <li><span><strong>Bir yetişkine anlat.</strong> Ailenden biri, sevdiğin bir öğretmen ya da okul rehber öğretmeni olabilir. Konuşmak zorsa ekran görüntülerini göster.</span></li>
+            <li><span><strong>Tehdit, hakaret, ısrarlı takip ya da görüntü paylaşımı varsa</strong> bunlar suç olabilir. Karakola ya da savcılığa başvurabilirsin; acil tehlikede 112.</span></li>
+          </ol>
+          <p>İnternetteki çocuk istismarı, müstehcenlik ya da intihara yönlendirme içeriklerini <a href="https://www.ihbarweb.org.tr/">ihbarweb.org.tr</a>'den bildirebilirsin. Arkadaşın zorbalığa uğruyorsa onu dinle ve yardım istemeye birlikte gidin.</p>
+          <p class="src">Kaynak: <a href="https://www.unicef.org/turkiye/siber-zorbal%C4%B1k-nedir-ve-nas%C4%B1l-%C3%B6nlenir">UNICEF Türkiye, Siber zorbalık</a> · <a href="https://orgm.meb.gov.tr/meb_iys_dosyalar/2022_08/23142552_Siber_ZorbalYk-_Lise_OYretmen_Sunumu.pdf">Millî Eğitim Bakanlığı, Siber zorbalık (lise)</a> · <a href="https://www.guvenliweb.org.tr/">Güvenli Web</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
         <h3 id="iliski-hukuk">Hukuki haklarını bil</h3>
         <div class="prose">
           <ul class="d">
@@ -1073,6 +1134,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="help__name">Mor Çatı</span><small>Şiddete maruz kalan kadınlar için dayanışma. <a href="https://morcati.org.tr">morcati.org.tr</a></small></li>
         <li><span class="help__name">Acil tehlike</span><a class="tel" href="tel:112">112</a></li>
       </ul>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
     </div>
   </section>
 
@@ -1089,7 +1151,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">4 / 8</span><span class="glance__txt">en sık görülen sekiz enfeksiyondan dördü ilaçla tamamen iyileşir</span></li>
         <li><span class="glance__big">Anonim</span><span class="glance__txt">GDTM'lerde kimlik vermeden, ücretsiz HIV testi</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="Cinsel sağlık: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#cinsel-1"><b>01</b>Önce şunu bil</a><a href="#cinsel-2"><b>02</b>Hepsi bir arada: enfeksiyonlar</a><a href="#cinsel-3"><b>03</b>Neyle bulaşmaz?</a><a href="#cinsel-4"><b>04</b>Korunma: her biri ne işe yarar?</a><a href="#cinsel-5"><b>05</b>Ücretsiz ya da düşük maliyetli yollar</a></nav>
+      <nav class="jump fade-up" aria-label="Cinsel sağlık: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#cinsel-1"><b>01</b>Önce şunu bil</a><a href="#cinsel-2"><b>02</b>Hepsi bir arada: enfeksiyonlar</a><a href="#cinsel-3"><b>03</b>Neyle bulaşmaz?</a><a href="#cinsel-4"><b>04</b>Korunma: her biri ne işe yarar?</a><a href="#cinsel-gebelik"><b>05</b>Gebelikten korunma ve ertesi gün hapı</a><a href="#cinsel-18"><b>06</b>18 yaşından küçüksen</a><a href="#cinsel-7"><b>07</b>Ücretsiz ya da düşük maliyetli yollar</a></nav>
     </div>
 
     <div class="blocks">
@@ -1281,7 +1343,13 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <div class="block fade-up">
         <h3 id="cinsel-3">Neyle bulaşmaz?</h3>
         <div class="prose">
-          <p>HIV ve hepatitler tükürük, ter, öksürük, sarılma, el sıkışma, ortak tuvalet, havuz, böcek sokması ya da aynı tabaktan yemek yemekle bulaşmaz. Öpüşme HIV bulaştırmaz ama dudakta uçuk varsa uçuk bulaştırabilir.</p>
+          <ul class="d">
+            <li><strong>HIV</strong> öpüşme, sarılma, el sıkışma, aynı eşyayı, yemeği ya da suyu paylaşmayla bulaşmaz. Tükürük, ter, öksürük, ortak tuvalet ve böcek sokması da bulaştırmaz.</li>
+            <li><strong>Hepatit C</strong> yemek, su, sarılma, öpüşme ya da aynı tabaktan yemekle bulaşmaz; kanla bulaşır.</li>
+            <li><strong>Dikkat:</strong> Hepatit A kirli su ve yiyecekle, yakın temasla bulaşabilir. Hepatit B, açık yara varsa tükürükle de bulaşabilir. İkisinin de aşısı var.</li>
+            <li><strong>Uçuk</strong> öpüşmeyle bulaşabilir.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/hiv-aids">DSÖ, HIV</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-a">Hepatit A</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-b">Hepatit B</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/hepatitis-c">Hepatit C</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/herpes-simplex-virus">Uçuk</a> · <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı broşürü (2026)</a></p>
         </div>
       </div>
 
@@ -1297,11 +1365,40 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><strong>Tedaviyi yarıda bırakma.</strong> Belirtiler geçse bile ilacı bitir. Partnerin de aynı anda tedavi olmalı, yoksa enfeksiyon ikinizin arasında gidip gelir.</li>
             <li><strong>Düzenli test.</strong> Yeni bir partnerin olduğunda ya da riskli bir durumdan sonra belirti beklemeden test yaptır.</li>
           </ul>
+          <p class="src">Kaynak: <a href="https://www.tapv.org.tr/wp-content/uploads/2026/07/cybe-brosur-2026-tr-v2-web.pdf">TAP Vakfı broşürü (2026)</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/condoms">DSÖ, Kondom</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/sexually-transmitted-infections-%28stis%29">DSÖ, CYBE bilgi notu</a></p>
         </div>
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-5">Ücretsiz ya da düşük maliyetli yollar</h3>
+        <h3 id="cinsel-gebelik">Gebelikten korunma ve ertesi gün hapı</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Kondom</strong> hem gebelikten hem enfeksiyonlardan koruyan tek yöntem. Her ilişkide doğru kullanıldığında gebelikten yaklaşık %98 korur.</li>
+            <li><strong>Geri çekme ve takvim</strong> yöntemleri daha az güvenilirdir. Hap, iğne, implant ve spiral için doktora danış; bunlar enfeksiyondan korumaz.</li>
+            <li><strong>Korunmasız ilişkiden sonra acele et.</strong> Ertesi gün hapı ne kadar erken alınırsa o kadar etkili. Dünya Sağlık Örgütü acil korunmayı ilk 5 gün içinde öneriyor; Türkiye'deki levonorgestrelli hapların kullanma talimatında süre <strong>72 saat</strong>. Hangi ilacın sana uygun olduğunu ve reçete gerekip gerekmediğini eczacıya ya da doktora sor.</li>
+            <li><strong>Ertesi gün hapı</strong> yumurtlamayı önler ya da geciktirir, başlamış gebeliği sonlandırmaz. Enfeksiyonlardan korumaz ve düzenli korunma yöntemi değildir.</li>
+            <li><strong>Adetin geciktiyse</strong> gebelik testi yap ve aile hekimine ya da kadın doğum bölümüne git. Erken öğrenmek seçeneklerini artırır.</li>
+            <li><strong>İstenmeyen gebelikte yasa:</strong> 10. hafta dolana kadar gebelik, tıbbi sakınca yoksa kadının isteğiyle sonlandırılabilir. 18 yaşından küçüklerde kendi rızası ve velisinin izni, evlilerde eşin rızası gerekir; hayati acil durumda izin şart değildir. Gebelik bir suç sonucu oluştuysa süre 20 haftadır ve hastanede uzman hekim tarafından yapılmalıdır.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/condoms">DSÖ, Kondom</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/family-planning-contraception">DSÖ, Korunma yöntemleri</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/emergency-contraception">DSÖ, Acil korunma</a> · <a href="https://titck.gov.tr/storage/kubKtAttachments/0T2ruJTzbm8oiv.pdf">TİTCK, kullanma talimatı</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.2827.pdf">2827 sayılı Kanun, madde 5 ve 6</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 99</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="cinsel-18">18 yaşından küçüksen</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Doktora gidebilirsin, soru sorabilirsin.</strong> Tıbbi müdahalelerde kural olarak velinin izni istenir ama senin de bilgilendirilmen ve karara katılman gerekir. Velin yoksa ya da orada bulunamıyorsa izin şartı aranmaz. Bilincin kapalıysa ve hayati tehlike varsa müdahale izin beklenmeden yapılır.</li>
+            <li><strong>Mahremiyet hakkın var.</strong> Muayenenin gizli bir ortamda yapılmasını isteyebilirsin.</li>
+            <li><strong>Bildirim:</strong> Sağlık çalışanları, bir suç işlendiğine dair belirti görürse bunu yetkililere bildirmek zorunda. 15 yaşını doldurmamış birine yönelik her cinsel davranış, rızası olsa bile yasada istismar sayılır.</li>
+            <li><strong>Zarar gördüysen suçlu sen değilsin.</strong> 112, ALO 183 ya da hastane acili sana yardım eder. Riskli temasta 72 saati bekleme.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4847&amp;MevzuatTur=7&amp;MevzuatTertip=5">Hasta Hakları Yönetmeliği, madde 21 ve 24</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 103 ve 280</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="cinsel-7">Ücretsiz ya da düşük maliyetli yollar</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Kimlik vermeden HIV testi.</strong> Sağlık Bakanlığı destekli Gönüllü Danışmanlık ve Test Merkezlerinde (GDTM) ücretsizdir ve adın sorulmaz. 2026'da 20 merkez hizmet veriyor. Bazıları hepatit ve frengi testi de yapıyor.</li>
@@ -1328,6 +1425,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="help__name">Cinsel Sağlık Bilgi Hattı (TAP Vakfı)</span><a class="tel" href="tel:4446539">444 65 39</a><small>Hafta içi 09.00–18.00.</small></li>
         <li><span class="help__name">Aile hekimin</span><small>İlk muayene, aşılar, test ve yönlendirme için.</small></li>
       </ul>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
     </div>
   </section>
 
@@ -1379,76 +1477,75 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <div class="block fade-up">
         <h3 id="madde-3">"En hafif" sanılandan en ağırına</h3>
         <div class="prose prose--wide">
-          <p style="max-width:38em">Aşağıdaki sıra, insanların en zararsız sandığından en ağır olana doğru gidiyor. Ama dikkat: Listede <strong>"güvenli" diye bir basamak yok.</strong> YEDAM'a göre uyuşturucu maddelerin hiçbir güvenli kullanım şekli yok. Her kartı açınca önce yaygın inancı, sonra kaynaklı gerçeği görürsün.</p>
-          <div class="scale" aria-hidden="true"><span>Zararsız sanılan</span><span>En ağır</span></div>
+          <p style="max-width:38em">Aşağıdaki sıra, insanların en zararsız sandığından en ağır olana doğru gidiyor. Ama dikkat: Listede <strong>"güvenli" diye bir basamak yok.</strong> YEDAM'a göre uyuşturucu maddelerin hiçbir güvenli kullanım şekli yok. Sıra, bilimsel bir ölçüm değil; yalnızca okumayı kolaylaştırıyor. Her kartı açınca önce yaygın inancı, sonra kaynaklı gerçeği görürsün.</p>
           <p class="meta-row"><span>9 madde</span><button class="link-btn" type="button" data-toggle-all="maddeler" aria-controls="maddeler">Hepsini aç</button></p>
           <ol class="acc-list madde-list" id="maddeler">
-            <li id="madde-k1" style="--r:11%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">1</span>Elektronik sigara ve nikotin</span><span class="acc__en">Vape, e-sigara, puff</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k1"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">1</span>Elektronik sigara ve nikotin</span><span class="acc__en">Vape</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Sigara değil, buhar; zararsız.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Dünya Sağlık Örgütü'ne göre nikotin çok bağımlılık yapar ve sağlığa zararlıdır.</li><li>Çocuk ve ergenlerde nikotin beynin gelişimini olumsuz etkiler.</li><li>Elektronik sigara, hiç sigara içmeyen gençlerde normal sigaraya başlamayı yaklaşık 3 kat artırıyor.</li></ul></div>
                 <p class="src">Kaynak: <a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-e-cigarettes">DSÖ, E-sigara soru-cevap</a></p>
               </div>
             </details></li>
-            <li id="madde-k2" style="--r:22%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">2</span>Alkol</span><span class="acc__en">Bira, şarap, rakı, votka</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k2"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">2</span>Alkol</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Azıcık içmekten bir şey olmaz.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Dünya Sağlık Örgütü'ne göre sağlığı etkilemeyen güvenli bir alkol miktarı yok; risk ilk yudumdan başlar.</li><li>Alkol en az yedi tür kansere yol açar.</li><li>Gençler alkolden orantısız biçimde zarar görüyor: alkole bağlı can kayıplarında en yüksek oran 20–39 yaş arasında.</li></ul></div>
                 <p class="src">Kaynak: <a href="https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health">DSÖ Avrupa, Güvenli alkol miktarı yok</a> · <a href="https://www.who.int/news-room/fact-sheets/detail/alcohol">DSÖ, Alkol bilgi notu</a></p>
               </div>
             </details></li>
-            <li id="madde-k3" style="--r:33%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">3</span>Esrar</span><span class="acc__en">Ot, kenevir, cannabis, skunk</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k3"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">3</span>Esrar</span><span class="acc__en">Kenevir</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Doğal bir bitki, bağımlılık yapmaz.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Dünyada en çok kullanılan uyuşturucu esrar; kullanmaya başlama yaşı da diğer maddelerden genelde daha düşük.</li><li>Dünya Sağlık Örgütü'ne göre esrar öğrenme becerisini bozar ve sürekli kullananlarda kontrolün kaybedildiği esrar bağımlılığı gelişebilir.</li><li>Şizofrenisi olan kişilerde hastalığı ağırlaştırabilir.</li></ul></div>
                 <p class="src">Kaynak: <a href="https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis">DSÖ, Esrar</a> · <a href="https://halksagligi.hacettepe.edu.tr/duyurular/halkayonelik/uyusturucumucadele2026.pdf">Hacettepe Halk Sağlığı, UNODC 2025 özeti</a></p>
               </div>
             </details></li>
-            <li id="madde-k4" style="--r:44%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">4</span>Uçucu maddeler</span><span class="acc__en">Tiner, bali, yapıştırıcı, çakmak gazı, sprey</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k4"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">4</span>Uçucu maddeler</span><span class="acc__en">Tiner, bali</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Evde herkesin elinde olan şeyler, ne olabilir ki?</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Çok yoğun kimyasallar kalp ritmini bozup birkaç dakika içinde kalp yetmezliğine ve can kaybına yol açabilir.</li><li>Bu ani can kayıpları, maddeyi yalnızca bir kez kullananlarda bile görülebilir.</li><li>Düzenli kullanım beyne, kalbe, böbreklere ve karaciğere zarar verir.</li></ul></div>
                 <p class="src">Kaynak: <a href="https://nida.nih.gov/research-topics/inhalants">NIDA, Uçucu maddeler</a></p>
               </div>
             </details></li>
-            <li id="madde-k5" style="--r:56%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">5</span>Ecstasy</span><span class="acc__en">MDMA, hap, molly</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k5"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">5</span>Ecstasy</span><span class="acc__en">MDMA</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Sadece eğlenmek için, bir gecelik.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Vücut ısısı tehlikeli derecede yükselebilir, özellikle çok hareket edildiğinde ya da kulüp gibi sıcak ortamlarda.</li><li>&quot;Ecstasy&quot; diye satılan hapların içinden kullanıcının haberi olmadan ketamin, amfetamin, &quot;banyo tuzu&quot; ve metamfetamin çıkabiliyor. Ne aldığını bilemezsin.</li><li>Uzun süreli kullanım kalp sorunlarına ve karaciğer hasarına yol açabilir.</li></ul></div>
                 <p class="src">Kaynak: <a href="https://nida.nih.gov/research-topics/mdma-ecstasy-molly">NIDA, MDMA</a></p>
               </div>
             </details></li>
-            <li id="madde-k6" style="--r:67%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">6</span>Sentetik kannabinoid</span><span class="acc__en">Bonzai, jamaika, K2, spice</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k6"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">6</span>Sentetik kannabinoid</span><span class="acc__en">Bonzai</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Esrarın aynısı, sadece daha ucuzu.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Laboratuvarda üretilen bu kimyasallar kurutulmuş otlara katılarak ya da elektronik sigara sıvısı olarak satılır. Esrardakine benzer ama etkileri çoğu zaman çok farklıdır.</li><li>Ciddi sağlık sorunlarına yol açar ve hayatı tehdit edebilir.</li><li>Türkiye'de 2025'te uyuşturucu nedeniyle hayatını kaybeden 557 kişinin 351'inde (%63) bonzaiye rastlandı.</li></ul></div>
                 <p class="src">Kaynak: <a href="https://nida.nih.gov/research-topics/synthetic-cannabinoids">NIDA, Sentetik kannabinoidler</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Emniyet Genel Müdürlüğü, 2026 Türkiye Uyuşturucu Raporu</a></p>
               </div>
             </details></li>
-            <li id="madde-k7" style="--r:78%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">7</span>Kokain</span><span class="acc__en">Kar, beyaz, coke</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k7"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">7</span>Kokain</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Pahalı, kaliteli; kontrollü kullanılır.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Hangi yolla alınırsa alınsın zehirli miktarda emilebilir; kalp krizi, inme ve nöbete yol açarak ani can kaybına neden olabilir.</li><li>Nadiren de olsa, ilk kullanımda bile can kaybı görülebilir.</li><li>Kokain kullanımı inme riskini artırır.</li></ul></div>
                 <p class="src">Kaynak: <a href="https://nida.nih.gov/research-topics/cocaine">NIDA, Kokain</a></p>
               </div>
             </details></li>
-            <li id="madde-k8" style="--r:89%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">8</span>Metamfetamin</span><span class="acc__en">Meth, buz, ice, kristal</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k8"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">8</span>Metamfetamin</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Ders çalışırken ya da uyanık kalmak için işe yarar.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Laboratuvarda üretilen, bağımlılık yapma potansiyeli yüksek bir uyarıcıdır.</li><li>Kısa vadede paranoya, kalp ritim bozukluğu, inme ve can kaybı; uzun vadede kalp yetmezliği, olmayan şeyleri görme/duyma (psikoz) ve diş kaybı görülür.</li><li>Türkiye'de 2025'te uyuşturucu nedeniyle hayatını kaybeden 557 kişinin 156'sında (%28) metamfetamine rastlandı.</li></ul></div>
                 <p class="src">Kaynak: <a href="https://nida.nih.gov/research-topics/methamphetamine">NIDA, Metamfetamin</a> · <a href="https://www.narkotik.pol.tr/kurumlar/narkotik.pol.tr/Duyurular/Turkiye_Uyusturucu_Raporu_2026_.pdf">Emniyet Genel Müdürlüğü, 2026 Türkiye Uyuşturucu Raporu</a></p>
               </div>
             </details></li>
-            <li id="madde-k9" style="--r:100%"><details class="acc">
-              <summary><span><span class="acc__t"><span class="rank">9</span>Eroin ve diğer opioidler</span><span class="acc__en">Eroin, fentanil, morfin türevleri</span></span><span class="acc__cat"><span class="riskbar" aria-hidden="true"></span></span></summary>
+            <li id="madde-k9"><details class="acc">
+              <summary><span><span class="acc__t"><span class="rank">9</span>Eroin ve diğer opioidler</span><span class="acc__en">Fentanil dahil</span></span></summary>
               <div class="acc__body">
                 <p class="myth"><span class="k">Sanılan</span><s>Bir kere denemekle bağımlı olunmaz.</s></p>
                 <div><span class="k">Gerçek</span><ul class="d"><li>Opioidler dünyada uyuşturucuya bağlı can kayıplarının yaklaşık üçte ikisinden sorumlu; en çok can kaybına yol açan madde grubu.</li><li>Beynin solunumu düzenleyen bölümünü etkilerler. Aşırı doz belirtileri: iğne ucu gibi küçülmüş göz bebekleri, bilinç kaybı ve nefes almada zorluk.</li><li>Fentanil başka maddelere karıştırılabiliyor; testte fentanil çıkan birçok kişi onu aldığını bilmiyor.</li></ul></div>
@@ -1526,6 +1623,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="help__name">Sigarayı bırakmak için</span><a class="tel" href="tel:171">ALO 171</a><small>Sağlık Bakanlığı Sigara Bırakma Danışma Hattı, ücretsiz.</small></li>
         <li><span class="help__name">Aşırı doz, bilinç kaybı</span><a class="tel" href="tel:112">112</a><small>Beklemeden ara.</small></li>
       </ul>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
     </div>
   </section>
 
@@ -1574,6 +1672,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
             <li><span>Küçük bir grup ortamında 10 dakika kalmak</span><span class="lvl"><span class="lvl__bar" style="--w:80%" aria-hidden="true"></span>8/10</span></li>
           </ol>
           <p style="margin-top:16px">Bir basamak çok zor gelirse daha küçük bir ara basamak eklersin. Geri adım atmak başarısızlık değildir.</p>
+          <p class="src">Kaynak: <a href="https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/facing-your-fears/">NHS, Korkularla kademeli yüzleşme</a></p>
         </div>
       </div>
 
@@ -1604,6 +1703,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="help__name">Üniversitedeysen</span><small>Çoğu üniversitede öğrencilere ücretsiz psikolojik danışmanlık birimi var.</small></li>
         <li><span class="help__name">Belediye kursları ve gönüllülük</span><small>Ortak bir uğraş üzerinden insanlarla tanışmak, doğrudan sohbet etmekten daha kolay gelebilir.</small></li>
       </ul>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
     </div>
   </section>
 
@@ -1640,7 +1740,8 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <div class="block fade-up">
         <h3 id="hayat-2">Maddi olarak çok zordaysan</h3>
         <div class="prose">
-          <p><a class="tel" href="tel:144">ALO 144</a> Sosyal Yardım Hattı'nı arayıp hangi yardımlardan yararlanabileceğini sorabilirsin.</p>
+          <p><a class="tel" href="tel:144">ALO 144</a> Sosyal Yardım Hattı'nı arayıp hangi yardımlardan yararlanabileceğini sorabilirsin. Hafta içi 08.00–19.00 arası açık ve ücretsiz.</p>
+          <p class="src">Kaynak: <a href="https://alo144.aile.gov.tr/">Aile ve Sosyal Hizmetler Bakanlığı, ALO 144</a></p>
         </div>
       </div>
 
@@ -1659,6 +1760,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="help__name">Sosyal Yardım Hattı</span><a class="tel" href="tel:144">ALO 144</a></li>
         <li><span class="help__name">e-Devlet</span><a class="tel" href="https://www.turkiye.gov.tr">turkiye.gov.tr</a></li>
       </ul>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
     </div>
   </section>
 
@@ -1688,43 +1790,29 @@ tbody th { font-weight: 600; white-space: nowrap; }
           <tr><th scope="row">Anonim HIV testi</th><td data-label="Nereye">Gönüllü Danışmanlık ve Test Merkezi</td><td data-label="Numara"><a href="https://hsgm.saglik.gov.tr/depo/birimler/bulasici-hastaliklar-ve-erken-uyari-db/Dokumanlar/Istatistikler/HIV_AIDS_Istatistikleri.pdf">Bakanlık listesi</a></td><td data-label="Not">Kimlik gerekmez, ücretsiz</td></tr>
           <tr><th scope="row">Cinsel sağlık sorusu</th><td data-label="Nereye">TAP Vakfı Bilgi Hattı</td><td data-label="Numara"><a class="tel" href="tel:4446539">444 65 39</a></td><td data-label="Not">Hafta içi 09.00–18.00</td></tr>
           <tr><th scope="row">Ücretsiz avukat</th><td data-label="Nereye">Baro Adli Yardım Bürosu</td><td data-label="Numara">İlindeki baro</td><td data-label="Not">Gelir belgesiyle</td></tr>
-          <tr><th scope="row">Maddi zorluk</th><td data-label="Nereye">Sosyal Yardım Hattı</td><td data-label="Numara"><a class="tel" href="tel:144">ALO 144</a></td><td data-label="Not"></td></tr>
+          <tr><th scope="row">Maddi zorluk</th><td data-label="Nereye">Sosyal Yardım Hattı</td><td data-label="Numara"><a class="tel" href="tel:144">ALO 144</a></td><td data-label="Not">Hafta içi 08.00–19.00, ücretsiz</td></tr>
         </tbody>
       </table>
+      <p class="checked">Linkler ve numaralar son kontrol: <time datetime="2026-11-25">25 Kasım 2026</time></p>
     </div>
   </section>
 
-  <section class="quick grid" aria-labelledby="hizli-baslik">
-    <h2 id="hizli-baslik" class="visually-hidden">Hızlı numaralar</h2>
-    <div class="block fade-up">
-      <h3 class="label">Acil</h3>
-      <ul>
-        <li><a href="tel:112"><span class="tel">112</span><span>Acil Çağrı</span></a></li>
-        <li><a href="tel:183"><span class="tel">ALO 183</span><span>Şiddet ve istismar</span></a></li>
-      </ul>
-    </div>
-    <div class="block fade-up">
-      <h3 class="label">Destek</h3>
-      <ul>
-        <li><a href="tel:182"><span class="tel">ALO 182</span><span>Hastane randevusu</span></a></li>
-        <li><a href="tel:191"><span class="tel">ALO 191</span><span>Uyuşturucu danışma</span></a></li>
-        <li><a href="tel:144"><span class="tel">ALO 144</span><span>Sosyal yardım</span></a></li>
-        <li><a href="tel:4446539"><span class="tel">444 65 39</span><span>Cinsel sağlık</span></a></li>
-      </ul>
-    </div>
-    <div class="block fade-up">
-      <h3 class="label">Yazarak</h3>
-      <ul>
-        <li><a href="https://wa.me/905011830183"><span class="tel">WhatsApp</span><span>ALO 183</span></a></li>
-        <li><a href="https://www.turkiye.gov.tr"><span class="tel">e-Devlet</span><span>Başvurular</span></a></li>
-      </ul>
-    </div>
+  <section id="gizlilik" class="privacy grid" aria-labelledby="gizlilik-baslik">
+    <h2 id="gizlilik-baslik" class="fade-up">Bu sayfaya girdiğin bilinmesin istiyorsan</h2>
+    <ul class="d fade-up">
+      <li><strong>Hızlı çık</strong> düğmesi seni hemen hava durumu sayfasına götürür. Yanına biri geldiğinde işe yarar ama tarayıcı geçmişini silmez.</li>
+      <li><strong>Gizli sekme kullan.</strong> Gizli sekmede gezdiğin sayfalar tarayıcı geçmişine yazılmaz.</li>
+      <li><strong>Geçmişten sil.</strong> Güvenliyse bu sayfayı tarayıcı geçmişinden çıkar. Aradığın numaralar telefonun arama kaydında görünür.</li>
+      <li><strong>Telefonunun izlendiğinden şüpheleniyorsan</strong> başka bir cihaz kullan. Gizli sekme bu durumda seni korumaz.</li>
+      <li><strong>Bu site</strong> üyelik istemez, çerez ve takip kodu kullanmaz. Yalnızca seçtiğin temayı tarayıcında saklar. GitHub Pages üzerinde yayınlandığı için GitHub teknik kayıt tutabilir.</li>
+    </ul>
+    <p class="src">Kaynak: <a href="https://www.techsafety.org/exit-from-this-website-quickly">NNEDV Safety Net, Siteden hızlı çıkış</a></p>
   </section>
 </main>
 
 <footer class="footer grid">
   <p><strong>Yalnız Değilsin</strong> bilgilendirme amaçlıdır; tıbbi, psikolojik ya da hukuki tavsiyenin yerini tutmaz. Kendi durumun için mutlaka bir uzmana başvur.</p>
-  <p>Bu sayfa bir taslaktır. Bilgiler Kasım 2026'da resmi ve akademik kaynaklardan derlendi. Yayına almadan önce bir sağlık profesyoneline ve bir hukukçuya kontrol ettirilmesi önerilir.</p>
+  <p>Bilgiler Kasım 2026'da resmi ve akademik kaynaklardan derlendi. Sayfa henüz bir sağlık uzmanı ve bir hukukçu tarafından kontrol edilmedi.</p>
 </footer>
 
 <!-- mobil alt gezinme çubuğu -->
@@ -1753,6 +1841,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <h2 id="toc-t">Konular</h2>
     <div style="display:flex;align-items:center;gap:8px">
       <button class="theme-toggle" type="button" data-theme-toggle style="border:0;padding:0">Açık tema</button>
+      <a class="exit" data-exit href="https://www.mgm.gov.tr/" rel="noreferrer">Hızlı çık</a>
       <button class="sheet__close" type="button" data-close aria-label="Kapat">×</button>
     </div>
   </div>
@@ -1763,6 +1852,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 <dialog class="sheet" id="search-dlg" aria-labelledby="search-t">
   <div class="sheet__head">
     <h2 id="search-t">Sayfada ara</h2>
+    <a class="exit" data-exit href="https://www.mgm.gov.tr/" rel="noreferrer">Hızlı çık</a>
     <button class="sheet__close" type="button" data-close aria-label="Kapat">×</button>
   </div>
   <div class="sheet__body">
@@ -1781,6 +1871,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 <dialog class="sheet" id="sos-dlg" aria-labelledby="sos-t" data-c="cinsel">
   <div class="sheet__head">
     <h2 id="sos-t">Hemen ara</h2>
+    <a class="exit" data-exit href="https://www.mgm.gov.tr/" rel="noreferrer">Hızlı çık</a>
     <button class="sheet__close" type="button" data-close aria-label="Kapat">×</button>
   </div>
   <div class="sheet__body">
@@ -1897,6 +1988,24 @@ tbody th { font-weight: 600; white-space: nowrap; }
     el.focus({ preventScroll: true });
     history.replaceState(null, "", "#" + id);
   }
+
+  /* hızlı çık: bu sayfanın geçmişteki yerine hava durumu geçer (geri tuşu buraya dönmez) */
+  $$("[data-exit]").forEach(function (x) {
+    x.addEventListener("click", function (e) {
+      e.preventDefault();
+      document.documentElement.style.display = "none";
+      location.replace(this.href);
+    });
+  });
+  /* sayfa içi bağlantılar yeni geçmiş kaydı açmasın */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    var id = a.getAttribute("href").slice(1);
+    if (!document.getElementById(id)) return;
+    e.preventDefault(); go(id);
+  });
+  addEventListener("pageshow", function () { document.documentElement.style.display = ""; });
 
   /* konular listesi: bölüm başlıkları ve alt başlıklar sayfadan okunur */
   var toc = $("#toc-list");
