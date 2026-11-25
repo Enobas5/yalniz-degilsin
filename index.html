@@ -18,6 +18,9 @@
 <meta property="og:image:alt" content="Yalnız Değilsin: soluk noktalar arasında bir yeşil nokta ve çevresinde parlayan noktalar">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://enobas5.github.io/yalniz-degilsin/">
+<link rel="alternate" hreflang="tr" href="https://enobas5.github.io/yalniz-degilsin/">
+<link rel="alternate" hreflang="en" href="https://enobas5.github.io/yalniz-degilsin/en/">
+<link rel="alternate" hreflang="x-default" href="https://enobas5.github.io/yalniz-degilsin/">
 <link rel="icon" href="img/simge.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="img/simge-180.png">
 <meta property="og:description" content="Bazı şeyleri sana kimse anlatmadı. Burada anlatıyoruz.">
@@ -139,6 +142,8 @@ ul.d + ol.n { margin-top: 1.4em; }
 .bar-btn svg { width: 16px; height: 16px; }
 .bar-btn kbd { font: 500 0.75rem var(--font); padding: 1px 6px; border: 1px solid var(--rule-strong); border-radius: 4px; }
 .theme-toggle { padding-left: 24px; border-left: 1px solid var(--rule); }
+.lang { flex: none; display: inline-flex; align-items: center; min-height: 44px; font-size: 0.9375rem; white-space: nowrap; color: var(--text-2); text-decoration: none; }
+.lang:hover { color: var(--text); text-decoration: underline; }
 .exit { flex: none; display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; font-size: 0.9375rem; white-space: nowrap; text-decoration-thickness: 2px; text-decoration-color: var(--accent); }
 .intro__exit { font-size: 0.9375rem; margin-top: 12px; }
 .intro__urgent.intro__exit a { color: inherit; font-size: inherit; font-weight: 450; text-decoration: underline; }
@@ -439,7 +444,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 }
 
 /* ---------- tablet ---------- */
-@media (max-width: 1100px) {
+@media (max-width: 1190px) {
   :root { --margin: 32px; --section: 96px; --label: 56px; }
   .intro__text { grid-column: 1 / -1; }
   .intro__lead, .intro__urgent { grid-column: 2 / -1; }
@@ -450,14 +455,14 @@ tbody th { font-weight: 600; white-space: nowrap; }
 }
 
 /* dar masaüstü: menü ikonları gizlenir, aralık daralır */
-@media (max-width: 1420px) {
+@media (max-width: 1490px) {
   .bar { gap: 20px; }
   .menu ul { gap: 16px; }
   .menu .ico { display: none; }
 }
 
 /* dar ekran: üst menü yerine alt çubuk */
-@media (max-width: 1100px) {
+@media (max-width: 1190px) {
   :root { --nav-h: calc(64px + env(safe-area-inset-bottom)); }
   .menu, .bar-btn, html.js .bar .theme-toggle { display: none; }
   html:not(.js) .menu { display: flex; }
@@ -563,6 +568,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   </nav>
   <button class="bar-btn" type="button" data-open="search-dlg" aria-haspopup="dialog"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5" stroke-linecap="round"/></svg><span>Ara</span><kbd>/</kbd></button>
   <button class="theme-toggle" type="button" id="theme">Açık tema</button>
+  <a class="lang" id="lang" data-lang href="en/" hreflang="en" lang="en">English</a>
   <a class="exit" id="quick-exit" data-exit href="https://www.mgm.gov.tr/" rel="noreferrer">Hızlı çık</a>
   <div class="progress" aria-hidden="true"><i></i></div>
 </header>
@@ -593,7 +599,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
     <ol>
       <li data-c="aile"><a href="#aile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Aile <span>Eksik ya da zor bir aile, sınır koymak, şiddet</span></a></li>
       <li data-c="ruh"><a href="#ruh"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 8 9 6 4.5 6c0 4 3 6 7.5 6z"/><path d="M12 10c0-3.6 2.6-6 7-6 0 3.6-2.6 6-7 6z"/></svg>Ruh sağlığı <span>Depresyon, ilk randevu</span></a></li>
-      <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>İlişkiler <span>Kavramlar sözlüğü, hukuki haklar</span></a></li>
+      <li data-c="iliski"><a href="#iliski"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>İlişkiler <span>Kavramlar sözlüğü, taciz, zorbalık, hukuki haklar</span></a></li>
       <li data-c="cinsel"><a href="#cinsel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M12 9v6M9 12h6"/></svg>Cinsel sağlık <span>Enfeksiyonlar, korunma, ücretsiz test</span></a></li>
       <li data-c="madde"><a href="#madde"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>Madde bağımlılığı <span>Efsaneler, maddeler, kurtulmanın yolu</span></a></li>
       <li data-c="ifade"><a href="#ifade"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke-width="2.4"/></svg>Kendini ifade etmek <span>Sosyal kaygı, hazır cümleler</span></a></li>
@@ -620,7 +626,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="aile-1">Bir ebeveynin olmaması ne değiştirir?</h3>
+        <h3 id="aile-1" data-k="babasız annesiz yetim öksüz boşanma boşanmış terk vefat tek ebeveyn">Bir ebeveynin olmaması ne değiştirir?</h3>
         <div class="prose">
           <p>Türkiye'de yapılan araştırmalar, tek ebeveynli ailelerde büyüyen gençlerin ekonomik, duygusal ve sosyal zorlukları daha sık yaşadığını gösteriyor. Araştırmalar evdeki sürekli çatışmanın da çocukların ruh sağlığını ciddi şekilde etkilediğini gösteriyor. Yani mesele sadece evde kimin olduğu değil, evin ne kadar güvenli olduğu.</p>
           <p>Harvard Üniversitesi Gelişen Çocuk Merkezi'nin çalışmalarına göre, zorluklara rağmen iyi bir hayat kuran çocukların en yaygın ortak noktası <strong>en az bir istikrarlı ve destekleyici yetişkinle kurdukları bağ</strong>. Bu yetişkin anne ya da baba olmak zorunda değil. Bir öğretmen, bir akraba, bir antrenör ya da bir komşu da olabilir.</p>
@@ -633,7 +639,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-2">Örnek alacak birini kendin seçebilirsin</h3>
+        <h3 id="aile-2" data-k="rol model mentor abi abla örnek">Örnek alacak birini kendin seçebilirsin</h3>
         <div class="prose">
           <p>Psikolojide aile dışından birinin gençlere yol göstermesine "doğal mentorluk" deniyor. 30 çalışmayı inceleyen bir meta-analiz, hayatında böyle biri olan gençlerin okulda, duygusal sağlıkta ve davranışlarda daha iyi sonuçlar elde ettiğini gösteriyor. Bu sonuç zor koşullarda büyüyen gençler için de geçerli. Araştırmalar, gencin bu kişiyi kendisinin seçtiği programların da işe yaradığını gösteriyor.</p>
           <ol class="n">
@@ -646,7 +652,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-3">Ailenle anlaşamıyorsan: sınır koymak</h3>
+        <h3 id="aile-3" data-k="kavga baskı anlaşamamak annem babam izin vermiyor">Ailenle anlaşamıyorsan: sınır koymak</h3>
         <div class="prose">
           <p>Sınır koymak aileni reddetmek demek değil. Ne istediğini, nelere izin verdiğini ve nelere vermediğini bilip bunu sakin ve açık bir şekilde söylemektir. Psikologların önerileri şöyle:</p>
           <ul class="d">
@@ -662,7 +668,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-4">Evde öğretilmeyenler: kime sorarsın?</h3>
+        <h3 id="aile-4" data-k="kravat tıraş yemek bütçe para hijyen">Evde öğretilmeyenler: kime sorarsın?</h3>
         <div class="prose">
           <p>Kravat bağlamak, tıraş olmak, musluk tamir etmek, yemek yapmak ya da bütçe tutmak gibi şeyleri kimse sana göstermediyse ayıp değil. Biz bunları burada anlatmak yerine işini iyi yapan kaynaklara yönlendiriyoruz:</p>
           <ul class="res">
@@ -678,7 +684,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-5">Ailenden ayrılmayı düşünüyorsan</h3>
+        <h3 id="aile-5" data-k="evden kaçmak evden ayrılmak kaçtım yurt ev taşınmak">Ailenden ayrılmayı düşünüyorsan</h3>
         <div class="prose">
           <p>18 yaşını doldurduğunda nerede yaşayacağına kendin karar verebilirsin. Ama ani bir ayrılık seni zor durumda bırakabilir. Şiddet yoksa önce bir plan yap:</p>
           <ol class="n">
@@ -693,7 +699,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="aile-6">Evde şiddet ya da ihmal varsa</h3>
+        <h3 id="aile-6" data-k="dayak dövüyor dövmek vurmak tokat istismar ensest taciz tecavüz korkuyorum">Evde şiddet ya da ihmal varsa</h3>
         <div class="prose">
           <p>Kimse sana vurmayı, seni aç bırakmayı ya da korkutmayı hak etmez. Bu "aile meselesi" değildir. <strong>18 yaşından küçüksen</strong>, 5395 sayılı Çocuk Koruma Kanunu'na göre devlet senin için danışmanlık, eğitim, bakım, sağlık ve barınma tedbirleri alabilir. Bu tedbirlerde öncelik, mümkünse kendi aile ortamında korunmandır.</p>
           <ul class="d">
@@ -739,7 +745,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="ruh-kriz">Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</h3>
+        <h3 id="ruh-kriz" data-k="intihar ölmek istiyorum kendini öldürmek yaşamak istemiyorum jilet kendini kesmek kriz">Kendine zarar vermeyi ya da hayatına son vermeyi düşünüyorsan</h3>
         <div class="prose">
           <p>Bunu düşünmek bir zayıflık değil ve suçlu hissetmeni gerektirmez. Dünya Sağlık Örgütü bunu ağır bir duygusal sıkıntının işareti olarak tanımlıyor. Bunu yaşayıp yardım alan ve iyileşen çok insan var.</p>
           <div class="callout" role="note">
@@ -758,7 +764,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-arkadas">Bir arkadaşın için endişeleniyorsan</h3>
+        <h3 id="ruh-arkadas" data-k="intihar arkadaşım ölmek istiyor destek">Bir arkadaşın için endişeleniyorsan</h3>
         <div class="prose">
           <p>Şu işaretleri ciddiye al: ani ve ağır ruh hâli değişimi, içine kapanma, "yokluğumu kimse fark etmez" gibi sözler, vedalaşma, değer verdiği eşyaları dağıtma.</p>
           <ol class="n">
@@ -772,7 +778,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-3">Bu senin suçun değil</h3>
+        <h3 id="ruh-3" data-k="mutsuz suçluluk depresyon">Bu senin suçun değil</h3>
         <div class="prose">
           <p>Dünya Sağlık Örgütü'ne göre dünyada yaklaşık 322 milyon kişi depresyonla yaşıyor. İstismar, ihmal, büyük kayıplar ya da uzun süre stres yaşayanlarda risk daha yüksek. Yani zor bir aile ortamında büyüdüysen ve bugün zorlanıyorsan, bunun bir sebebi var ve bu senin suçun değil.</p>
           <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/depression">Dünya Sağlık Örgütü, Depresyon bilgi notu</a></p>
@@ -780,7 +786,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-4">Üzüntü ile depresyon arasındaki fark</h3>
+        <h3 id="ruh-4" data-k="mutsuzluk ağlamak keder bunalım çöküntü">Üzüntü ile depresyon arasındaki fark</h3>
         <dl class="compare">
           <div><dt>Normal üzüntü</dt><dd>Bir olaya bağlıdır. Arada iyi anlar da olur, birkaç gün ya da hafta içinde hafifler.</dd></div>
           <div><dt>Depresyon olabilir</dt><dd>Neredeyse her gün, en az iki haftadır sürer. Eskiden sevdiğin şeylerden zevk alamazsın. Uyku, iştah ve enerji değişir. "Hiçbir şey düzelmeyecek" hissi baskındır.</dd></div>
@@ -789,7 +795,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-5">Psikolog mu, psikiyatrist mi?</h3>
+        <h3 id="ruh-5" data-k="terapi terapist danışman">Psikolog mu, psikiyatrist mi?</h3>
         <div class="prose">
           <div class="table-wrap">
             <table class="stack">
@@ -808,7 +814,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ruh-6">İlk randevuda ne olur?</h3>
+        <h3 id="ruh-6" data-k="randevu mhrs hastane terapi">İlk randevuda ne olur?</h3>
         <div class="prose">
           <ol class="n">
             <li><span>MHRS'den ya da <a href="tel:182">ALO 182</a>'yi arayarak devlet hastanesinde "Ruh Sağlığı ve Hastalıkları" bölümünden randevu alırsın. Ücretsizdir.</span></li>
@@ -851,12 +857,12 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <li><span class="glance__big">6284</span><span class="glance__txt">sayılı Kanun psikolojik şiddeti de kapsar; kadınları, çocukları ve aile bireylerini korur</span></li>
         <li><span class="glance__big">WhatsApp</span><span class="glance__txt">sesli konuşamıyorsan ALO 183'e yazabilirsin: 0501 183 0 183</span></li>
       </ul>
-      <nav class="jump fade-up" aria-label="İlişkiler: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#iliski-1"><b>01</b>Kavramlar sözlüğü</a><a href="#iliski-2"><b>02</b>Bunlardan nasıl kurtulur, nasıl aşarsın?</a><a href="#iliski-zorbalik"><b>03</b>Okulda ve internette zorbalık</a><a href="#iliski-hukuk"><b>04</b>Hukuki haklarını bil</a></nav>
+      <nav class="jump fade-up" aria-label="İlişkiler: bu bölümde"><span class="jump__t">Bu bölümde</span><a href="#iliski-1"><b>01</b>Kavramlar sözlüğü</a><a href="#iliski-2"><b>02</b>Bunlardan nasıl kurtulur, nasıl aşarsın?</a><a href="#iliski-taciz"><b>03</b>Taciz ya da cinsel saldırıya uğradıysan</a><a href="#iliski-taciz-yasa"><b>04</b>Taciz ve cinsel saldırıda hakların</a><a href="#iliski-taciz-arkadas"><b>05</b>Biri sana taciz ya da saldırıyı anlattıysa</a><a href="#iliski-zorbalik"><b>06</b>Okulda ve internette zorbalık</a><a href="#iliski-hukuk"><b>07</b>Hukuki haklarını bil</a></nav>
     </div>
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="iliski-1">Kavramlar sözlüğü</h3>
+        <h3 id="iliski-1" data-k="toksik manipülasyon kıskançlık sevgili flört">Kavramlar sözlüğü</h3>
         <div class="prose prose--wide">
           <p style="max-width:38em">Aşağıda günümüz ilişkilerinde sık karşılaşılan kavramlar var. Hepsinin Türkçesi ve İngilizcesi yazılı, çünkü internette çoğunlukla İngilizce isimleriyle geçiyorlar. Her kavram için ne olduğu, bir örnek ve ne yapabileceğin anlatılıyor. Bir kişide bunlardan birini bir kez görmek onun kötü biri olduğunu göstermez. Önemli olan, bir davranışın <strong>tekrar edip etmediği</strong> ve sende korku, suçluluk ya da değersizlik hissi yaratıp yaratmadığıdır.</p>
           <div class="filters" data-filter="terms">
@@ -1077,7 +1083,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="iliski-2">Bunlardan nasıl kurtulur, nasıl aşarsın?</h3>
+        <h3 id="iliski-2" data-k="ayrılık toksik unutmak eski sevgili">Bunlardan nasıl kurtulur, nasıl aşarsın?</h3>
         <div class="prose">
           <ol class="n">
             <li><span><strong>Adını koy.</strong> Yaşadığının bir örüntü olduğunu görmek, "benim hatam" düşüncesini kırar. Bir deftere ya da telefonuna olanları tarihleriyle yaz. Okuduğunda kafandaki sis dağılır.</span></li>
@@ -1092,7 +1098,59 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="iliski-zorbalik">Okulda ve internette zorbalık</h3>
+        <h3 id="iliski-taciz" data-k="taciz tecavüz istismar elle taciz sarkıntılık zorla dokundu cinsel şiddet sapık ensest">Taciz ya da cinsel saldırıya uğradıysan</h3>
+        <div class="prose">
+          <p>Suçlu sen değilsin. Ne giydiğin, orada neden bulunduğun, içmiş olman, donup kalman ya da bağıramaman bunu değiştirmez. Daha önce evet demiş olman ya da sevgili olmanız da rıza sayılmaz. Bunu yapanların çoğu yabancı değil; partner, akraba, arkadaş ya da iş arkadaşı gibi tanıdık kişilerdir. Kız ya da erkek, her yaştan herkesin başına gelebilir.</p>
+          <div class="callout" role="note">
+            <p class="callout__t">Şu an tehlikedeysen</p>
+            <p>Güvenli bir yere geç ve <a class="tel" href="tel:112">112</a>'yi ara. Sokakta ya da toplu taşımadaysan yüksek sesle yardım iste, bir görevliye ya da kalabalığa yaklaş.</p>
+          </div>
+          <ol class="n" style="margin-top:24px">
+            <li><span><strong>Yalnız kalma.</strong> Güvendiğin birine haber ver ve yanında olmasını iste.</span></li>
+            <li><span><strong>Cinsel saldırıdan sonra hastaneye git.</strong> Şikâyetçi olmayı düşünmesen bile yaralanma, enfeksiyon ve gebelik için muayene olman gerekir. Enfeksiyon için <a href="#cinsel-1">ilk 72 saat</a>, gebelik için <a href="#cinsel-gebelik">ertesi gün hapı</a> önemli; ne kadar erken gidersen o kadar iyi.</span></li>
+            <li><span><strong>Mümkünse yıkanma, kıyafetini değiştirme.</strong> Muayenede toplanan izler delil olabilir. Yıkandıysan da geç değil, yine başvurabilirsin. Vücudunda iz olmaması saldırı olmadığı anlamına gelmez.</span></li>
+            <li><span><strong>Kanıtı sakla.</strong> Mesajları ve arama kayıtlarını silme, ekran görüntüsü al. Yeri, saati ve gördüklerini hatırladığın kadar yaz. Çevredeki kameraların incelenmesini isteyebilirsin.</span></li>
+            <li><span><strong>Başvur.</strong> Karakola, jandarmaya ya da savcılığa gidebilirsin; hastaneye gidersen polis sürece oradan da dahil olur. Ne yapacağını bilmiyorsan <a href="tel:183">ALO 183</a> yol gösterir.</span></li>
+            <li><span><strong>Kendine zaman tanı.</strong> Korku, uykusuzluk, utanç ya da hiçbir şey hissetmemek sık görülür. Ücretsiz destek için <a href="#ruh">Ruh sağlığı bölümüne</a> bak.</span></li>
+          </ol>
+          <p class="src">Kaynak: <a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Cinsel saldırıdan sonra yardım</a> · <a href="https://bianet.org/haber/cinsel-siddet-sonrasi-hukuki-sureci-nasil-baslatabilirsiniz-310915">Mor Çatı avukatı Funda Ekin, bianet (2025)</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="iliski-taciz-yasa" data-k="taciz tecavüz istismar ceza şikayet kanun tacizci">Taciz ve cinsel saldırıda hakların</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>Dokunmadan da taciz olur (TCK 105).</strong> Laf atmak, ısrarlı cinsel mesajlar ya da istenmeyen görüntü göndermek gibi cinsel amaçlı rahatsızlıklar cinsel taciz suçuna girebilir. Cezası 3 ay–2 yıl hapis ya da adli para cezası, çocuğa karşı 6 ay–3 yıl hapistir. Aile içinde, iş yerinde, öğretmen ya da bakıcı tarafından veya mesajla yapılırsa ceza yarı oranında artar. Şikâyete bağlıdır.</li>
+            <li><strong>İstemediğin bir cinsel dokunuş cinsel saldırıdır (TCK 102).</strong> Cezası 5–10 yıl, ani ve kısa bir dokunuş gibi sarkıntılık düzeyinde kalırsa 2–5 yıl hapistir ve şikâyete bağlıdır. Tecavüzde ceza en az 12 yıldır ve şikâyet aranmaz. Eşin yapması da suçtur; bu durumda şikâyetin gerekir.</li>
+            <li><strong>18 yaşından küçüklere yapılan cinsel istismar suçtur (TCK 103).</strong> 15 yaşını doldurmamış birine yönelik her cinsel davranış istismardır; rızası geçerli değildir. 15–18 yaş arasında cebir, tehdit, hile ya da iradeyi etkileyen başka bir nedenle yapılan davranışlar istismardır.</li>
+            <li><strong>Aileden biri yaptıysa</strong> bu yasada daha ağır sayılır. Kimsenin itibarını korumak zorunda değilsin. <a href="#aile">Aile bölümündeki</a> ALO 183 ve Çocuk İzlem Merkezleri bunun için var.</li>
+            <li><strong>Ücretsiz avukat isteyebilirsin.</strong> Cinsel saldırı, çocuğun cinsel istismarı ve ısrarlı takip suçlarında avukatın yoksa barodan görevlendirilmesini istersin. 18 yaşından küçüksen istemen bile gerekmez.</li>
+            <li><strong>Defalarca anlatmak zorunda değilsin.</strong> Olaydan ruhsal olarak etkilendiysen kural olarak tanık olarak bir kez dinlenirsin ve yanında bir uzman bulunur. Tecavüzde ve çocuğa yönelik istismarın aynı ağır hâlinde ifaden, uzmanlarla çalışan merkezlerde alınır.</li>
+            <li><strong>Korunma ve gizlilik.</strong> Kadınsan, çocuksan, yapan ailenden biriyse ya da ısrarlı takibe uğruyorsan 6284 sayılı Kanun'la sana yaklaşmaması için tedbir isteyebilirsin. Gerekli görülürse adresin ve kimlik bilgilerin resmi kayıtlarda gizlenir.</li>
+            <li><strong>İş yerindeyse</strong> yazılı olarak bildir. İşveren taciz ederse ya da başkasının tacizini bildirdiğin hâlde önlem almazsa, iş sözleşmeni hemen ve haklı nedenle sonlandırabilirsin.</li>
+            <li><strong>Süre.</strong> Şikâyete bağlı olanlarda, olayı ve yapanı öğrendiğin günden itibaren 6 ay içinde şikâyet et (TCK 73). Süre geçtiyse de bir avukata sor; her durum aynı değildir.</li>
+          </ul>
+          <p>Yazılan cezalar yetişkinler içindir; yapan 18 yaşından küçükse kurallar farklıdır (TCK 31).</p>
+          <p class="src">Kaynak: <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5237.pdf">Türk Ceza Kanunu, madde 31, 73, 102, 103 ve 105</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.5271.pdf">Ceza Muhakemesi Kanunu, madde 158, 234, 236 ve 239</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6284.pdf">6284 sayılı Kanun, madde 1, 5 ve 8</a> · <a href="https://www.mevzuat.gov.tr/mevzuatmetin/1.5.4857.pdf">4857 sayılı İş Kanunu, madde 24</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="iliski-taciz-arkadas" data-k="taciz tecavüz arkadaşım destek">Biri sana taciz ya da saldırıyı anlattıysa</h3>
+        <div class="prose">
+          <ul class="d">
+            <li><strong>İnan ve dinle.</strong> "Sana inanıyorum, bu senin suçun değil" demek çok şey değiştirir.</li>
+            <li><strong>Sorgulama.</strong> "Neden oradaydın?", "Neden bağırmadın?" gibi sorular suçlama gibi gelir.</li>
+            <li><strong>Kararı ona bırak.</strong> Yetişkin biri adına şikâyetçi olma, anlattıklarını kimseye yayma. Hastaneye ya da karakola gitmek isterse yanında git.</li>
+            <li><strong>18 yaşından küçükse ya da tehlike sürüyorsa</strong> sır olarak tutma. Güvendiğin bir yetişkine, rehber öğretmene ya da <a href="tel:183">ALO 183</a>'e söyle; acil durumda <a href="tel:112">112</a>.</li>
+          </ul>
+          <p class="src">Kaynak: <a href="https://www.nhs.uk/live-well/sexual-health/help-after-rape-and-sexual-assault/">NHS, Cinsel saldırıdan sonra yardım</a></p>
+        </div>
+      </div>
+
+      <div class="block fade-up">
+        <h3 id="iliski-zorbalik" data-k="akran zorbalığı dalga geçmek alay dışlanma siber mobbing küfür lakap">Okulda ve internette zorbalık</h3>
         <div class="prose">
           <p>"Şakaydı" denmesi onu şaka yapmaz. Durmasını söylediğin hâlde sürüyorsa ve seni incitiyorsa zorbalıktır. İnternette olunca evde bile kaçış yokmuş gibi gelebilir. Bu senin suçun değil ve geçebilir.</p>
           <ol class="n">
@@ -1108,7 +1166,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="iliski-hukuk">Hukuki haklarını bil</h3>
+        <h3 id="iliski-hukuk" data-k="uzaklaştırma koruma kararı şikayet dava kanun ifşa tehdit şantaj stalk">Hukuki haklarını bil</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Psikolojik şiddet de şiddettir.</strong> 6284 sayılı Kanun fiziksel, cinsel, psikolojik, sözlü ve ekonomik şiddeti kapsar. Kadınları, çocukları, aile bireylerini ve tek taraflı ısrarlı takibe uğrayan herkesi korur; şiddete uğrama tehlikesi de yeterlidir. Karakola, savcılığa, kaymakamlığa ya da valiliğe, aile mahkemesine veya ŞÖNİM'e başvurabilirsin. Koruyucu tedbir için delil ya da belge aranmaz; uzaklaştırma gibi önleyici tedbirler de geciktirilmeden verilir (madde 8).</li>
@@ -1156,7 +1214,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="cinsel-1">Önce şunu bil</h3>
+        <h3 id="cinsel-1" data-k="cybe cyb zührevi bulaşıcı hastalık kondom yırtıldı pep">Önce şunu bil</h3>
         <div class="prose">
           <p>Dünya Sağlık Örgütü'ne göre en sık görülen sekiz enfeksiyondan dördü (frengi, bel soğukluğu, klamidya, trikomonas) ilaçla tamamen iyileşir. Diğer dördü virüslerden kaynaklanır (Hepatit B, uçuk, HIV, HPV). Bunlar kalıcı olsa da tedaviyle kontrol altına alınabilir ya da aşıyla önlenebilir.</p>
           <p class="src">Kaynak: <a href="https://www.who.int/news-room/fact-sheets/detail/sexually-transmitted-infections-%28stis%29">Dünya Sağlık Örgütü, CYBE bilgi notu</a></p>
@@ -1168,7 +1226,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-2">Hepsi bir arada: enfeksiyonlar</h3>
+        <h3 id="cinsel-2" data-k="akıntı kaşıntı siğil yara aids cybe cinsel hastalık">Hepsi bir arada: enfeksiyonlar</h3>
         <div class="prose prose--wide">
           <div class="filters" data-filter="stis" style="margin-top:0">
             <div class="tabs" role="group" aria-label="Enfeksiyonları filtrele">
@@ -1341,7 +1399,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-3">Neyle bulaşmaz?</h3>
+        <h3 id="cinsel-3" data-k="öpüşme tuvalet havuz tükürük bulaşır mı">Neyle bulaşmaz?</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>HIV</strong> öpüşme, sarılma, el sıkışma, aynı eşyayı, yemeği ya da suyu paylaşmayla bulaşmaz. Tükürük, ter, öksürük, ortak tuvalet ve böcek sokması da bulaştırmaz.</li>
@@ -1354,7 +1412,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-4">Korunma: her biri ne işe yarar?</h3>
+        <h3 id="cinsel-4" data-k="prezervatif kondom aşı korunma">Korunma: her biri ne işe yarar?</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Kondom.</strong> Vajinal, anal ve oral ilişkide her seferinde, baştan sona kullanılmalı. HIV'den korunmada en güvenilir yöntemdir. Ama frengi, uçuk ve HPV gibi ten temasıyla bulaşanlara karşı <strong>kısmen</strong> korur, çünkü kondomun örtmediği deri de bulaştırabilir.</li>
@@ -1370,7 +1428,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-gebelik">Gebelikten korunma ve ertesi gün hapı</h3>
+        <h3 id="cinsel-gebelik" data-k="hamile hamilelik kürtaj prezervatif regl adet gecikmesi doğum kontrol">Gebelikten korunma ve ertesi gün hapı</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Kondom</strong> hem gebelikten hem enfeksiyonlardan koruyan tek yöntem. Her ilişkide doğru kullanıldığında gebelikten yaklaşık %98 korur.</li>
@@ -1385,7 +1443,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-18">18 yaşından küçüksen</h3>
+        <h3 id="cinsel-18" data-k="çocuk reşit değil veli ailem duyar mı doktor rıza yaşı">18 yaşından küçüksen</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Doktora gidebilirsin, soru sorabilirsin.</strong> Tıbbi müdahalelerde kural olarak velinin izni istenir ama senin de bilgilendirilmen ve karara katılman gerekir. Velin yoksa ya da orada bulunamıyorsa izin şartı aranmaz. Bilincin kapalıysa ve hayati tehlike varsa müdahale izin beklenmeden yapılır.</li>
@@ -1398,7 +1456,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="cinsel-7">Ücretsiz ya da düşük maliyetli yollar</h3>
+        <h3 id="cinsel-7" data-k="ücretsiz test bedava">Ücretsiz ya da düşük maliyetli yollar</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Kimlik vermeden HIV testi.</strong> Sağlık Bakanlığı destekli Gönüllü Danışmanlık ve Test Merkezlerinde (GDTM) ücretsizdir ve adın sorulmaz. 2026'da 20 merkez hizmet veriyor. Bazıları hepatit ve frengi testi de yapıyor.</li>
@@ -1447,7 +1505,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="madde-1">Bağımlılık nasıl başlar?</h3>
+        <h3 id="madde-1" data-k="uyuşturucu bağımlı keyif verici">Bağımlılık nasıl başlar?</h3>
         <div class="prose">
           <p>Yeşilay Danışmanlık Merkezi (YEDAM) madde bağımlılığını, zarar görüldüğü hâlde maddenin bırakılamaması olarak tanımlıyor. Kişi kullanım üzerindeki kontrolünü kaybeder, bırakmaya çalıştığında yoksunluk yaşar ve bağımlılık zamanla hem fiziksel hem psikolojik hâle gelir.</p>
           <p>Kimse "bağımlı olacağım" diye başlamaz. Merak, bir arkadaşın ısrarı, bir partide "bir kere" denemek ya da bir sıkıntıyı unutmak için başlanır. Yeşilay'a göre kullanım <strong>tekrarlamaya başladığında</strong> bağımlılık yapabilir. Sağlık Bakanlığı da bazı maddelerin tek kullanımda bile bağımlılığa yol açabildiğini, kimin ne zaman bağımlı olacağının önceden bilinemeyeceğini söylüyor.</p>
@@ -1460,7 +1518,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="madde-2">Duyduğun yalanlar ve gerçekleri</h3>
+        <h3 id="madde-2" data-k="efsane doğal zararsız">Duyduğun yalanlar ve gerçekleri</h3>
         <div class="prose">
           <dl class="myths">
             <div><dt>"Doğal, bitki, zararı yok."</dt><dd>Esrar da bitkiden gelir; Dünya Sağlık Örgütü'ne göre bağımlılık yapar ve öğrenmeyi bozar. Bonzai ise doğal bile değil: kurutulmuş otlara katılan laboratuvar kimyasalıdır. 2025'te Türkiye'de uyuşturucu nedeniyle hayatını kaybedenlerin %63'ünde bonzaiye rastlandı.</dd></div>
@@ -1475,7 +1533,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="madde-3">"En hafif" sanılandan en ağırına</h3>
+        <h3 id="madde-3" data-k="uyuşturucu hap ot sigara çeşitleri">"En hafif" sanılandan en ağırına</h3>
         <div class="prose prose--wide">
           <p style="max-width:38em">Aşağıdaki sıra, insanların en zararsız sandığından en ağır olana doğru gidiyor. Ama dikkat: Listede <strong>"güvenli" diye bir basamak yok.</strong> YEDAM'a göre uyuşturucu maddelerin hiçbir güvenli kullanım şekli yok. Sıra, bilimsel bir ölçüm değil; yalnızca okumayı kolaylaştırıyor. Her kartı açınca önce yaygın inancı, sonra kaynaklı gerçeği görürsün.</p>
           <p class="meta-row"><span>9 madde</span><button class="link-btn" type="button" data-toggle-all="maddeler" aria-controls="maddeler">Hepsini aç</button></p>
@@ -1557,7 +1615,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="madde-4">Bir arkadaşın kötüleşirse: aşırı doz</h3>
+        <h3 id="madde-4" data-k="overdoz zehirlenme bayıldı">Bir arkadaşın kötüleşirse: aşırı doz</h3>
         <div class="prose">
           <p>Aşırı doz her maddede farklı görünebilir. Şunlardan birini görürsen <strong>beklemeden 112'yi ara</strong>:</p>
           <ul class="d">
@@ -1576,7 +1634,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="madde-5">Bırakmak istiyorsan: adım adım</h3>
+        <h3 id="madde-5" data-k="bırakmak tedavi amatem rehabilitasyon">Bırakmak istiyorsan: adım adım</h3>
         <div class="prose">
           <ol class="n">
             <li><span><strong>Bir kişiye söyle ya da ara.</strong> <a href="tel:191">ALO 191</a> 7/24 açık ve sabit hatlardan ücretsiz. Seni bilgilendirir ve tedavi için en uygun merkeze yönlendirir; kararsızsan da arayabilirsin. Yeşilay'ın <a href="tel:115">115</a> hattı da ücretsiz.</span></li>
@@ -1590,7 +1648,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="madde-6">Tedavi istemek seni suçlu yapmaz</h3>
+        <h3 id="madde-6" data-k="uyuşturucu ceza hapis yakalanmak">Tedavi istemek seni suçlu yapmaz</h3>
         <div class="prose">
           <ul class="d">
             <li><strong>Soruşturma başlamadan kendin başvurursan ceza yok.</strong> Türk Ceza Kanunu'nun 192. maddesinin 4. fıkrasına göre, kullanmaktan dolayı hakkında soruşturma başlamadan önce resmi makamlara ya da sağlık kuruluşlarına başvurup tedavi olmak isteyen kişiye ceza verilmez. Bu durumda doktorların ve kamu görevlilerinin seni bildirme yükümlülüğü de doğmaz. Başvuru kendi isteğinle olmalı: hakkında verilmiş bir tedavi ya da denetimli serbestlik kararı yüzünden gitmek bu kapsama girmez.</li>
@@ -1603,7 +1661,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="madde-7">Sana teklif edilirse ne dersin?</h3>
+        <h3 id="madde-7" data-k="hayır demek ısrar baskı">Sana teklif edilirse ne dersin?</h3>
         <div class="prose say">
           <figure><blockquote><p>"Yok, ben kullanmıyorum."</p></blockquote><figcaption>Açıklama yapmak zorunda değilsin. Kısa ve net bir "hayır" yeter.</figcaption></figure>
           <figure><blockquote><p>"Yarın maçım var" / "Yarın sınavım var."</p></blockquote><figcaption>Israr eden birinden kurtulmanın en kolay yolu konuyu kapatmaktır.</figcaption></figure>
@@ -1645,7 +1703,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="ifade-1">Kaçınma kaygıyı neden büyütür?</h3>
+        <h3 id="ifade-1" data-k="utangaçlık utangaç sosyal fobi özgüven">Kaçınma kaygıyı neden büyütür?</h3>
         <div class="prose">
           <ol class="loop" aria-label="Kaçınma döngüsü">
             <li>Ortam korkutucu gelir</li>
@@ -1660,7 +1718,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ifade-2">Kendi merdivenini sen kurarsın</h3>
+        <h3 id="ifade-2" data-k="özgüven cesaret utangaç">Kendi merdivenini sen kurarsın</h3>
         <div class="prose">
           <p>Kimse sana en zor basamaktan başla demiyor. Senin için 10 üzerinden 2 ya da 3 zorlukta olan şeyi bulursun ve oradan başlarsın.</p>
           <h4>Örnek merdiven <span class="label" style="font-weight:450">· sağdaki sayı zorluk derecesi</span></h4>
@@ -1677,7 +1735,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ifade-3">Kaygı anında bedeninde ne olur?</h3>
+        <h3 id="ifade-3" data-k="panik atak çarpıntı nefes kızarma heyecan">Kaygı anında bedeninde ne olur?</h3>
         <div class="prose">
           <p>Kalp çarpıntısı, kızarma, titreme, terleme ve ses kısılması vücudunun alarm sisteminin tepkileridir. Rahatsız edicidir ama tehlikeli değildir. Ortamdan kaçmadığında kaygı bir süre sonra kendiliğinden azalır. Burnundan dört saniye nefes al ve ağzından altı saniyede ver. Nefesi uzun vermek bedeni sakinleştirir.</p>
           <p>Bir de şunu bil: İnsanlar, başkalarının kendilerini ne kadar fark ettiğini hep olduğundan fazla tahmin eder. Psikolojide buna "spot ışığı etkisi" denir. Senin kızardığını fark eden kişi sandığından çok daha azdır.</p>
@@ -1686,7 +1744,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="ifade-4">Zor anlar için hazır cümleler</h3>
+        <h3 id="ifade-4" data-k="hayır demek ne desem">Zor anlar için hazır cümleler</h3>
         <div class="prose say">
           <figure><blockquote><p>"Şu an cevap veremiyorum, düşünüp sana döneceğim."</p></blockquote><figcaption>Donup kaldığında kendine zaman kazandırır.</figcaption></figure>
           <figure><blockquote><p>"Hayır, bunu yapmak istemiyorum."</p></blockquote><figcaption>Açıklama yapmak zorunda değilsin.</figcaption></figure>
@@ -1725,7 +1783,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
 
     <div class="blocks">
       <div class="block fade-up">
-        <h3 id="hayat-1">Ücretsiz avukat: adli yardım</h3>
+        <h3 id="hayat-1" data-k="bedava avukat baro dava mahkeme">Ücretsiz avukat: adli yardım</h3>
         <div class="prose">
           <p>Avukat tutacak paran yoksa, yaşadığın ildeki baronun Adli Yardım Bürosu'na başvurabilirsin. Başvurun uygun bulunursa sana bir avukat görevlendirilir ve avukatın ücretini baro öder. Harç ve masraflar ayrıdır. Dava sonunda maddi kazanç elde edersen (nafaka hariç) avukata ödenen ücreti ve kazancın %5'ini baroya ödemen gerekir.</p>
           <ol class="n">
@@ -1738,7 +1796,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="hayat-2">Maddi olarak çok zordaysan</h3>
+        <h3 id="hayat-2" data-k="para yok yoksulluk sosyal yardım aç fakir borç">Maddi olarak çok zordaysan</h3>
         <div class="prose">
           <p><a class="tel" href="tel:144">ALO 144</a> Sosyal Yardım Hattı'nı arayıp hangi yardımlardan yararlanabileceğini sorabilirsin. Hafta içi 08.00–19.00 arası açık ve ücretsiz.</p>
           <p class="src">Kaynak: <a href="https://alo144.aile.gov.tr/">Aile ve Sosyal Hizmetler Bakanlığı, ALO 144</a></p>
@@ -1746,7 +1804,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       </div>
 
       <div class="block fade-up">
-        <h3 id="hayat-3">Resmi bir işte ne yapacağını bilmiyorsan</h3>
+        <h3 id="hayat-3" data-k="edevlet devlet dairesi belge">Resmi bir işte ne yapacağını bilmiyorsan</h3>
         <div class="prose">
           <p>Görevliye "İlk kez yapıyorum, nereden başlamalıyım?" diye sormak tamamen normaldir. Birçok işlemi e-Devlet'ten evden yapabilirsin. Gittiğin her yerde aldığın evrakın fotoğrafını çek ve görüştüğün kişinin adını not al.</p>
         </div>
@@ -1780,6 +1838,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
         <tbody>
           <tr><th scope="row">Hayati tehlike, kendine zarar verme düşüncesi</th><td data-label="Nereye">Acil Çağrı Merkezi</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">7/24</td></tr>
           <tr><th scope="row">Şiddet (fiziksel, psikolojik, cinsel, ekonomik)</th><td data-label="Nereye">Şiddetle Mücadele Hattı</td><td data-label="Numara"><a class="tel" href="tel:183">ALO 183</a></td><td data-label="Not">7/24, ücretsiz. WhatsApp: <a href="https://wa.me/905011830183">0501 183 0 183</a></td></tr>
+          <tr><th scope="row">Taciz, cinsel saldırı, tecavüz</th><td data-label="Nereye">Hastane acil servisi, karakol ya da savcılık; danışmak için ALO 183</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">Mümkünse yıkanmadan; ilk 72 saat. <a href="#iliski-taciz">Adım adım</a></td></tr>
           <tr><th scope="row">İşitme ya da konuşma engeli</th><td data-label="Nereye">ALO 183 işaret dili hattı</td><td data-label="Numara"><a class="tel" href="tel:+905493810183">0549 381 0 183</a></td><td data-label="Not">Görüntülü görüşme; hafta içi 08.00–24.00, cumartesi 08.00–17.00</td></tr>
           <tr><th scope="row">Görüntüyle şantaj, ifşa, ısrarlı takip</th><td data-label="Nereye">Karakol ya da Cumhuriyet Başsavcılığı</td><td data-label="Numara"><a class="tel" href="tel:112">112</a></td><td data-label="Not">Delilleri silme, para gönderme</td></tr>
           <tr><th scope="row">Aile içi sorunlar, anlaşamama</th><td data-label="Nereye">Sosyal Hizmet Merkezi (aile ve bireysel danışmanlık)</td><td data-label="Numara"><a href="https://www.turkiye.gov.tr">e-Devlet</a></td><td data-label="Not">Ücretsiz</td></tr>
@@ -1861,7 +1920,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
       <span class="visually-hidden">Aranacak kelime</span>
       <input type="search" id="site-q" placeholder="Örn: uyuz, sınır, avukat, 72 saat" autocomplete="off" aria-controls="site-results">
     </label>
-    <p class="hint" id="site-hint">Sık aranan: <button type="button">depresyon</button><button type="button">şantaj</button><button type="button">HIV testi</button><button type="button">avukat</button><button type="button">sınır</button></p>
+    <p class="hint" id="site-hint">Sık aranan: <button type="button">depresyon</button><button type="button">taciz</button><button type="button">şantaj</button><button type="button">HIV testi</button><button type="button">avukat</button><button type="button">sınır</button></p>
     <p class="visually-hidden" id="site-status" role="status"></p>
     <ul class="results" id="site-results"></ul>
   </div>
@@ -1877,7 +1936,7 @@ tbody th { font-weight: 600; white-space: nowrap; }
   <div class="sheet__body">
     <ul class="sos">
       <li><a href="tel:112"><span class="n">112</span><span class="go">Ara</span><span class="s">Hayati tehlike ya da kendine zarar verme düşüncesi · 7/24</span></a></li>
-      <li><a href="tel:183"><span class="n">ALO 183</span><span class="go">Ara</span><span class="s">Şiddet, istismar, ihmal · 7/24, ücretsiz</span></a></li>
+      <li><a href="tel:183"><span class="n">ALO 183</span><span class="go">Ara</span><span class="s">Şiddet, taciz, istismar, ihmal · 7/24, ücretsiz</span></a></li>
       <li><a href="https://wa.me/905011830183"><span class="n">0501 183 0 183</span><span class="go">Yaz</span><span class="s">ALO 183 WhatsApp · sesli konuşamıyorsan</span></a></li>
       <li><a href="tel:+905493810183"><span class="n">0549 381 0 183</span><span class="go">Görüntülü</span><span class="s">ALO 183 işaret dili hattı</span></a></li>
       <li><a href="tel:191"><span class="n">ALO 191</span><span class="go">Ara</span><span class="s">Uyuşturucu ve madde bağımlılığı danışma hattı · 7/24, sabit hatlardan ücretsiz</span></a></li>
@@ -1997,6 +2056,14 @@ tbody th { font-weight: 600; white-space: nowrap; }
       location.replace(this.href);
     });
   });
+  /* dil: aynı başlığın diğer dildeki karşılığına git (kimlikler iki dilde aynı) */
+  $("[data-lang]").addEventListener("click", function (e) {
+    if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+    e.preventDefault();
+    var at = "";
+    $$("main section[id], main h3[id]").forEach(function (x) { if (x.getBoundingClientRect().top <= innerHeight * 0.4 && scrollY > 200) at = "#" + x.id; });
+    location.replace(this.href + at);
+  });
   /* sayfa içi bağlantılar yeni geçmiş kaydı açmasın */
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest('a[href^="#"]');
@@ -2032,42 +2099,61 @@ tbody th { font-weight: 600; white-space: nowrap; }
   });
 
   /* sayfa içi arama: alt başlıklar ve kartlar */
-  var tr = function (s) { return s.toLocaleLowerCase("tr"); };
+  /* büyük/küçük harf ve Türkçe harf farkını yok say: "SIDDET", "şiddet" ve "siddet" aynı (uzunluk değişmez) */
+  var FOLD = { "ş": "s", "ç": "c", "ğ": "g", "ö": "o", "ü": "u", "â": "a", "î": "i", "û": "u" };
+  var tr = function (s) { return s.replace(/[İIı]/g, "i").toLowerCase().replace(/[şçğöüâîû]/g, function (c) { return FOLD[c]; }); };
   var idx = [];
   chapters.forEach(function (s) {
     var sec = $(".chapter__name", s) ? $(".chapter__name", s).textContent : "";
     $$(".blocks > .block > h3[id]", s).forEach(function (h) {
-      idx.push({ c: s.dataset.c, sec: sec, id: h.id, t: h.textContent, body: h.parentNode.textContent.replace(/\s+/g, " ") });
+      idx.push({ c: s.dataset.c, sec: sec, id: h.id, t: h.textContent, k: h.dataset.k || "", body: h.parentNode.textContent.replace(/\s+/g, " ") });
     });
     $$(".acc", s).forEach(function (d, i) {
       var li = d.parentNode;
       if (!li.id) li.id = s.id + "-k" + (i + 1);
       var tEl = $(".acc__t", d), rk = $(".rank", tEl);
       var title = rk ? tEl.textContent.slice(rk.textContent.length) : tEl.textContent;
-      idx.push({ c: s.dataset.c, sec: sec, id: li.id, t: title, body: d.textContent.replace(/\s+/g, " "), card: true });
+      idx.push({ c: s.dataset.c, sec: sec, id: li.id, t: title, k: "", body: d.textContent.replace(/\s+/g, " "), card: true });
     });
   });
   var q = $("#site-q"), out = $("#site-results"), hint = $("#site-hint"), status = $("#site-status");
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function snippet(text, term) {
     var i = tr(text).indexOf(term);
+    if (i < 0 && term.indexOf(" ") > 0) { term = term.split(" ")[0]; i = tr(text).indexOf(term); }
     if (i < 0) return esc(text.slice(0, 110)) + "…";
     var a = Math.max(0, i - 50), b = Math.min(text.length, i + term.length + 70);
     return (a > 0 ? "…" : "") + esc(text.slice(a, i)) + "<mark>" + esc(text.slice(i, i + term.length)) + "</mark>" + esc(text.slice(i + term.length, b)) + (b < text.length ? "…" : "");
+  }
+  /* sıra: başlık ve anahtar kelime, sonra metin. Birden çok kelimede hepsi aranır */
+  function find(term) {
+    var parts = term.split(/\s+/);
+    return idx.map(function (r) {
+      var T = tr(r.t), K = " " + tr(r.k), B = tr(r.body), score = 0;
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i], at = K.indexOf(" " + p);
+        /* anahtar kelimelerde önce yazılan daha önemlidir */
+        var s = Math.max(T.indexOf(p) > -1 ? 6 : 0, at > -1 ? Math.max(4, 6.5 - at * 0.02) : 0, B.indexOf(p) > -1 ? 1 : 0);
+        if (!s) return { r: r, score: 0 };
+        score += s;
+      }
+      if (parts.length > 1 && (T + " | " + K + " | " + B).indexOf(term) > -1) score += 4;
+      return { r: r, score: score };
+    }).filter(function (h) { return h.score; }).sort(function (a, b) { return b.score - a.score; });
   }
   function search() {
     var term = tr(q.value.trim());
     hint.hidden = !!term;
     if (!term) { out.innerHTML = ""; status.textContent = ""; return; }
-    var hits = idx.map(function (r) {
-      var inT = tr(r.t).indexOf(term) > -1, inB = tr(r.body).indexOf(term) > -1;
-      return { r: r, score: inT ? 2 : inB ? 1 : 0 };
-    }).filter(function (h) { return h.score; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 20);
+    var hits = find(term), cut = term;
+    /* ekli kelimeler: "tacize", "dayaktan" → sondan kısaltarak bir daha dene */
+    for (var n = 0; !hits.length && n < 3 && cut.length > 4; n++) { cut = cut.slice(0, -1); hits = find(cut); }
+    hits = hits.slice(0, 20);
     out.innerHTML = hits.map(function (h) {
       var r = h.r;
-      return '<li data-c="' + r.c + '"><a href="#' + r.id + '"><span class="r-sec">' + esc(r.sec) + (r.card ? " · kart" : "") + '</span><span class="r-t">' + esc(r.t) + '</span><span class="r-x">' + snippet(r.body, term) + "</span></a></li>";
+      return '<li data-c="' + r.c + '"><a href="#' + r.id + '"><span class="r-sec">' + esc(r.sec) + (r.card ? " · kart" : "") + '</span><span class="r-t">' + esc(r.t) + '</span><span class="r-x">' + snippet(r.body, cut) + "</span></a></li>";
     }).join("") || '<li class="hint">Sonuç yok. Başka bir kelime dene ya da <a href="#rehber">Rehber</a> bölümüne bak.</li>';
-    status.textContent = hits.length ? hits.length + " sonuç" : "Sonuç yok";
+    status.textContent = hits.length ? "Sonuç sayısı: " + hits.length : "Sonuç yok";
   }
   q.addEventListener("input", search);
   $$("#site-hint button").forEach(function (b) { b.addEventListener("click", function () { q.value = b.textContent; search(); q.focus(); }); });
